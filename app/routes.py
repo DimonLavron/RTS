@@ -1,5 +1,5 @@
 from app import app
-from flask import render_template, redirect, url_for
+from flask import render_template, redirect, url_for, flash
 from app.forms import RegisterUserForm, RegisterCheckpointForm
 import csv
 
@@ -28,7 +28,8 @@ def index():
 def register_user():
     form = RegisterUserForm()
     if form.validate_on_submit():
-        return redirect(url_for(index))
+        flash('User {} {} is successfully registered.'.format(form.first_name.data, form.last_name.data))
+        return redirect(url_for('index'))
     return render_template('register_user.html', form=form)
 
 
@@ -36,7 +37,8 @@ def register_user():
 def register_checkpoint():
     form = RegisterCheckpointForm()
     if form.validate_on_submit():
-        return redirect(url_for(index))
+        flash('Checkpoint {} is successfully registered.'.format(form.name.data))
+        return redirect(url_for('index'))
     return render_template('register_checkpoint.html', form=form)
 
 
