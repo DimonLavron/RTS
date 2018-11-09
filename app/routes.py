@@ -9,7 +9,7 @@ data = []
 def get_info():
     global data
     with open("app/templates/runners.csv", encoding='utf-8') as file:
-        reader = csv.reader(file, delimiter=';')
+        reader = csv.reader(file)
         data = [row for row in reader]
 
 
