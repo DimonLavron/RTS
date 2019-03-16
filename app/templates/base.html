@@ -8,9 +8,14 @@
 <div>
     Menu:
     <a href="{{ url_for('index') }}">Main</a>
+    <a href="{{ url_for('table') }}">Results</a>
+    {% if current_user.is_anonymous %}
+    <a href="{{ url_for('login')}}">Login</a>
+    {% else %}
     <a href="{{ url_for('register_user') }}">Register User</a>
     <a href="{{ url_for('register_checkpoint') }}">Register Checkpoint</a>
-    <a href="{{ url_for('table') }}">Table</a>
+    {% endif %}
+
 </div>
 <hr>
 {% with messages = get_flashed_messages() %}

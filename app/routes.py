@@ -1,6 +1,7 @@
 from app import app
 from flask import render_template, redirect, url_for, flash
 from app.forms import RegisterUserForm, RegisterCheckpointForm
+from flask_login import current_user
 import csv
 
 data = []
@@ -24,25 +25,12 @@ def index():
     return render_template('index.html')
 
 
-@app.route('/register_user', methods=['GET', 'POST'])
-def register_user():
-    form = RegisterUserForm()
-    if form.validate_on_submit():
-        flash('User {} {} is successfully registered.'.format(form.first_name.data, form.last_name.data))
-        return redirect(url_for('index'))
-    return render_template('register_user.html', form=form)
+@app.route('/login')
+def login():
+    return "Login page"
 
 
-@app.route('/register_checkpoint', methods=['GET', 'POST'])
-def register_checkpoint():
-    form = RegisterCheckpointForm()
-    if form.validate_on_submit():
-        flash('Checkpoint {} is successfully registered.'.format(form.name.data))
-        return redirect(url_for('index'))
-    return render_template('register_checkpoint.html', form=form)
-
-
-@app.route('/table')
+@app.route('/results')
 def table():
     get_info()
     table_data = [['Full Name', 'ID', 'Time']]
@@ -52,3 +40,25 @@ def table():
         temp.append(row[1])
         table_data.append(temp)
     return render_template('table.html', table=table_data)
+
+
+@app.route('/register_user', methods=['GET', 'POST'])
+def register_user():
+    if (current_user.is_anonymous):
+        return redirect(url_for('index'))
+    form = RegisterUserForm()
+    if form.validate_on_submit():
+        flash('User {} {} is successfully registered.'.format(form.first_name.data, form.last_name.data))
+        return redirect(url_for('index'))
+    return render_template('register_user.html', form=form)
+
+
+@app.route('/register_checkpoint', methods=['GET', 'POST'])
+def register_checkpoint():
+    if (current_user.is_anonymous):
+        return redirect(url_for('index'))
+    form = RegisterCheckpointForm()
+    if form.validate_on_submit():
+        flash('Checkpoint {} is successfully registered.'.format(form.name.data))
+        return redirect(url_for('index'))
+    return render_template('register_checkpoint.html', form=form)
