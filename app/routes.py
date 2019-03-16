@@ -1,7 +1,8 @@
 from app import app
 from flask import render_template, redirect, url_for, flash
-from app.forms import RegisterUserForm, RegisterCheckpointForm
-from flask_login import current_user
+from app.forms import RegisterUserForm, RegisterCheckpointForm, LoginForm
+from app.models import User
+from flask_login import current_user, login_user, logout_user
 import csv
 
 data = []
@@ -25,9 +26,25 @@ def index():
     return render_template('index.html')
 
 
-@app.route('/login')
+@app.route('/login', methods=['GET', 'POST'])
 def login():
-    return "Login page"
+    if (current_user.is_authenticated):
+        return redirect(url_for('index'))
+    form = LoginForm()
+    if form.validate_on_submit():
+        if form.username.data == 'admin' and form.password.data == 'admin':
+            user = User()
+            user.username = 'admin'
+            user.password = 'admin'
+            user.role = 'admin'
+            user.id = 1
+            login_user(user)
+            flash('{} is logged in. Welcome!'.format(user.username))
+            return redirect(url_for('index'))
+        else:
+            flash('Invalid username or password')
+            return redirect(url_for('login'))
+    return render_template('login.html', form=form)
 
 
 @app.route('/results')
@@ -62,3 +79,10 @@ def register_checkpoint():
         flash('Checkpoint {} is successfully registered.'.format(form.name.data))
         return redirect(url_for('index'))
     return render_template('register_checkpoint.html', form=form)
+
+
+@app.route('/logout')
+def logout():
+    logout_user()
+    return redirect(url_for('index'))
+
