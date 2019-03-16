@@ -41,6 +41,15 @@ def login():
             login_user(user)
             flash('{} is logged in. Welcome!'.format(user.username))
             return redirect(url_for('index'))
+        elif form.username.data == 'organizer' and form.password.data == 'organizer':
+            user = User()
+            user.username = 'organizer'
+            user.password = 'organizer'
+            user.role = 'organizer'
+            user.id = 2
+            login_user(user)
+            flash('{} is logged in. Welcome!'.format(user.username))
+            return redirect(url_for('index'))
         else:
             flash('Invalid username or password')
             return redirect(url_for('login'))

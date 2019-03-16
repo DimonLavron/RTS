@@ -12,8 +12,15 @@ class User(UserMixin):
 @login.user_loader
 def load_user(id):
     user = User()
-    user.username = 'admin'
-    user.password = 'admin'
-    user.role = 'admin'
-    user.id = 1
+    if id == 1:
+        user.username = 'admin'
+        user.password = 'admin'
+        user.role = 'admin'
+        user.id = 1
+
+    if id == 2:
+        user.username = 'organizer'
+        user.password = 'organizer'
+        user.role = 'organizer'
+        user.id = 2
     return user
