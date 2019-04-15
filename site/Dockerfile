@@ -2,12 +2,12 @@ FROM python:3.6-alpine
 
 RUN adduser -D rts
 
-WORKDIR /home/rts-site
+WORKDIR /home/site
 
 COPY requirements.txt requirements.txt
-RUN python -m venv venv-rts
-RUN venv-rts/bin/pip install -r requirements.txt
-RUN venv-rts/bin/pip install gunicorn
+RUN python -m venv venv-site
+RUN venv-site/bin/pip install -r requirements.txt
+RUN venv-site/bin/pip install gunicorn
 
 COPY app app
 COPY rts.py config.py boot.sh ./

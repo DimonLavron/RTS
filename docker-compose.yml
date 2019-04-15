@@ -1,8 +1,21 @@
 version: '3'
 services:
-  rts:
-    build: .
-    ports:
-     - "8000:5000"
-    volumes:
-     - .:/app
+   site:
+     build: ./site
+     ports:
+       - "8000:5000"
+     volumes:
+       - ./site:/site
+
+   mqtt:
+     image: eclipse-mosquitto:latest
+     ports:
+       - "1883:1883"
+       - "9001:9001"
+
+   script:
+     build: ./script
+     depends_on:
+       - mqtt
+     volumes:
+       - ./script:/script
