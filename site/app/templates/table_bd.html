@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block content %}
+  {% if events[0] %}
+  <table>
+    <tr>
+      <th>Checkpoint Id</th>
+    	<th>Tag</th>
+    	<th>Time</th>
+    </tr>
+    {% for event in events %}
+    <tr>
+      <td>{{ event.checkpoint_id }}</td>
+      <td>{{ event.tag }}</td>
+      <td>{{ event.time }}</td>
+    </tr>
+    {% endfor %}
+  </table>
+  {% else %}
+  	<h1>No events registered!</h1>
+  {% endif %}
+{% endblock content %}

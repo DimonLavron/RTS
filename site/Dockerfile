@@ -1,4 +1,4 @@
-FROM python:3.6-alpine
+FROM python:3.7-alpine
 
 RUN adduser -D rts
 
@@ -19,4 +19,4 @@ RUN chown -R rts:rts ./
 USER rts
 
 EXPOSE 5000
-ENTRYPOINT ["sh", "./boot.sh"]
+ENTRYPOINT ["./boot.sh"]

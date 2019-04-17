@@ -5,6 +5,8 @@ WORKDIR /home/script
 COPY requirements.txt requirements.txt
 RUN pip install -r requirements.txt
 
-COPY withouthard.py checkpointId.txt mosquitto ./
+COPY mosquitto mosquitto
+
+COPY withouthard.py checkpointId.txt ./
 
 CMD ["python", "./withouthard.py"]

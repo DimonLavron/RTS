@@ -24,3 +24,9 @@ def load_user(id):
         user.role = 'organizer'
         user.id = 2
     return user
+
+class Event:
+    def __init__(self, checkpoint_id, tag, time):
+        self.checkpoint_id = checkpoint_id
+        self.tag = tag
+        self.time = time

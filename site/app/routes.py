@@ -1,12 +1,13 @@
-from app import app
+from app import app, db
 from flask import render_template, redirect, url_for, flash
 from app.forms import RegisterUserForm, RegisterCheckpointForm, LoginForm
-from app.models import User
+from app.models import User, Event
 from flask_login import current_user, login_user, logout_user
 import csv
 
 data = []
 
+events_col = db.events
 
 def get_info():
     global data
@@ -56,16 +57,43 @@ def login():
     return render_template('login.html', form=form)
 
 
-@app.route('/results')
+@app.route("/post", methods=['POST'])
+def post():
+	event1 = Event("10", "e280116060000206699a8abe4879", "2019-04-06 17:33:12")
+	event2 = Event("20", "e280116060000206699a8abe4879", "2019-04-06 17:55:23")
+	event3 = Event("30", "e280116060000206699a8abe4879", "2019-04-06 18:11:45")
+	event4 = Event("40", "e280116060000206699a8abe4879", "2019-04-06 18:55:14")
+	events_col.insert_many([
+	{"checkpoint_id":event1.checkpoint_id, "tag":event1.tag, "time":event1.time},
+	{"checkpoint_id":event2.checkpoint_id, "tag":event2.tag, "time":event2.time},
+	{"checkpoint_id":event3.checkpoint_id, "tag":event3.tag, "time":event3.time},
+	{"checkpoint_id":event4.checkpoint_id, "tag":event4.tag, "time":event4.time}
+	])
+	return redirect("/results")
+
+
+#@app.route('/results')
+#def table():
+#    get_info()
+#    table_data = [['Full Name', 'ID', 'Time']]
+#    collection = [['id003', '0:05:33'], ['id005', '0:06:02'], ['id001', '0:06:18'], ['id004', '0:06:49'], ['id002', '0:07:08']]
+#    for row in collection:
+#        temp = get_runner_by_id(row[0])
+#        temp.append(row[1])
+#        table_data.append(temp)
+#    return render_template('table.html', table=table_data)
+
+
+@app.route("/results")
 def table():
-    get_info()
-    table_data = [['Full Name', 'ID', 'Time']]
-    collection = [['id003', '0:05:33'], ['id005', '0:06:02'], ['id001', '0:06:18'], ['id004', '0:06:49'], ['id002', '0:07:08']]
-    for row in collection:
-        temp = get_runner_by_id(row[0])
-        temp.append(row[1])
-        table_data.append(temp)
-    return render_template('table.html', table=table_data)
+	heading = "Table with events"
+
+	list = []
+	for events in events_col.find() :
+	   list.append(events)
+	list.reverse()
+	return render_template("table_bd.html",events = list, h=heading)
+
 
 
 @app.route('/register_user', methods=['GET', 'POST'])
@@ -94,4 +122,3 @@ def register_checkpoint():
 def logout():
     logout_user()
     return redirect(url_for('index'))
-

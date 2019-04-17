@@ -1,27 +1,15 @@
 version: '3'
 services:
-  site:
-    build: ./site
+  web:
+    build: .
     ports:
-      - "8000:5000"
+      - "8000:8000"
+    volumes:
+      - .:/DB
+    links:
+      - db
     depends_on:
       - db
-    volumes:
-      - ./site:/site
-
-  mqtt:
-    image: eclipse-mosquitto:latest
-    ports:
-      - "1883:1883"
-      - "9001:9001"
-
-  script:
-    build: ./script
-    depends_on:
-      - mqtt
-    volumes:
-      - ./script:/script
-
   db:
     image: mongo:latest
     ports:
