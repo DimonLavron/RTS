@@ -65,7 +65,7 @@ def table():
 	for events in events_col.find() :
 	   list.append(events)
 	list.reverse()
-	return render_template("table_bd.html",events = list, h=heading)
+	return render_template("table.html",events = list, h=heading)
 
 
 
