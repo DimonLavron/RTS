@@ -1,20 +1,22 @@
 {% extends "base.html" %}
 
 {% block content %}
-<table border="2">
-    <caption >Results</caption>
-    {% for row in table %}
-        <tr>
-            {% if loop.first %}
-                {% for val in row %}
-                    <th> {{val}} </th>
-                {% endfor %}
-            {% else %}
-                {% for val in row %}
-                    <td> {{val}} </td>
-                {% endfor %}
-            {% endif %}
-        </tr>
+  {% if events[0] %}
+  <table>
+    <tr>
+      <th>Checkpoint Id</th>
+    	<th>Tag</th>
+    	<th>Time</th>
+    </tr>
+    {% for event in events %}
+    <tr>
+      <td>{{ event.checkpoint_id }}</td>
+      <td>{{ event.tag }}</td>
+      <td>{{ event.time }}</td>
+    </tr>
     {% endfor %}
-</table>
-{% endblock %}
+  </table>
+  {% else %}
+  	<h1>No events registered!</h1>
+  {% endif %}
+{% endblock content %}

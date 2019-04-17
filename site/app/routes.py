@@ -3,23 +3,8 @@ from flask import render_template, redirect, url_for, flash
 from app.forms import RegisterUserForm, RegisterCheckpointForm, LoginForm
 from app.models import User, Event
 from flask_login import current_user, login_user, logout_user
-import csv
-
-data = []
 
 events_col = db.events
-
-def get_info():
-    global data
-    with open("app/templates/runners.csv", encoding='utf-8') as file:
-        reader = csv.reader(file)
-        data = [row for row in reader]
-
-
-def get_runner_by_id(id):
-    for row in data:
-        if row[1] == id:
-            return row
 
 
 @app.route('/')
@@ -70,18 +55,6 @@ def post():
 	{"checkpoint_id":event4.checkpoint_id, "tag":event4.tag, "time":event4.time}
 	])
 	return redirect("/results")
-
-
-#@app.route('/results')
-#def table():
-#    get_info()
-#    table_data = [['Full Name', 'ID', 'Time']]
-#    collection = [['id003', '0:05:33'], ['id005', '0:06:02'], ['id001', '0:06:18'], ['id004', '0:06:49'], ['id002', '0:07:08']]
-#    for row in collection:
-#        temp = get_runner_by_id(row[0])
-#        temp.append(row[1])
-#        table_data.append(temp)
-#    return render_template('table.html', table=table_data)
 
 
 @app.route("/results")
