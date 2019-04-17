@@ -1,21 +1,34 @@
 version: '3'
 services:
-   site:
-     build: ./site
-     ports:
-       - "8000:5000"
-     volumes:
-       - ./site:/site
+  site:
+    build: ./site
+    ports:
+      - "8000:5000"
+    depends_on:
+      - db
+    volumes:
+      - ./site:/site
 
-   mqtt:
-     image: eclipse-mosquitto:latest
-     ports:
-       - "1883:1883"
-       - "9001:9001"
+  mqtt:
+    image: eclipse-mosquitto:latest
+    ports:
+      - "1883:1883"
+      - "9001:9001"
 
-   script:
-     build: ./script
-     depends_on:
-       - mqtt
-     volumes:
-       - ./script:/script
+  script:
+    build: ./script
+    depends_on:
+      - mqtt
+    volumes:
+      - ./script:/script
+
+  db:
+    image: mongo:latest
+    ports:
+      - 27017:27017
+    environment:
+      - MONGO_DATA_DIR=/usr/data/db
+      - MONGO_LOG_DIR=/dev/null
+    volumes:
+      - ./data/db:/usr/data/db
+    command: mongod --smallfiles --logpath=/dev/null # --quiet
