@@ -42,9 +42,11 @@ def login():
 			return redirect(url_for('login'))
 	return render_template('login.html', form=form)
 
+
 @mqtt.on_connect()
 def handle_connect(client, userdata, flags, rc):
 	mqtt.subscribe('myTopic')
+
 
 @mqtt.on_message()
 def handle_mqtt_message(client, userdata, message):
@@ -57,6 +59,12 @@ def handle_mqtt_message(client, userdata, message):
 	events_col.insert({"checkpoint_id":event.checkpoint_id, "tag":event.tag, "time":event.time})
 
 
+@app.route("/clear")
+def clear():
+	events_col.remove()
+	return redirect("/results")
+
+
 @app.route("/results")
 def table():
 	heading = "Table with events"
@@ -66,7 +74,6 @@ def table():
 	   list.append(events)
 	list.reverse()
 	return render_template("table.html",events = list, h=heading)
-
 
 
 @app.route('/register_user', methods=['GET', 'POST'])
