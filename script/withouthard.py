@@ -87,8 +87,8 @@ def on_connect(client, userdata, rc):
      print("connected with exit code: " + str(rc))
      client.subscribe("myTopic")
 
-def on_massage(client, userdata, massage):
-     print(str(massage.payload))
+def on_message(client, userdata, message):
+     print(str(message.payload))
 
 def on_publish(client,userdata,result):
     print("data published \n")
@@ -103,15 +103,18 @@ CHECKPOINT_ID = checkpointId.readline();
 
 client = mqtt.Client("client-01");
 client.on_connect = on_connect
-client.on_massage = on_massage
+client.on_message = on_message
 client.on_publish = on_publish
 client.connect(brocker, MQTT_PORT)
 
 client.loop_start()
-for tag in tags:
+i = 0
+while 1:
     timestamp = datetime.datetime.fromtimestamp(time.time()).strftime('%Y-%m-%d %H:%M:%S')
-    screen_output = str(CHECKPOINT_ID) + " " + tag + " " + str(timestamp)
+    screen_output = str(CHECKPOINT_ID) + " " + tags[i % 4] + " " + str(timestamp)
     client.publish("myTopic", screen_output)
+    i += 1
+    time.sleep(5)
 
 client.loop_stop()
 client.disconnect()
