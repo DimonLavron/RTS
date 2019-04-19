@@ -1,6 +1,9 @@
 {% extends "base.html" %}
 
 {% block content %}
+<form action="/clear">
+  <button type="submit">Clear</button>
+</form>
   {% if events[0] %}
   <table>
     <tr>
