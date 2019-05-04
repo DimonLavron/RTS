@@ -8,6 +8,7 @@ rvm:
 
 env:
   - DOCKER_COMPOSE_VERSION=3
+  - CLOUDSDK_CORE_DISABLE_PROMPTS=1
 
 before_install:
   - docker-compose up  -d
