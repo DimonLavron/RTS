@@ -3,7 +3,6 @@ from flask import render_template, redirect, url_for, flash
 from app.forms import RegisterUserForm, RegisterCheckpointForm, LoginForm
 from app.models import User, Event
 from flask_login import current_user, login_user, logout_user
-import json
 
 events_col = db.events
 
@@ -62,7 +61,7 @@ def handle_mqtt_message(client, userdata, message):
 @app.route("/clear")
 def clear():
 	events_col.remove()
-	return redirect("/results")
+	return redirect(url_for('results'))
 
 
 @app.route("/results")
