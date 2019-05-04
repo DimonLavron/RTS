@@ -10,7 +10,7 @@ env:
   - DOCKER_COMPOSE_VERSION=3
 
 before_install:
-  - docker-compose up  -d
+  - docker-compose up --build
   #- docker ps
 
   # [START auth]
