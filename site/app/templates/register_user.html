@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+<!--{% extends "base.html" %}
 
 {% block content %}
 <h1>User Registration</h1>
@@ -30,3 +30,45 @@
     </p>
 </form>
 {% endblock %}
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>User Registration</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <ul class="nav__menu">
+                <li><a href="index.html">Main</a></li>
+                <li><a href="table.html">Results</a></li>
+                <li><a href="register_checkpoint.html">Register Checkpoint</a></li>
+                <li><a href="index.html">Logout</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <section class="reg-user">
+            <h2 class="form__title">User Registration</h2>
+            <form class="form form_reg-user">
+                <label for="reg-user__name" class="form__label">
+                    <input type="text" id="reg-user__name" class="form__input">
+                    <span>Name</span>
+                </label>
+
+                <label for="reg-user__id" class="form__label">
+                    <input type="text" id="reg-user__id" class="form__input">
+                    <span>Id</span>
+                </label>
+
+                <input type="submit" value="Register User" class="form__btn">
+            </form>
+        </section>
+    </main>
+</body>
+</html>
