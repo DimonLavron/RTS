@@ -13,6 +13,7 @@ env:
 script:
   - docker-compose up -d 
   - docker ps
+
 #after_success:
   # [START auth]
   # Decrypt the credentials we added to the repo using the key we added with the Travis command line tool
