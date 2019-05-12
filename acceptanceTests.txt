@@ -1,0 +1,46 @@
+** Settings ***
+Library           Selenium2Library
+Suite Setup       Go to Welcome Page
+Suite Teardown    Close All Browsers
+
+
+*** Test Cases ***
+Type in login and password
+    Open Browser    localhost:8000/register_user        chrome
+    Typing          new_runner_Fname    new_runner_Lname    new_runner_id
+Check logging
+    Open Browser    localhost:8000/${page_with_table}   chrome
+    Find runner     new_runner_Fname    new_runner_Lname    new_runner_id
+Check Admin Login
+    Open Browser    localhost:8000/login        chrome
+    Typing          admin    admin
+Check Admin Login
+    Open Browser    localhost:8000/login        chrome
+    Typing          admin    admin
+
+
+*** Keywords ***
+Go to Welcome Page
+    Open Browser    localhost:8000/   chrome
+
+
+Runner Registration
+    [Arguments]     ${Fname}    ${Lname}    ${id}
+    Input Text      fieldToPasteFirstName   ${Fname}
+    Input Text      fieldToPasteLastName    ${Lname}
+    Input Text      fieldToPasteId          ${id}
+    Submit Form
+
+
+Checkpoint Registration
+    [Arguments]  ${name}  ${id}
+    Input Text  fieldToPasteFirstName  ${Fname}
+    Input Text  fieldToPasteId  ${id}
+    Submit Form
+
+
+Find Runner
+    [Arguments]                  ${Fname}    ${Lname}    ${id}
+    Wait Until Page Contains     ${Fname}
+    Wait Until Page Contains     ${Lname}
+    Wait Until Page Contains     ${id}
