@@ -5,38 +5,49 @@ Suite Teardown    Close All Browsers
 
 
 *** Test Cases ***
-Type in login and password
-    Open Browser    localhost:8000/register_user        chrome
-    Typing          new_runner_Fname    new_runner_Lname    new_runner_id
-Check logging
-    Open Browser    localhost:8000/${page_with_table}   chrome
-    Find runner     new_runner_Fname    new_runner_Lname    new_runner_id
-Check Admin Login
-    Open Browser    localhost:8000/login        chrome
-    Typing          admin    admin
-Check Admin Login
-    Open Browser    localhost:8000/login        chrome
-    Typing          admin    admin
+Login Admin
+    Open Browser    localhost:8000/login       chrome
+    Logging         admin    admin
+
+Reg User
+    Open Browser    localhost:8000/login       chrome
+    Logging          admin    admin
+    Click Link      link:Register User
+    Runner Registration          new_runner_Fname    new_runner_Lname    new_runner_id
+
+Reg Checkpoint
+    Open Browser    localhost:8000/login       chrome
+    Logging          admin    admin
+    Click Link      link:Register Checkpoint
+    Checkpoint Registration          new_checkpoint_name    new_checkpoint_id
 
 
 *** Keywords ***
 Go to Welcome Page
-    Open Browser    localhost:8000/   chrome
+    Open Browser   localhost:8000/   chrome
+    Wait Until Page Contains    Runners Tracker System - Main Page
+
+
+Logging
+    [Arguments]   ${USERNAME}         ${PASSWORD}
+    Input Text    id=username     ${USERNAME}
+    Input Text    id=password     ${PASSWORD}
+    Click Button    id=submit
 
 
 Runner Registration
     [Arguments]     ${Fname}    ${Lname}    ${id}
-    Input Text      fieldToPasteFirstName   ${Fname}
-    Input Text      fieldToPasteLastName    ${Lname}
-    Input Text      fieldToPasteId          ${id}
-    Submit Form
+    Input Text      id=first_name   ${Fname}
+    Input Text      id=last_name    ${Lname}
+    Input Text      id=id           ${id}
+    Click Button    id=submit
 
 
 Checkpoint Registration
-    [Arguments]  ${name}  ${id}
-    Input Text  fieldToPasteFirstName  ${Fname}
-    Input Text  fieldToPasteId  ${id}
-    Submit Form
+    [Arguments]   ${name}     ${id}
+    Input Text    id=name   ${name}
+    Input Text    id=id     ${id}
+    Click Button    name=submit
 
 
 Find Runner
