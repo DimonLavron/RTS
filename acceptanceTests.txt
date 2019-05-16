@@ -10,33 +10,33 @@ Login Admin
     Logging         admin    admin
 
 Reg User
-    Open Browser    localhost:8000/login       chrome
-    Logging          admin    admin
-    Click Link      link:Register User
-    Runner Registration          new_runner_Fname    new_runner_Lname    new_runner_id
+    Open Browser                  localhost:8000/login       chrome
+    Logging                       admin                      admin
+    Click Link                    link:Register User
+    Runner Registration           new_runner_Fname           new_runner_Lname    new_runner_id
 
 Reg Checkpoint
-    Open Browser    localhost:8000/login       chrome
-    Logging          admin    admin
-    Click Link      link:Register Checkpoint
-    Checkpoint Registration          new_checkpoint_name    new_checkpoint_id
+    Open Browser                      localhost:8000/login       chrome
+    Logging                           admin                      admin
+    Click Link                        link:Register Checkpoint
+    Checkpoint Registration           new_checkpoint_name        new_checkpoint_id
 
 
 *** Keywords ***
 Go to Welcome Page
-    Open Browser   localhost:8000/   chrome
-    Wait Until Page Contains    Runners Tracker System - Main Page
+    Open Browser                  localhost:8000/   chrome
+    Wait Until Page Contains      Runners Tracker System - Main Page
 
 
 Logging
-    [Arguments]   ${USERNAME}         ${PASSWORD}
-    Input Text    id=username     ${USERNAME}
-    Input Text    id=password     ${PASSWORD}
+    [Arguments]     ${USERNAME}     ${PASSWORD}
+    Input Text      id=username     ${USERNAME}
+    Input Text      id=password     ${PASSWORD}
     Click Button    id=submit
 
 
 Runner Registration
-    [Arguments]     ${Fname}    ${Lname}    ${id}
+    [Arguments]     ${Fname}        ${Lname}    ${id}
     Input Text      id=first_name   ${Fname}
     Input Text      id=last_name    ${Lname}
     Input Text      id=id           ${id}
@@ -44,9 +44,9 @@ Runner Registration
 
 
 Checkpoint Registration
-    [Arguments]   ${name}     ${id}
-    Input Text    id=name   ${name}
-    Input Text    id=id     ${id}
+    [Arguments]     ${name}     ${id}
+    Input Text      id=name     ${name}
+    Input Text      id=id       ${id}
     Click Button    name=submit
 
 
