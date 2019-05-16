@@ -1,6 +1,6 @@
 ** Settings ***
 Library           Selenium2Library
-Suite Setup       Go to Welcome Page
+Library           MQTTLibrary
 Suite Teardown    Close All Browsers
 
 
@@ -21,12 +21,17 @@ Reg Checkpoint
     Click Link                        link:Register Checkpoint
     Checkpoint Registration           new_checkpoint_name        new_checkpoint_id
 
+Publish
+    Connect   127.0.0.1   1883
+    Publish   topic=myTopic   message=test    qos=1
+    [Teardown]    Disconnect
+
+Subscribe
+    Connect   127.0.0.1   1883
+    Subscribe  topic=myTopic   qos=1   timeout=5
+    [Teardown]    Disconnect
 
 *** Keywords ***
-Go to Welcome Page
-    Open Browser                  localhost:8000/   chrome
-    Wait Until Page Contains      Runners Tracker System - Main Page
-
 
 Logging
     [Arguments]     ${USERNAME}     ${PASSWORD}
