@@ -61,7 +61,7 @@ def handle_mqtt_message(client, userdata, message):
 @app.route("/clear")
 def clear():
 	events_col.remove()
-	return redirect(url_for('results'))
+	return redirect("/results")
 
 
 @app.route("/results")
