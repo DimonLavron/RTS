@@ -35,7 +35,10 @@ deploy:
   - provider: script
     script: chmod +x gcloud/deploy.sh && gcloud/deploy.sh
     skip_cleanup: true
-    all_branches: true
+    on:
+      branches:
+        only:
+          - Serhii
   # provider: gae
   # keyfile: "client-secret.json"
   # project: "utility-logic-238209"
