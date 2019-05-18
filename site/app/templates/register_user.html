@@ -1,28 +1,37 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1>User Registration</h1>
-<form action="" method="post" novalidate>
+<style type="text/css">
+h1 {
+font-size: 180%;
+font-family: "Trebuchet MS", Helvetica, sans-serif;
+font-weight: bolder;
+color: #333366;
+}
+
+</style>
+<h1 align="center">User Registration</h1>
+<form action="" method="post" novalidate align="center">
     {{ form.hidden_tag() }}
     <p>
-        {{ form.first_name.label }}<br>
-        {{ form.first_name(size=30) }}
+    <br><strong>{{ form.first_name.label }}</strong><br>
+        {{ form.first_name(size=25) }}
         {% for error in form.first_name.errors %}
-        <span style="color: red;">[{{ error }}]</span>
+        <span style="color: black;">[{{ error }}]</span>
         {% endfor %}
     </p>
     <p>
-        {{ form.last_name.label }}<br>
-        {{ form.last_name(size=30) }}
+        <br><strong>{{ form.last_name.label }}</strong><br>
+        {{ form.last_name(size=25) }}
         {% for error in form.last_name.errors %}
-        <span style="color: red;">[{{ error }}]</span>
+        <span style="color: black;">[{{ error }}]</span>
         {% endfor %}
     </p>
     <p>
-        {{ form.id.label }}<br>
-        {{ form.id(size=30) }}
+      <br><strong>{{ form.id.label }}</strong><br>
+        {{ form.id(size=25) }}
         {% for error in form.id.errors %}
-        <span style="color: red;">[{{ error }}]</span>
+        <span style="color: black;">[{{ error }}]</span>
         {% endfor %}
     </p>
     <p>

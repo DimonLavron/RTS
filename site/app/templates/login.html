@@ -1,25 +1,35 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1>Login</h1>
-<form action="" method="post" novalidate>
+<style type="text/css">
+h1 {
+font-size: 180%;
+font-family: "Trebuchet MS", Helvetica, sans-serif;
+font-weight: bolder;
+color: #333366;
+}
+
+</style>
+<h1 align="center">Login</h1>
+<form action="" method="post" novalidate align="center">
     {{ form.hidden_tag() }}
     <p>
-        {{ form.username.label }}<br>
+      <strong><br>{{ form.username.label }}</br></strong>
         {{ form.username(size=30) }}
         {% for error in form.username.errors %}
-        <span style="color: red;">[{{ error }}]</span>
+        <span>[{{ error }}]</span>
         {% endfor %}
     </p>
     <p>
-        {{ form.password.label }}<br>
+      <strong><br>{{ form.password.label }}<br></strong>
         {{ form.password(size=30) }}
         {% for error in form.password.errors %}
-        <span style="color: red;">[{{ error }}]</span>
+        <span>[{{ error }}]</span>
+        <span>[{{password}}]</span>
         {% endfor %}
     </p>
     <p>
-        {{ form.submit() }}<br>
+        <br><strong>{{ form.submit() }}</strong><br>
     </p>
 </form>
 {% endblock %}

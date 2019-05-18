@@ -25,7 +25,7 @@ def login():
 			user.role = 'admin'
 			user.id = 1
 			login_user(user)
-			flash('{} is logged in. Welcome!'.format(user.username))
+			flash('{}  authorized! Welcome!'.format(user.username))
 			return redirect(url_for('index'))
 		elif form.username.data == 'organizer' and form.password.data == 'organizer':
 			user = User()
@@ -34,7 +34,7 @@ def login():
 			user.role = 'organizer'
 			user.id = 2
 			login_user(user)
-			flash('{} is logged in. Welcome!'.format(user.username))
+			flash('{} authorized! Welcome!'.format(user.username))
 			return redirect(url_for('index'))
 		else:
 			flash('Invalid username or password')
