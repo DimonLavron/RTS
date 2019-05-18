@@ -1,81 +1,87 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<robot generator="Robot 3.1.1 (Python 3.7.1 on win32)" generated="20190516 16:35:45.955" rpa="false">
+<robot generator="Robot 3.1.1 (Python 3.7.1 on win32)" generated="20190516 16:50:13.765" rpa="false">
 <suite id="s1" name="acceptanceTests" source="D:\projects\RTS\acceptanceTests.txt">
-<test id="s1-t1" name="Publish">
+<test id="s1-t1" name="Publish1">
 <kw name="Connect" library="MQTTLibrary">
 <doc>Connect to an MQTT broker. This is a pre-requisite step for publish
 and subscribe keywords.</doc>
 <arguments>
 <arg>127.0.0.1</arg>
 <arg>1883</arg>
+<arg>client-01</arg>
 </arguments>
-<msg timestamp="20190516 16:35:46.535" level="INFO">Connecting to 127.0.0.1 at port 1883</msg>
-<status status="PASS" starttime="20190516 16:35:46.533" endtime="20190516 16:35:46.546"></status>
+<msg timestamp="20190516 16:50:14.417" level="INFO">Connecting to 127.0.0.1 at port 1883</msg>
+<status status="PASS" starttime="20190516 16:50:14.414" endtime="20190516 16:50:14.431"></status>
 </kw>
-<kw name="Publish" library="MQTTLibrary">
-<doc>Publish a message to a topic with specified qos and retained flag.
-It is required that a connection has been established using `Connect`
-keyword before using this keyword.</doc>
+<kw name="Publish Single" library="MQTTLibrary">
+<doc>Publish a single message and disconnect. This keyword uses the
+[http://eclipse.org/paho/clients/python/docs/#single|single]
+function of publish module.</doc>
 <arguments>
 <arg>topic=myTopic</arg>
-<arg>message=test</arg>
+<arg>payload=test</arg>
 <arg>qos=1</arg>
 </arguments>
-<msg timestamp="20190516 16:35:46.548" level="INFO">Publish topic: myTopic, message: test, qos: 1, retain: False</msg>
-<status status="PASS" starttime="20190516 16:35:46.547" endtime="20190516 16:35:46.549"></status>
+<msg timestamp="20190516 16:50:14.433" level="INFO">Publishing to: localhost:1883, topic: myTopic, payload: test, qos: 1</msg>
+<status status="PASS" starttime="20190516 16:50:14.432" endtime="20190516 16:50:14.446"></status>
 </kw>
 <kw name="Disconnect" library="MQTTLibrary" type="teardown">
 <doc>Disconnect from MQTT Broker.</doc>
-<status status="PASS" starttime="20190516 16:35:46.550" endtime="20190516 16:35:46.551"></status>
+<status status="PASS" starttime="20190516 16:50:14.447" endtime="20190516 16:50:14.449"></status>
 </kw>
-<status status="PASS" starttime="20190516 16:35:46.529" endtime="20190516 16:35:46.552" critical="yes"></status>
+<status status="PASS" starttime="20190516 16:50:14.410" endtime="20190516 16:50:14.449" critical="yes"></status>
 </test>
-<test id="s1-t2" name="Subscribe">
+<test id="s1-t2" name="Subscribe1">
 <kw name="Connect" library="MQTTLibrary">
 <doc>Connect to an MQTT broker. This is a pre-requisite step for publish
 and subscribe keywords.</doc>
 <arguments>
 <arg>127.0.0.1</arg>
 <arg>1883</arg>
+<arg>client-01</arg>
 </arguments>
-<msg timestamp="20190516 16:35:46.558" level="INFO">Connecting to 127.0.0.1 at port 1883</msg>
-<status status="PASS" starttime="20190516 16:35:46.557" endtime="20190516 16:35:46.561"></status>
+<msg timestamp="20190516 16:50:14.456" level="INFO">Connecting to 127.0.0.1 at port 1883</msg>
+<status status="PASS" starttime="20190516 16:50:14.455" endtime="20190516 16:50:14.461"></status>
 </kw>
-<kw name="Subscribe" library="MQTTLibrary">
-<doc>Subscribe to a topic and return a list of message payloads received
-    within the specified time.</doc>
+<kw name="Subscribe And Validate" library="MQTTLibrary">
+<doc>Subscribe to a topic and validate that the specified payload is
+received within timeout. It is required that a connection has been
+established using `Connect` keyword. The payload can be specified as
+a python regular expression. If the specified payload is not received
+within timeout, an AssertionError is thrown.</doc>
 <arguments>
 <arg>topic=myTopic</arg>
 <arg>qos=1</arg>
-<arg>timeout=5</arg>
+<arg>payload=test</arg>
 </arguments>
-<msg timestamp="20190516 16:35:46.563" level="INFO">Subscribing to topic: myTopic</msg>
-<status status="PASS" starttime="20190516 16:35:46.562" endtime="20190516 16:35:51.567"></status>
+<msg timestamp="20190516 16:50:14.462" level="INFO">Subscribing to topic: myTopic</msg>
+<msg timestamp="20190516 16:50:15.466" level="FAIL">The expected payload didn't arrive in the topic</msg>
+<status status="FAIL" starttime="20190516 16:50:14.462" endtime="20190516 16:50:15.467"></status>
 </kw>
 <kw name="Disconnect" library="MQTTLibrary" type="teardown">
 <doc>Disconnect from MQTT Broker.</doc>
-<status status="PASS" starttime="20190516 16:35:51.570" endtime="20190516 16:35:51.572"></status>
+<status status="PASS" starttime="20190516 16:50:15.471" endtime="20190516 16:50:15.474"></status>
 </kw>
-<status status="PASS" starttime="20190516 16:35:46.556" endtime="20190516 16:35:51.574" critical="yes"></status>
+<status status="FAIL" starttime="20190516 16:50:14.453" endtime="20190516 16:50:15.475" critical="yes">The expected payload didn't arrive in the topic</status>
 </test>
 <kw name="Close All Browsers" library="Selenium2Library" type="teardown">
 <doc>Closes all open browsers and resets the browser cache.</doc>
-<status status="PASS" starttime="20190516 16:35:51.593" endtime="20190516 16:35:51.594"></status>
+<status status="PASS" starttime="20190516 16:50:15.496" endtime="20190516 16:50:15.498"></status>
 </kw>
-<status status="PASS" starttime="20190516 16:35:45.959" endtime="20190516 16:35:51.594"></status>
+<status status="FAIL" starttime="20190516 16:50:13.769" endtime="20190516 16:50:15.498"></status>
 </suite>
 <statistics>
 <total>
-<stat pass="2" fail="0">Critical Tests</stat>
-<stat pass="2" fail="0">All Tests</stat>
+<stat pass="1" fail="1">Critical Tests</stat>
+<stat pass="1" fail="1">All Tests</stat>
 </total>
 <tag>
 </tag>
 <suite>
-<stat pass="2" fail="0" id="s1" name="acceptanceTests">acceptanceTests</stat>
+<stat pass="1" fail="1" id="s1" name="acceptanceTests">acceptanceTests</stat>
 </suite>
 </statistics>
 <errors>
-<msg timestamp="20190516 16:35:45.945" level="WARN">Automatically parsing other than '*.robot' files is deprecated. Convert 'D:\projects\RTS\acceptanceTests.txt' to '*.robot' format or use '--extension' to explicitly configure which files to parse.</msg>
+<msg timestamp="20190516 16:50:13.752" level="WARN">Automatically parsing other than '*.robot' files is deprecated. Convert 'D:\projects\RTS\acceptanceTests.txt' to '*.robot' format or use '--extension' to explicitly configure which files to parse.</msg>
 </errors>
 </robot>

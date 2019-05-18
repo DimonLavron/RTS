@@ -31,8 +31,17 @@ Subscribe
     Subscribe  topic=myTopic   qos=1   timeout=5
     [Teardown]    Disconnect
 
-*** Keywords ***
+PublishWithPayload
+    Connect   127.0.0.1   1883
+    Publish Single   topic=myTopic   payload=test    qos=0
+    [Teardown]    Disconnect
 
+SubscribeWithPayload
+    Connect                 127.0.0.1
+    Subscribe and Validate  topic=test/mqtt_test    qos=0   payload=test
+    [Teardown]              Disconnect
+
+*** Keywords ***
 Logging
     [Arguments]     ${USERNAME}     ${PASSWORD}
     Input Text      id=username     ${USERNAME}
