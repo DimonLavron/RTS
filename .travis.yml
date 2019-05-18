@@ -7,7 +7,14 @@ rvm:
   - 3.6.7
 
 env:
-  - DOCKER_COMPOSE_VERSION=3
+  global:
+    - DOCKER_COMPOSE_VERSION=3
+    - GOOGLE_APPLICATION_CREDENTIALS=~/client-secret.json
+    - PROJECT_PROD=utility-logic-238209
+    # - CLUSTER=sanata-cluster
+    - ZONE=europe-west3-a
+    - SCRIPT_IMAGE=script
+    - SITE_IMAGE=site
 
 script:
   - docker-compose up -d
