@@ -10,6 +10,7 @@ docker tag eclipse-mosquitto gcr.io/${PROJECT_PROD}/${MQTT_IMAGE}:$TRAVIS_COMMIT
 gcloud --quiet config set project $PROJECT_PROD
 gcloud --quiet config set container/cluster $CLUSTER
 gcloud --quiet config set compute/zone ${ZONE}
+gcloud --quiet components install kubectl
 gcloud --quiet container clusters get-credentials $CLUSTER
 
 gcloud docker -- push gcr.io/${PROJECT_PROD}/${SCRIPT_IMAGE}
