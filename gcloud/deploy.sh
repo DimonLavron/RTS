@@ -7,7 +7,7 @@ set -e
 
 docker tag rts_script gcr.io/${PROJECT_PROD}/${SCRIPT_IMAGE}:$TRAVIS_COMMIT
 docker tag rts_site gcr.io/${PROJECT_PROD}/${SITE_IMAGE}:$TRAVIS_COMMIT
-dcoker tag mongo gcr.io/${PROJECT_PROD}/${MONGO_IMAGE}:$TRAVIS_COMMIT
+docker tag mongo gcr.io/${PROJECT_PROD}/${MONGO_IMAGE}:$TRAVIS_COMMIT
 docker tag eclipse-mosquitto gcr.io/${PROJECT_PROD}/${MQTT_IMAGE}:$TRAVIS_COMMIT
 
 echo $GCLOUD_SERVICE_KEY_TEST | base64 --decode -i > ${HOME}/client-secret.json
