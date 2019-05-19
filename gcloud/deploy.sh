@@ -2,8 +2,8 @@
 
 set -e
 
-docker build -t gcr.io/${PROJECT_PROD}/${SCRIPT_IMAGE}:$TRAVIS_COMMIT -f script/ .
-docker build -t gcr.io/${PROJECT_PROD}/${SITE_IMAGE}:$TRAVIS_COMMIT -f site/ .
+docker build -t gcr.io/${PROJECT_PROD}/${SCRIPT_IMAGE}:$TRAVIS_COMMIT -f script/Dockerfile .
+docker build -t gcr.io/${PROJECT_PROD}/${SITE_IMAGE}:$TRAVIS_COMMIT -f site/Dockerfile .
 
 echo $GCLOUD_SERVICE_KEY_TEST | base64 --decode -i > ${HOME}/client-secret.json
 gcloud auth activate-service-account --key-file ${HOME}/client-secret.json

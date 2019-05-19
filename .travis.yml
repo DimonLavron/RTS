@@ -11,7 +11,7 @@ env:
     - DOCKER_COMPOSE_VERSION=3
     - GOOGLE_APPLICATION_CREDENTIALS=~/client-secret.json
     - PROJECT_PROD=utility-logic-238209
-    # - CLUSTER=sanata-cluster
+    # - CLUSTER=
     - ZONE=europe-west3-a
     - SCRIPT_IMAGE=script
     - SITE_IMAGE=site

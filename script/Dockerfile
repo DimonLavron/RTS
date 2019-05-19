@@ -1,6 +1,9 @@
 FROM python:3.7
 
-WORKDIR /home/script
+RUN mkdir -p /usr/src/app
+WORKDIR /usr/src/app
+
+COPY /home/script /usr/src/app
 
 COPY requirements.txt requirements.txt
 RUN pip install -r requirements.txt
