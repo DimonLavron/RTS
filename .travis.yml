@@ -11,10 +11,11 @@ env:
     - DOCKER_COMPOSE_VERSION=3
     - GOOGLE_APPLICATION_CREDENTIALS=~/client-secret.json
     - PROJECT_PROD=utility-logic-238209
-    # - CLUSTER=
     - ZONE=europe-west3-a
     - SCRIPT_IMAGE=script
     - SITE_IMAGE=site
+    - MONGO_IMAGE=mongo
+    - MQTT_IMAGE=eclipse-mosquitto
 
 script:
   - docker-compose up -d
