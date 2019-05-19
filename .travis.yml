@@ -11,11 +11,20 @@ env:
     - DOCKER_COMPOSE_VERSION=3
     - GOOGLE_APPLICATION_CREDENTIALS=~/client-secret.json
     - PROJECT_PROD=utility-logic-238209
+    - CLUSTER=rts-cluster
     - ZONE=europe-west3-a
     - SCRIPT_IMAGE=script
     - SITE_IMAGE=site
     - MONGO_IMAGE=mongo
     - MQTT_IMAGE=eclipse-mosquitto
+    - SCRIPT_DEPLOYMENT=script-deploy
+    - SITE_DEPLOYMENT=site-deploy
+    - MONGO_DEPLOYMENT=mongo-deploy
+    - MQTT_DEPLOYMENT=eclipse-mosquitto-deploy
+    - SCRIPT_CONTAINER=script-container
+    - SITE_CONTAINER=site-container
+    - MONGO_CONTAINER=mongo-container
+    - MQTT_CONTAINER=eclipse-mosquitto-container
 
 script:
   - docker-compose up -d
