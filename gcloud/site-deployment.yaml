@@ -7,7 +7,7 @@ metadata:
   creationTimestamp: null
   labels:
     io.kompose.service: site
-  name: site-deploy
+  name: site
 spec:
   replicas: 1
   strategy: {}
@@ -19,7 +19,7 @@ spec:
     spec:
       containers:
       - image: site
-        name: site-container
+        name: site
         ports:
         - containerPort: 5000
         resources: {}

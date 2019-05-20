@@ -17,7 +17,7 @@ services:
 
   script:
     build: ./script
-    image: script
+    image: rts_script
     depends_on:
       - mqtt
     volumes:

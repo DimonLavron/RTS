@@ -7,7 +7,7 @@ metadata:
   creationTimestamp: null
   labels:
     io.kompose.service: mqtt
-  name: mqtt-deploy
+  name: mqtt
 spec:
   replicas: 1
   strategy: {}
@@ -19,7 +19,7 @@ spec:
     spec:
       containers:
       - image: eclipse-mosquitto:latest
-        name: mqtt-container
+        name: mqtt
         ports:
         - containerPort: 1883
         - containerPort: 9001
