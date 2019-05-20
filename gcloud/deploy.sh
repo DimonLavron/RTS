@@ -21,9 +21,6 @@ yes | gcloud beta container images add-tag gcr.io/${PROJECT_PROD}/${SITE_IMAGE}:
 yes | gcloud beta container images add-tag gcr.io/${PROJECT_PROD}/${MONGO_IMAGE}:$TRAVIS_COMMIT gcr.io/${PROJECT_PROD}/${MONGO_IMAGE}:latest
 yes | gcloud beta container images add-tag gcr.io/${PROJECT_PROD}/${MQTT_IMAGE}:$TRAVIS_COMMIT gcr.io/${PROJECT_PROD}/${MQTT_IMAGE}:latest
 
-kubectl config view
-kubectl config current-context
-
 kubectl set image deployment/${SITE_DEPLOYMENT} ${SITE_CONTAINER}=gcr.io/${PROJECT_PROD}/${SITE_IMAGE}:$TRAVIS_COMMIT
 kubectl set image deployment/${SCRIPT_DEPLOYMENT} ${SCRIPT_CONTAINER}=gcr.io/${PROJECT_PROD}/${SCRIPT_IMAGE}:$TRAVIS_COMMIT
 kubectl set image deployment/${MONGO_DEPLOYMENT} ${MOBGO_CONTAINER}=gcr.io/${PROJECT_PROD}/${MONGO_IMAGE}:$TRAVIS_COMMIT
