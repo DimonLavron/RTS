@@ -19,12 +19,12 @@ env:
     - MQTT_IMAGE=eclipse-mosquitto
     - SCRIPT_DEPLOYMENT=script-deploy
     - SITE_DEPLOYMENT=site-deploy
-    - MONGO_DEPLOYMENT=mongo-deploy
-    - MQTT_DEPLOYMENT=eclipse-mosquitto-deploy
+    - MONGO_DEPLOYMENT=db-deploy
+    - MQTT_DEPLOYMENT=mqtt-deploy
     - SCRIPT_CONTAINER=script-container
     - SITE_CONTAINER=site-container
-    - MONGO_CONTAINER=mongo-container
-    - MQTT_CONTAINER=eclipse-mosquitto-container
+    - MONGO_CONTAINER=db-container
+    - MQTT_CONTAINER=mqtt-container
 
 script:
   - docker-compose up -d
@@ -47,7 +47,7 @@ before_deploy:
   - gcloud --quiet version
   - gcloud --quiet components update
   - gcloud --quiet components update kubectl
-  - gcloud --quiet services enable container.googleapis.com
+  - gcloud services enable container.googleapis.com
 
 deploy:
   - provider: script
