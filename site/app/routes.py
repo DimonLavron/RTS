@@ -83,8 +83,24 @@ def register_runner():
 	form = RegisterRunnerForm()
 	if form.validate_on_submit():
 		flash('Runner {} {} is successfully registered.'.format(form.first_name.data, form.last_name.data))
-		return redirect(url_for('index'))
+		runners_col.insert({"first_name": form.first_name.data, "last_name":form.last_name.data, "id":form.id.data})
+		return redirect(url_for('runners_table'))
 	return render_template('register_runner.html', form=form)
+
+
+@app.route("/clear_runners")
+def clear_runners():
+	runners_col.remove()
+	return redirect("/runners")
+
+
+@app.route('/runners')
+def runners_table():
+	heading = "All runners"
+	list = []
+	for runners in runners_col.find():
+		list.append(runners)
+	return render_template('runners_table.html', runners = list, h = heading)
 
 
 @app.route('/register_checkpoint', methods=['GET', 'POST'])
