@@ -13,6 +13,8 @@ env:
     - PROJECT_PROD=utility-logic-238209
     - CLUSTER=rts-cluster
     - ZONE=europe-west3-a
+    - LOCAL_SCRIPT_IMAGE=rts_script:v0.1
+    - LOCAL_SITE_IMAGE=rts_site:v0.1
     - SCRIPT_IMAGE=script
     - SITE_IMAGE=site
     - MONGO_IMAGE=mongo
