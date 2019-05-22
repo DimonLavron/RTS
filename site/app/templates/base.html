@@ -4,9 +4,19 @@
     <meta charset="UTF-8">
     <title>RTS-Site</title>
 </head>
-<body>
+<body class="style" style="background-color:#72c9f1">
 <div>
-    Menu:
+  <style type="text/css">
+  a {
+  font-size: 170%;
+  font-family: "Trebuchet MS", Helvetica, sans-serif;
+  color: #333366;
+  border: 8px solid #ececec;
+  background-color: #ececec;
+  }
+  </style>
+  <table style="background-color:#ececec; size:80; color:black;" align="center">
+    <td>
     <a href="{{ url_for('index') }}">Main</a>
     <a href="{{ url_for('table') }}">Results</a>
     {% if current_user.is_anonymous %}
@@ -16,6 +26,8 @@
     <a href="{{ url_for('register_checkpoint') }}">Register Checkpoint</a>
     <a href="{{ url_for('logout')}}">Logout</a>
     {% endif %}
+    <td>
+    </table>
 
 </div>
 <hr>
