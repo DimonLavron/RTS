@@ -1,10 +1,11 @@
 from app import app, db, mqtt
 from flask import render_template, redirect, url_for, flash
-from app.forms import RegisterUserForm, RegisterCheckpointForm, LoginForm
+from app.forms import RegisterRunnerForm, RegisterCheckpointForm, LoginForm
 from app.models import User, Event
 from flask_login import current_user, login_user, logout_user
 
 events_col = db.events
+runners_col = db.runners
 
 
 @app.route('/')
@@ -75,15 +76,15 @@ def table():
 	return render_template("table.html",events = list, h=heading)
 
 
-@app.route('/register_user', methods=['GET', 'POST'])
-def register_user():
+@app.route('/register_runner', methods=['GET', 'POST'])
+def register_runner():
 	if (current_user.is_anonymous):
 		return redirect(url_for('index'))
-	form = RegisterUserForm()
+	form = RegisterRunnerForm()
 	if form.validate_on_submit():
-		flash('User {} {} is successfully registered.'.format(form.first_name.data, form.last_name.data))
+		flash('Runner {} {} is successfully registered.'.format(form.first_name.data, form.last_name.data))
 		return redirect(url_for('index'))
-	return render_template('register_user.html', form=form)
+	return render_template('register_runner.html', form=form)
 
 
 @app.route('/register_checkpoint', methods=['GET', 'POST'])

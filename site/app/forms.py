@@ -3,11 +3,11 @@ from wtforms import StringField, SubmitField, PasswordField
 from wtforms.validators import DataRequired
 
 
-class RegisterUserForm(FlaskForm):
+class RegisterRunnerForm(FlaskForm):
     first_name = StringField('First Name', validators=[DataRequired()])
     last_name = StringField('Last Name', validators=[DataRequired()])
     id = StringField('ID', validators=[DataRequired()])
-    submit = SubmitField('Register User')
+    submit = SubmitField('Register Runner')
 
 
 class RegisterCheckpointForm(FlaskForm):

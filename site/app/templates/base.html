@@ -22,7 +22,7 @@
         {% if current_user.is_anonymous %}
         <a href="{{ url_for('login')}}">Login</a>
         {% else %}
-        <a href="{{ url_for('register_user') }}">Register User</a>
+        <a href="{{ url_for('register_runner') }}">Register Runner</a>
         <a href="{{ url_for('register_checkpoint') }}">Register Checkpoint</a>
         <a href="{{ url_for('logout')}}">Logout</a>
         {% endif %}
