@@ -95,6 +95,9 @@ def on_publish(client,userdata,result):
 
 # Create a new socket to handle conversation with yr903
 
+tags = dict()
+runner_id = 1
+
 checkpointId = open("checkpointId.txt")
 CHECKPOINT_ID = checkpointId.readline(); #code to identify current checkpoint
 
@@ -114,6 +117,14 @@ while 1:
     s.send(createSetAntennaPacket(1,1))
     s.send(createRealTimeInventoryPacket())
     data = s.recv(8000)
+    if data.hex() in tags.keys():
+        data = "#" + "0{5-log10(tags.get(data.hex()))}"\
+            + str(tags.get(data.hex()))
+    else:
+        runner_id = runnner_id + 1
+        tags = tags + {data.hex(), runner_id}
+        data = "#" + "0{5-log10(runner_id)}"\
+            + str(tags.get(data.hex()))
     timestamp = datetime.datetime.fromtimestamp(time.time()).strftime('%Y-%m-%d %H:%M:%S')
     screen_output = str(CHECKPOINT_ID) + " " + data.hex() + " " + str(timestamp)
     client.publish("myTopic", screen_output)

@@ -32,7 +32,7 @@ Subscribe
     [Teardown]    Disconnect
 
 PublishWithPayload
-    Connect   127.0.0.1   1883
+    Connect   127.0.0.1
     Publish Single   topic=myTopic   payload=test    qos=0
     [Teardown]    Disconnect
 
