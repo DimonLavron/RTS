@@ -2,8 +2,8 @@
 
 set -e
 
-docker tag rts_script gcr.io/${PROJECT_PROD}/${SCRIPT_IMAGE}:$TRAVIS_COMMIT
-docker tag rts_site gcr.io/${PROJECT_PROD}/${SITE_IMAGE}:$TRAVIS_COMMIT
+docker tag ${LOCAL_SCRIPT_IMAGE} gcr.io/${PROJECT_PROD}/${SCRIPT_IMAGE}:$TRAVIS_COMMIT
+docker tag ${LOCAL_SITE_IMAGE} gcr.io/${PROJECT_PROD}/${SITE_IMAGE}:$TRAVIS_COMMIT
 docker tag mongo gcr.io/${PROJECT_PROD}/${MONGO_IMAGE}:$TRAVIS_COMMIT
 docker tag eclipse-mosquitto gcr.io/${PROJECT_PROD}/${MQTT_IMAGE}:$TRAVIS_COMMIT
 
