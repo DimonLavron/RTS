@@ -15,14 +15,14 @@ color: #333366;
     {{ form.hidden_tag() }}
     <p>
       <br><strong>{{ form.name.label }}</strong><br>
-        {{ form.name(size=25) }}
+        {{ form.name(size=25) }}<br>
         {% for error in form.name.errors %}
         <span style="color: black;">[{{ error }}]</span>
         {% endfor %}
     </p>
     <p>
-      <br><strong>{{ form.id.label }}<strong><br>
-        {{ form.id(size=25) }}
+      <br><strong>{{ form.id.label }}</strong><br>
+        {{ form.id(size=25) }}<br>
         {% for error in form.id.errors %}
         <span style="color: black;">[{{ error }}]</span>
         {% endfor %}

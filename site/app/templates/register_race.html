@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+
+{% block content %}
+<style type="text/css">
+h1 {
+font-size: 180%;
+font-family: "Trebuchet MS", Helvetica, sans-serif;
+font-weight: bolder;
+color: #333366;
+}
+
+</style>
+<h1 align="center">Race Registration</h1>
+<form action="" method="post" novalidate align="center">
+    {{ form.hidden_tag() }}
+    <p>
+      <br><strong>{{ form.name.label }}</strong><br>
+        {{ form.name(size=25) }}<br>
+        {% for error in form.name.errors %}
+        <span style="color: black;">[{{ error }}]</span>
+        {% endfor %}
+    </p>
+    <p>
+      <br><strong>{{ form.logo.label }}</strong><br>
+        {{ form.logo(size=25) }}<br>
+        {% for error in form.logo.errors %}
+        <span style="color: black;">[{{ error }}]</span>
+        {% endfor %}
+    </p>
+    <p>
+      <br><strong>{{ form.admin.label }}</strong><br>
+        {{ form.admin }}<br>
+        {% for error in form.admin.errors %}
+        <span style="color: black;">[{{ error }}]</span>
+        {% endfor %}
+    </p>
+    <p>
+      <br><strong>{{ form.laps_number.label }}</strong><br>
+        {{ form.laps_number }}<br>
+        {% for error in form.laps_number.errors %}
+        <span style="color: black;">[{{ error }}]</span>
+        {% endfor %}
+    </p>
+    <p>
+      <br><strong>{{ form.lap_length.label }}</strong><br>
+        {{ form.lap_length(size=10) }}<br>
+        {% for error in form.lap_length.errors %}
+        <span style="color: black;">[{{ error }}]</span>
+        {% endfor %}
+    </p>
+    <p>
+      <br><strong>{{ form.date_and_time_of_race.label }}</strong><br>
+        {{ form.date_and_time_of_race }}<br>
+        {% for error in form.date_and_time_of_race.errors %}
+        <span style="color: black;">[{{ error }}]</span>
+        {% endfor %}
+    </p>
+    <p>
+      <br><strong>{{ form.description.label }}</strong><br>
+        {{ form.description(maxlength=300, cols=50, rows=6) }}<br>
+        {% for error in form.description.errors %}
+        <span style="color: black;">[{{ error }}]</span>
+        {% endfor %}
+    </p>
+    <h1>
+    <p>
+        {{ form.submit() }}<br>
+    </p>
+    </h1>
+</form>
+{% endblock %}
