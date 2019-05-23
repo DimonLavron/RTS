@@ -118,15 +118,19 @@ while 1:
     s.send(createRealTimeInventoryPacket())
     data = s.recv(8000)
     if data.hex() in tags.keys():
-        data = "#" + "0{5-log10(tags.get(data.hex()))}"\
-            + str(tags.get(data.hex()))
+        data = "#"
+        for zero in range(5-int(math.log10(tags.get(data.hex())))):
+            data += "0"
+        data += str(tags.get(data.hex()))
     else:
         runner_id = runnner_id + 1
         tags = tags + {data.hex(), runner_id}
-        data = "#" + "0{5-log10(runner_id)}"\
-            + str(tags.get(data.hex()))
+        data = "#"
+        for zero in range(5-int(math.log10(runner_id))):
+            data += "0"
+        data += runner_id
     timestamp = datetime.datetime.fromtimestamp(time.time()).strftime('%Y-%m-%d %H:%M:%S')
-    screen_output = str(CHECKPOINT_ID) + " " + data.hex() + " " + str(timestamp)
+    screen_output = str(CHECKPOINT_ID) + " " + data + " " + str(timestamp)
     client.publish("myTopic", screen_output)
 
 client.loop_stop()
