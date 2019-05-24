@@ -21,7 +21,7 @@ class RegisterRaceForm(FlaskForm):
     #logo = FileField('Logo', validators=[FileAllowed(photos, 'File is not an image.'), FileRequired('File was empty.')])
     admin = SelectField('Admin User', choices=[('admin', 'Admin'), ('organizer', 'Organizer')])
     laps_number = SelectField('Number of laps', coerce=int)
-    lap_length = FloatField('Length of lap (km)', validators=[InputRequired(), DataRequired('Not a right data format.')])
+    distance = FloatField('Distance of the race (km)', validators=[InputRequired(), DataRequired('Not a right data format.')])
     date_and_time_of_race = DateTimeField('Date (Format: 01.01.2000 12:00)', format='%d.%m.%Y %H:%M', validators=[InputRequired(), DataRequired('Not a right data format.')])
     description = TextAreaField('Description', validators=[DataRequired()])
     submit = SubmitField('Register Race')

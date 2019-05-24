@@ -106,9 +106,9 @@ def register_race():
 	form.laps_number.choices = [(i, i) for i in range(1,11)]
 	if form.validate_on_submit():
 		#filename = photos.save(form.logo.data)
-		race = Race(form.name.data, form.admin.data, form.laps_number.data, form.lap_length.data, form.date_and_time_of_race.data, form.description.data)
+		race = Race(form.name.data, form.admin.data, form.laps_number.data, form.distance.data, form.date_and_time_of_race.data, form.description.data)
 		races_col.insert({"name":race.name, "admin":race.admin, "laps_number":race.laps_number,
-			"lap_length":race.lap_length, "date_and_time_of_race":race.date_and_time_of_race, "description":race.description})
+			"distance":race.distance, "date_and_time_of_race":race.date_and_time_of_race, "description":race.description})
 		flash('Race {} is successfully registered.'.format(form.name.data))
 		return redirect(url_for('index'))
 	return render_template('register_race.html', form=form)

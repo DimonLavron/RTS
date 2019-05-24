@@ -9,10 +9,10 @@
   Number of laps: {{ race.laps_number }}
 </p>
 <p>
-  Length of the lap: {{ race.lap_length }}
+  Distance of the race: {{ race.distance }}
 </p>
 <p>
-  Date: {{ race.date_and_time_of_race }}
+  Date: {{ race.date_and_time_of_race.strftime("%d %B %Y %H:%M") }}
 </p>
 <p>
   Description:<br>{{ race.description }}

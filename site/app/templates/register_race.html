@@ -35,9 +35,9 @@ color: #333366;
         {% endfor %}
     </p>
     <p>
-      <br><strong>{{ form.lap_length.label }}</strong><br>
-        {{ form.lap_length(size=10) }}<br>
-        {% for error in form.lap_length.errors %}
+      <br><strong>{{ form.distance.label }}</strong><br>
+        {{ form.distance(size=10) }}<br>
+        {% for error in form.distance.errors %}
         <span style="color: black;">[{{ error }}]</span>
         {% endfor %}
     </p>

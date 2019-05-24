@@ -32,10 +32,10 @@ class Event:
         self.time = time
 
 class Race:
-    def __init__(self, name, admin, laps_number, lap_length, date_and_time_of_race, description):
+    def __init__(self, name, admin, laps_number, distance, date_and_time_of_race, description):
         self.name = name
         self.admin = admin
         self.laps_number = laps_number
-        self.lap_length = lap_length
+        self.distance = distance
         self.date_and_time_of_race = date_and_time_of_race
         self.description = description
