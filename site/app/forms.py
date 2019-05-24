@@ -6,7 +6,6 @@ from app import db
 
 runners_col = db.runners
 
-
 class RegisterRunnerForm(FlaskForm):
     first_name = StringField('First Name', validators=[DataRequired()])
     last_name = StringField('Last Name', validators=[DataRequired()])
