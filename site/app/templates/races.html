@@ -1,10 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
-{% if current_user.is_authenticated %}
-<form action="/clear">
-<button type="submit"><strong>Clear</strong></button>
-{% endif %}
+
 </form>
   {% if races[0] %}
   <style type="text/css">
@@ -20,6 +17,7 @@
     <tr>
       <th style="background-color:#ececec; color: #333366;">Name</th>
       <th style="background-color:#ececec; color: #333366;">Date</th>
+      <th style="background-color:#ececec; color: #333366;">About</th>
     </tr>
     {% for race in races %}
     <tr>
@@ -30,6 +28,7 @@
         <tr>
           <td style="background-color:#ececec; color: black">{{ race.name }}</td>
           <td style="background-color:#ececec; color: black">{{ race.date_and_time_of_race }}</td>
+          <td style="background-color:#ececec; color: black"><a href="{{ url_for('race', race_id=race._id) }}">About</a></td>
         </tr>
         <tr>
           <!--</style>-->

@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Race: {{ race.name }}</h1>
+<p>
+  Admin: {{ race.admin }}
+</p>
+<p>
+  Number of laps: {{ race.laps_number }}
+</p>
+<p>
+  Length of the lap: {{ race.lap_length }}
+</p>
+<p>
+  Date: {{ race.date_and_time_of_race }}
+</p>
+<p>
+  Description:<br>{{ race.description }}
+</p>
+{% endblock content %}

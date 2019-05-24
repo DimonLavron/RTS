@@ -3,6 +3,7 @@ from flask import render_template, redirect, url_for, flash
 from app.forms import RegisterUserForm, RegisterCheckpointForm, LoginForm, RegisterRaceForm
 from app.models import User, Event, Race
 from flask_login import current_user, login_user, logout_user
+from bson.objectid import ObjectId
 
 events_col = db.events
 races_col = db.races
@@ -121,6 +122,11 @@ def races():
 	   list.append(race)
 	list.reverse()
 	return render_template("races.html",races = list, h=heading)
+
+@app.route("/race/<race_id>")
+def race(race_id):
+	race = races_col.find({"_id":ObjectId(race_id)})[0]
+	return render_template("race.html", race=race)
 
 
 @app.route('/logout')
