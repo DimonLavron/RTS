@@ -2,6 +2,7 @@
 
 #designed by dante
 
+import math
 import datetime
 import socket
 import time
@@ -95,8 +96,11 @@ def on_publish(client,userdata,result):
 
 # Create a new socket to handle conversation with yr903
 
-tags = ["e280116060000206699a8abe4879", "e20000158508017719404ca149c8",
-"e2005186060a0152267009d83e8a", "e20000175608012611909f4d472d"]
+# tags = ["e280116060000206699a8abe4879", "e20000158508017719404ca149c8",
+# "e2005186060a0152267009d83e8a", "e20000175608012611909f4d472d"]
+
+tags = ["#00001", "#00002", "#00003", "#00004"]
+runner_id = 1
 
 checkpointId = open("checkpointId.txt")
 CHECKPOINT_ID = checkpointId.readline();
@@ -108,12 +112,16 @@ client.on_publish = on_publish
 client.connect(brocker, MQTT_PORT)
 
 client.loop_start()
-i = 0
+
 while 1:
+    data = "#"
+    for zero in range(5-int(math.log10(runner_id))):
+        data += "0"
+    data += str(runner_id)
     timestamp = datetime.datetime.fromtimestamp(time.time()).strftime('%Y-%m-%d %H:%M:%S')
-    screen_output = str(CHECKPOINT_ID) + " " + tags[i % 4] + " " + str(timestamp)
+    screen_output = str(CHECKPOINT_ID) + " " + data + " " + str(timestamp)
     client.publish("myTopic", screen_output)
-    i += 1
+    runner_id += 1
     time.sleep(5)
 
 client.loop_stop()
