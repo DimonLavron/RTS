@@ -21,13 +21,6 @@ color: #333366;
         {% endfor %}
     </p>
     <p>
-      <br><strong>{{ form.logo.label }}</strong><br>
-        {{ form.logo(size=25) }}<br>
-        {% for error in form.logo.errors %}
-        <span style="color: black;">[{{ error }}]</span>
-        {% endfor %}
-    </p>
-    <p>
       <br><strong>{{ form.admin.label }}</strong><br>
         {{ form.admin }}<br>
         {% for error in form.admin.errors %}
@@ -64,7 +57,7 @@ color: #333366;
     </p>
     <h1>
     <p>
-        {{ form.submit() }}<br>
+        {{ form.submit }}<br>
     </p>
     </h1>
 </form>

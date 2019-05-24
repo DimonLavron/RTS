@@ -6,3 +6,4 @@ class Config(object):
     MQTT_BROKER_URL = 'mqtt'
     MQTT_BROKER_PORT = 1883
     MQTT_KEEPALIVE = 5
+    UPLOADED_PHOTOS_DEST = os.getcwd()

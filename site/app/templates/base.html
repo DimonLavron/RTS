@@ -19,6 +19,7 @@
     <td>
     <a href="{{ url_for('index') }}">Main</a>
     <a href="{{ url_for('table') }}">Results</a>
+    <a href="{{ url_for('races') }}">Races</a>
     {% if current_user.is_anonymous %}
     <a href="{{ url_for('login')}}">Login</a>
     {% else %}

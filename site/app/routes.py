@@ -1,10 +1,11 @@
-from app import app, db, mqtt
+from app import app, db, mqtt, photos
 from flask import render_template, redirect, url_for, flash
 from app.forms import RegisterUserForm, RegisterCheckpointForm, LoginForm, RegisterRaceForm
-from app.models import User, Event
+from app.models import User, Event, Race
 from flask_login import current_user, login_user, logout_user
 
 events_col = db.events
+races_col = db.races
 
 
 @app.route('/')
@@ -103,9 +104,23 @@ def register_race():
 	form = RegisterRaceForm()
 	form.laps_number.choices = [(i, i) for i in range(1,11)]
 	if form.validate_on_submit():
+		#filename = photos.save(form.logo.data)
+		race = Race(form.name.data, form.admin.data, form.laps_number.data, form.lap_length.data, form.date_and_time_of_race.data, form.description.data)
+		races_col.insert({"name":race.name, "admin":race.admin, "laps_number":race.laps_number,
+			"lap_length":race.lap_length, "date_and_time_of_race":race.date_and_time_of_race, "description":race.description})
 		flash('Race {} is successfully registered.'.format(form.name.data))
 		return redirect(url_for('index'))
 	return render_template('register_race.html', form=form)
+
+@app.route("/races")
+def races():
+	heading = "Table with races"
+
+	list = []
+	for race in races_col.find():
+	   list.append(race)
+	list.reverse()
+	return render_template("races.html",races = list, h=heading)
 
 
 @app.route('/logout')
