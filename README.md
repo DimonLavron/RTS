@@ -4,10 +4,10 @@
 
 ## Basic Overview
 
-> - #### Designed to automate and simplify process of tracking runners in marathons
-- #### Helps organizers to track all runners on checkpoints
-- #### Prevents cheating
-- #### Built using RFID antenna and multiple tags
+ - #### Designed to automate and simplify process of tracking runners in marathons
+ - #### Helps organizers to track all runners on checkpoints
+ - #### Prevents cheating
+ - #### Built using RFID antenna and multiple tags
 
 ## How It Works (locally)
 
@@ -19,7 +19,7 @@ git clone https://github.com/DimonLavron/RTS.git
 
 2. Open folder by command:
 ```bash
-cd YOUR_FOLDER/RTS
+cd {YOUR_FOLDER}/RTS
 ```
 3. Start app by using this command:
 ```bash
