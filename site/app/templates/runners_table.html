@@ -1,10 +1,10 @@
 {% extends "base.html" %}
 
 {% block content %}
-<form action="/clear">
+<form action="/clear_runners">
   <button type="submit"><strong>Clear</strong></button>
 </form>
-{% if events[0] %}
+{% if runners[0] %}
 <style type="text/css">
   th {
     color: blue;
@@ -22,18 +22,18 @@
 
 <table align="center">
   <tr>
-    <th>Checkpoint Id</th>
-    <th>Tag of Player</th>
-    <th>Time</th>
+    <th>First Name</th>
+    <th>Last Name</th>
+    <th>ID</th>
   </tr>
-  {% for event in events %}
+  {% for runner in runners %}
   <body>
     <div>
       <table border="1" cellspacing="1" cellpadding="10" align="center" id="line1">
         <tr>
-          <td>{{ event.checkpoint_id }}</td>
-          <td>{{ event.tag }}</td>
-          <td>{{ event.time }}</td>
+          <td>{{ runner.first_name }}</td>
+          <td>{{ runner.last_name }}</td>
+          <td>{{ runner.id }}</td>
         </tr>
         <tr>
       </table>
@@ -42,6 +42,6 @@
   {% endfor %}
 </table>
 {% else %}
-<h1>No events registered!</h1>
+<h1>No runners registered!</h1>
 {% endif %}
 {% endblock content %}
