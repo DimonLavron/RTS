@@ -38,7 +38,6 @@
     {% endfor %}
   </table>
 
-
   <button onclick="move('up');">&ShortUpArrow;</button>
   <button onclick="move('down');">&ShortDownArrow;</button>
 	<button onclick="move_end('up');">&ShortUpArrow;</button>
@@ -58,7 +57,7 @@
                       table.rows[index].classList.toggle("selected");
                   }
                   index = this.rowIndex;
-                  this.classList.toggle("selected");
+									this.classList.toggle("selected");
               };
           }
       }
