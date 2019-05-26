@@ -12,7 +12,7 @@
   background-color: white;
 	}
 </style>
-  <table align="center">
+  <table border="1" cellspacing="1" cellpadding="10" align="center">
     <tr>
       <th style="background-color:#ececec; color: #333366;">Name</th>
       <th style="background-color:#ececec; color: #333366;">Date</th>
@@ -20,19 +20,10 @@
     </tr>
     {% for race in races %}
     <tr>
-
+      <td style="background-color:#ececec; color: black">{{ race.name }}</td>
+      <td style="background-color:#ececec; color: black">{{ race.date_and_time_of_race.strftime("%d %B %Y %H:%M") }}</td>
+      <td style="background-color:#ececec; color: black"><a href="{{ url_for('race', race_id=race._id) }}">About</a></td>
     </tr>
-    <body>
-      <table border="1" cellspacing="1" cellpadding="10" align="center">
-        <tr>
-          <td style="background-color:#ececec; color: black">{{ race.name }}</td>
-          <td style="background-color:#ececec; color: black">{{ race.date_and_time_of_race.strftime("%d %B %Y %H:%M") }}</td>
-          <td style="background-color:#ececec; color: black"><a href="{{ url_for('race', race_id=race._id) }}">About</a></td>
-        </tr>
-        <tr>
-          <!--</style>-->
-        </table>
-      </body>
     {% endfor %}
   </table>
   {% else %}
