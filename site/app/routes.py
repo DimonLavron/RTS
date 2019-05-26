@@ -7,6 +7,8 @@ from bson.objectid import ObjectId
 
 events_col = db.events
 races_col = db.races
+runners_col = db.runners
+
 
 
 @app.route('/')
@@ -77,15 +79,31 @@ def table():
 	return render_template("table.html",events = list, h=heading)
 
 
-@app.route('/register_user', methods=['GET', 'POST'])
-def register_user():
+@app.route('/register_runner', methods=['GET', 'POST'])
+def register_runner():
 	if (current_user.is_anonymous):
 		return redirect(url_for('index'))
-	form = RegisterUserForm()
+	form = RegisterRunnerForm()
 	if form.validate_on_submit():
-		flash('User {} {} is successfully registered.'.format(form.first_name.data, form.last_name.data))
-		return redirect(url_for('index'))
-	return render_template('register_user.html', form=form)
+		flash('Runner {} {} is successfully registered.'.format(form.first_name.data, form.last_name.data))
+		runners_col.insert({"first_name": form.first_name.data, "last_name":form.last_name.data, "id":form.id.data})
+		return redirect(url_for('runners_table'))
+	return render_template('register_runner.html', form=form)
+
+
+@app.route("/clear_runners")
+def clear_runners():
+	runners_col.remove()
+	return redirect("/runners")
+
+
+@app.route('/runners')
+def runners_table():
+	heading = "All runners"
+	list = []
+	for runners in runners_col.find():
+		list.append(runners)
+	return render_template('runners_table.html', runners = list, h = heading)
 
 
 @app.route('/register_checkpoint', methods=['GET', 'POST'])

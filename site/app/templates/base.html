@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>RTS-Site</title>
+  <meta charset="UTF-8">
+  <title>RTS-Site</title>
 </head>
 <body class="style" style="background-color:#72c9f1">
 <div>
@@ -17,31 +17,31 @@
   </style>
   <table style="background-color:#ececec; size:80; color:black;" align="center">
     <td>
-    <a href="{{ url_for('index') }}">Main</a>
-    <a href="{{ url_for('table') }}">Results</a>
-    <a href="{{ url_for('races') }}">Races</a>
-    {% if current_user.is_anonymous %}
-    <a href="{{ url_for('login')}}">Login</a>
-    {% else %}
-    <a href="{{ url_for('register_user') }}">Register User</a>
-    <a href="{{ url_for('register_checkpoint') }}">Register Checkpoint</a>
-    <a href="{{ url_for('register_race') }}">Register Race</a>
-    <a href="{{ url_for('logout')}}">Logout</a>
-    {% endif %}
+      <a href="{{ url_for('index') }}">Main</a>
+      <a href="{{ url_for('table') }}">Results</a>
+      <a href="{{ url_for('races') }}">Races</a>
+      <a href="{{ url_for('runners_table') }}">Runners</a>
+      {% if current_user.is_anonymous %}
+      <a href="{{ url_for('login')}}">Login</a>
+      {% else %}
+      <a href="{{ url_for('register_runner') }}">Register Runner</a>
+      <a href="{{ url_for('register_checkpoint') }}">Register Checkpoint</a>
+      <a href="{{ url_for('register_race') }}">Register Race</a>
+      <a href="{{ url_for('logout')}}">Logout</a>
+      {% endif %}
     <td>
     </table>
-
-</div>
-<hr>
-{% with messages = get_flashed_messages() %}
-    {% if messages %}
-    <ul>
-        {% for message in messages %}
-        <li>{{message}}</li>
-        {% endfor %}
-    </ul>
-    {% endif %}
-{% endwith %}
-{% block content %} {% endblock %}
+  </div>
+  <hr>
+  {% with messages = get_flashed_messages() %}
+  {% if messages %}
+  <ul>
+    {% for message in messages %}
+    <li>{{message}}</li>
+    {% endfor %}
+  </ul>
+  {% endif %}
+  {% endwith %}
+  {% block content %} {% endblock %}
 </body>
 </html>

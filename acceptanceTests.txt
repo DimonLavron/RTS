@@ -1,0 +1,71 @@
+** Settings ***
+Library           Selenium2Library
+Library           MQTTLibrary
+Suite Teardown    Close All Browsers
+
+
+*** Test Cases ***
+Login Admin
+    Open Browser    localhost:8000/login       chrome
+    Logging         admin    admin
+
+Reg User
+    Open Browser                  localhost:8000/login       chrome
+    Logging                       admin                      admin
+    Click Link                    link:Register User
+    Runner Registration           new_runner_Fname           new_runner_Lname    new_runner_id
+
+Reg Checkpoint
+    Open Browser                      localhost:8000/login       chrome
+    Logging                           admin                      admin
+    Click Link                        link:Register Checkpoint
+    Checkpoint Registration           new_checkpoint_name        new_checkpoint_id
+
+Publish
+    Connect   127.0.0.1   1883
+    Publish   topic=myTopic   message=test    qos=1
+    [Teardown]    Disconnect
+
+Subscribe
+    Connect   127.0.0.1   1883
+    Subscribe  topic=myTopic   qos=1   timeout=5
+    [Teardown]    Disconnect
+
+PublishWithPayload
+    Connect   127.0.0.1
+    Publish Single   topic=myTopic   payload=test    qos=0
+    [Teardown]    Disconnect
+
+SubscribeWithPayload
+    Connect                 127.0.0.1
+    Subscribe and Validate  topic=test/mqtt_test    qos=0   payload=test
+    [Teardown]              Disconnect
+
+*** Keywords ***
+Logging
+    [Arguments]     ${USERNAME}     ${PASSWORD}
+    Input Text      id=username     ${USERNAME}
+    Input Text      id=password     ${PASSWORD}
+    Click Button    id=submit
+
+
+Runner Registration
+    [Arguments]     ${Fname}        ${Lname}    ${id}
+    Input Text      id=first_name   ${Fname}
+    Input Text      id=last_name    ${Lname}
+    Input Text      id=id           ${id}
+    Click Button    id=submit
+
+
+Checkpoint Registration
+    [Arguments]     ${name}     ${id}
+    Input Text      id=name     ${name}
+    Input Text      id=id       ${id}
+    Click Button    name=submit
+
+
+Find Runner
+    [Arguments]                  ${Fname}    ${Lname}    ${id}
+    Wait Until Page Contains     ${Fname}
+    Wait Until Page Contains     ${Lname}
+    Wait Until Page Contains     ${id}

@@ -2,13 +2,12 @@
 
 {% block content %}
 <style type="text/css">
-h1 {
-font-size: 180%;
-font-family: "Trebuchet MS", Helvetica, sans-serif;
-font-weight: bolder;
-color: #333366;
-}
-
+  h1 {
+    font-size: 180%;
+    font-family: "Trebuchet MS", Helvetica, sans-serif;
+    font-weight: bolder;
+    color: #333366;
+  }
 </style>
 <h1 align="center">Checkpoint Registration</h1>
 <form action="" method="post" novalidate align="center">
@@ -26,11 +25,11 @@ color: #333366;
         {% for error in form.id.errors %}
         <span style="color: black;">[{{ error }}]</span>
         {% endfor %}
-    </p>
-    <h1>
+  </p>
+  <h1>
     <p>
-        {{ form.submit() }}<br>
+      {{ form.submit() }}<br>
     </p>
-    </h1>
+  </h1>
 </form>
 {% endblock %}

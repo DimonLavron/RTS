@@ -1,14 +1,21 @@
-from app import app, photos
+from app import app, photos, db
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileField, FileAllowed, FileRequired
 from wtforms import StringField, SubmitField, PasswordField, FloatField, DateTimeField, TextAreaField, SelectField
-from wtforms.validators import DataRequired, InputRequired
+from wtforms.validators import DataRequired, InputRequired, ValidationError
 
-class RegisterUserForm(FlaskForm):
+runners_col = db.runners
+
+class RegisterRunnerForm(FlaskForm):
     first_name = StringField('First Name', validators=[DataRequired()])
     last_name = StringField('Last Name', validators=[DataRequired()])
     id = StringField('ID', validators=[DataRequired()])
-    submit = SubmitField('Register User')
+    submit = SubmitField('Register Runner')
+
+    def validate_id(self, id):
+        list = runners_col.distinct(key='id')
+        if id.data in list:
+            raise ValidationError('Please use a different id.')
 
 
 class RegisterCheckpointForm(FlaskForm):
