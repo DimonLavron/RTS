@@ -1,17 +1,17 @@
 {% extends "base.html" %}
 
 {% block content %}
-</form>
-  {% if races[0] %}
+<h1 align="center">All Races</h1>
+{% if races[0] %}
   <style type="text/css">
-	th {
-	color: blue;
-	font-size: 13px;
-	font-family:  "Trebuchet MS", Helvetica, sans-serif;
-  border: 1px solid black;
-  background-color: white;
-	}
-</style>
+  	th {
+  	color: blue;
+  	font-size: 13px;
+  	font-family:  "Trebuchet MS", Helvetica, sans-serif;
+    border: 1px solid black;
+    background-color: white;
+  	}
+  </style>
   <table border="1" cellspacing="1" cellpadding="10" align="center">
     <tr>
       <th style="background-color:#ececec; color: #333366;">Name</th>
@@ -26,7 +26,7 @@
     </tr>
     {% endfor %}
   </table>
-  {% else %}
-  	<h1>No races registered!</h1>
-  {% endif %}
+{% else %}
+  <h1>No races registered!</h1>
+{% endif %}
 {% endblock content %}

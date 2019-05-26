@@ -1,14 +1,13 @@
 from app import app, db, mqtt, photos
 from flask import render_template, redirect, url_for, flash
-from app.forms import RegisterUserForm, RegisterCheckpointForm, LoginForm, RegisterRaceForm
-from app.models import User, Event, Race
+from app.forms import RegisterRunnerForm, RegisterCheckpointForm, LoginForm, RegisterRaceForm
+from app.models import User, Event, Race, Runner
 from flask_login import current_user, login_user, logout_user
 from bson.objectid import ObjectId
 
 events_col = db.events
 races_col = db.races
 runners_col = db.runners
-
 
 
 @app.route('/')
@@ -65,18 +64,16 @@ def handle_mqtt_message(client, userdata, message):
 @app.route("/clear")
 def clear():
 	events_col.remove()
-	return redirect("/results")
+	return redirect(url_for('table'))
 
 
 @app.route("/results")
 def table():
-	heading = "Table with events"
-
 	list = []
 	for events in events_col.find() :
 	   list.append(events)
 	list.reverse()
-	return render_template("table.html",events = list, h=heading)
+	return render_template("table.html", events=list)
 
 
 @app.route('/register_runner', methods=['GET', 'POST'])
@@ -86,7 +83,8 @@ def register_runner():
 	form = RegisterRunnerForm()
 	if form.validate_on_submit():
 		flash('Runner {} {} is successfully registered.'.format(form.first_name.data, form.last_name.data))
-		runners_col.insert({"first_name": form.first_name.data, "last_name":form.last_name.data, "id":form.id.data})
+		runner = Runner(form.first_name.data, form.last_name.data, form.id.data)
+		runners_col.insert({"first_name":runner.first_name, "last_name":runner.last_name, "id":runner.id})
 		return redirect(url_for('runners_table'))
 	return render_template('register_runner.html', form=form)
 
@@ -94,16 +92,15 @@ def register_runner():
 @app.route("/clear_runners")
 def clear_runners():
 	runners_col.remove()
-	return redirect("/runners")
+	return redirect(url_for('runners_table'))
 
 
 @app.route('/runners')
 def runners_table():
-	heading = "All runners"
 	list = []
 	for runners in runners_col.find():
 		list.append(runners)
-	return render_template('runners_table.html', runners = list, h = heading)
+	return render_template('runners_table.html', runners=list)
 
 
 @app.route('/register_checkpoint', methods=['GET', 'POST'])
@@ -129,18 +126,16 @@ def register_race():
 		races_col.insert({"name":race.name, "logo":race.logo, "admin":race.admin, "laps_number":race.laps_number,
 			"distance":race.distance, "date_and_time_of_race":race.date_and_time_of_race, "description":race.description})
 		flash('Race {} is successfully registered.'.format(form.name.data))
-		return redirect(url_for('index'))
+		return redirect(url_for('races'))
 	return render_template('register_race.html', form=form)
 
 @app.route("/races")
 def races():
-	heading = "Table with races"
-
 	list = []
 	for race in races_col.find():
 	   list.append(race)
 	list.reverse()
-	return render_template("races.html",races = list, h=heading)
+	return render_template("races.html", races=list)
 
 @app.route("/race/<race_id>")
 def race(race_id):
