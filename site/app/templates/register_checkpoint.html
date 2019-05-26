@@ -2,35 +2,34 @@
 
 {% block content %}
 <style type="text/css">
-h1 {
-font-size: 180%;
-font-family: "Trebuchet MS", Helvetica, sans-serif;
-font-weight: bolder;
-color: #333366;
-}
-
+  h1 {
+    font-size: 180%;
+    font-family: "Trebuchet MS", Helvetica, sans-serif;
+    font-weight: bolder;
+    color: #333366;
+  }
 </style>
 <h1 align="center">Checkpoint Registration</h1>
 <form action="" method="post" novalidate align="center">
-    {{ form.hidden_tag() }}
-    <p>
-      <br><strong>{{ form.name.label }}</strong><br>
-        {{ form.name(size=25) }}
-        {% for error in form.name.errors %}
-        <span style="color: black;">[{{ error }}]</span>
-        {% endfor %}
-    </p>
-    <p>
-      <br><strong>{{ form.id.label }}<strong><br>
+  {{ form.hidden_tag() }}
+  <p>
+    <br><strong>{{ form.name.label }}</strong><br>
+    {{ form.name(size=25) }}
+    {% for error in form.name.errors %}
+    <span style="color: black;">[{{ error }}]</span>
+    {% endfor %}
+  </p>
+  <p>
+    <br><strong>{{ form.id.label }}<strong><br>
         {{ form.id(size=25) }}
         {% for error in form.id.errors %}
         <span style="color: black;">[{{ error }}]</span>
         {% endfor %}
-    </p>
-    <h1>
+  </p>
+  <h1>
     <p>
-        {{ form.submit() }}<br>
+      {{ form.submit() }}<br>
     </p>
-    </h1>
+  </h1>
 </form>
 {% endblock %}

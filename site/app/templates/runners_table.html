@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block content %}
+<form action="/clear_runners">
+  <button type="submit"><strong>Clear</strong></button>
+</form>
+{% if runners[0] %}
+<style type="text/css">
+  th {
+    color: blue;
+    font-size: 13px;
+    font-family: "Trebuchet MS", Helvetica, sans-serif;
+    border: 1px solid black;
+    background-color: #ececec;
+    color: #333366;
+  }
+  td {
+    background-color: #ececec;
+    color: black;
+  }
+</style>
+
+<table align="center">
+  <tr>
+    <th>First Name</th>
+    <th>Last Name</th>
+    <th>ID</th>
+  </tr>
+  {% for runner in runners %}
+  <body>
+    <div>
+      <table border="1" cellspacing="1" cellpadding="10" align="center" id="line1">
+        <tr>
+          <td>{{ runner.first_name }}</td>
+          <td>{{ runner.last_name }}</td>
+          <td>{{ runner.id }}</td>
+        </tr>
+        <tr>
+      </table>
+    </div>
+  </body>
+  {% endfor %}
+</table>
+{% else %}
+<h1>No runners registered!</h1>
+{% endif %}
+{% endblock content %}
