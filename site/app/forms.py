@@ -18,7 +18,7 @@ class RegisterCheckpointForm(FlaskForm):
 
 class RegisterRaceForm(FlaskForm):
     name = StringField('Name', validators=[DataRequired()])
-    #logo = FileField('Logo', validators=[FileAllowed(photos, 'File is not an image.'), FileRequired('File was empty.')])
+    logo = FileField('Logo', validators=[FileAllowed(photos, 'File is not an image.'), FileRequired('File was empty.')])
     admin = SelectField('Admin User', choices=[('admin', 'Admin'), ('organizer', 'Organizer')])
     laps_number = SelectField('Number of laps', coerce=int)
     distance = FloatField('Distance of the race (km)', validators=[InputRequired(), DataRequired('Not a right data format.')])

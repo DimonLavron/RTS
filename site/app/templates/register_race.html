@@ -11,12 +11,19 @@ color: #333366;
 
 </style>
 <h1 align="center">Race Registration</h1>
-<form action="" method="post" novalidate align="center">
+<form action="" method="post" enctype="multipart/form-data" novalidate align="center">
     {{ form.hidden_tag() }}
     <p>
       <br><strong>{{ form.name.label }}</strong><br>
         {{ form.name(size=25) }}<br>
         {% for error in form.name.errors %}
+        <span style="color: black;">[{{ error }}]</span>
+        {% endfor %}
+    </p>
+    <p>
+      <br><strong>{{ form.logo.label }}</strong><br>
+        {{ form.logo(size=25) }}<br>
+        {% for error in form.logo.errors %}
         <span style="color: black;">[{{ error }}]</span>
         {% endfor %}
     </p>
