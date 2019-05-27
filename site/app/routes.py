@@ -1,6 +1,6 @@
 from app import app, db, mqtt, photos
-from flask import render_template, redirect, url_for, flash
-from app.forms import RegisterRunnerForm, RegisterCheckpointForm, LoginForm, RegisterRaceForm
+from flask import render_template, redirect, url_for, flash, request
+from app.forms import RegisterRunnerForm, RegisterCheckpointForm, LoginForm, RegisterRaceForm, EditRaceForm
 from app.models import User, Event, Race, Runner
 from flask_login import current_user, login_user, logout_user
 from bson.objectid import ObjectId
@@ -58,7 +58,7 @@ def handle_mqtt_message(client, userdata, message):
 	payload.pop()
 	print(payload)
 	event = Event(payload[0], payload[1], payload[2])
-	events_col.insert({"checkpoint_id":event.checkpoint_id, "tag":event.tag, "time":event.time})
+	events_col.insert_one({"checkpoint_id":event.checkpoint_id, "tag":event.tag, "time":event.time})
 
 
 @app.route("/clear")
@@ -84,16 +84,9 @@ def register_runner():
 	if form.validate_on_submit():
 		flash('Runner {} {} is successfully registered.'.format(form.first_name.data, form.last_name.data))
 		runner = Runner(form.first_name.data, form.last_name.data, form.id.data)
-		runners_col.insert({"first_name":runner.first_name, "last_name":runner.last_name, "id":runner.id})
+		runners_col.insert_one({"first_name":runner.first_name, "last_name":runner.last_name, "id":runner.id})
 		return redirect(url_for('runners_table'))
 	return render_template('register_runner.html', form=form)
-
-
-@app.route("/clear_runners")
-def clear_runners():
-	runners_col.remove()
-	return redirect(url_for('runners_table'))
-
 
 @app.route('/runners')
 def runners_table():
@@ -123,7 +116,7 @@ def register_race():
 		filename = photos.save(form.logo.data)
 		url = photos.url(filename)
 		race = Race(form.name.data, url, form.admin.data, form.laps_number.data, form.distance.data, form.date_and_time_of_race.data, form.description.data)
-		races_col.insert({"name":race.name, "logo":race.logo, "admin":race.admin, "laps_number":race.laps_number,
+		races_col.insert_one({"name":race.name, "logo":race.logo, "admin":race.admin, "laps_number":race.laps_number,
 			"distance":race.distance, "date_and_time_of_race":race.date_and_time_of_race, "description":race.description})
 		flash('Race {} is successfully registered.'.format(form.name.data))
 		return redirect(url_for('races'))
@@ -142,6 +135,32 @@ def race(race_id):
 	race = races_col.find({"_id":ObjectId(race_id)})[0]
 	return render_template("race.html", race=race)
 
+@app.route("/race/<race_id>/delete")
+def delete_race(race_id):
+	race = races_col.find({"_id":ObjectId(race_id)})[0]
+	races_col.delete_one(race)
+	return redirect(url_for('races'))
+
+@app.route("/race/<race_id>/edit", methods=['GET', 'POST'])
+def edit_race(race_id):
+	race = races_col.find({"_id":ObjectId(race_id)})[0]
+	form = EditRaceForm()
+	form.laps_number.choices = [(i, i) for i in range(1,11)]
+	if form.validate_on_submit():
+		if form.logo.data == None:
+			url = race['logo']
+		else:
+			filename = photos.save(form.logo.data)
+			url = photos.url(filename)
+		race = Race(form.name.data, url, form.admin.data, form.laps_number.data, form.distance.data, form.date_and_time_of_race.data, form.description.data)
+		races_col.replace_one({"_id":ObjectId(race_id)}, {"name":race.name, "logo":race.logo, "admin":race.admin, "laps_number":race.laps_number,
+			"distance":race.distance, "date_and_time_of_race":race.date_and_time_of_race, "description":race.description})
+		flash('Race {} is successfully edited.'.format(form.name.data))
+		return redirect(url_for('race', race_id=race_id))
+	elif request.method == 'GET':
+		form.add_data(race)
+
+	return render_template('race.html', form=form, race_name=race['name'])
 
 @app.route('/logout')
 def logout():
