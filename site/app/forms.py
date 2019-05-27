@@ -32,6 +32,24 @@ class RegisterRaceForm(FlaskForm):
     description = TextAreaField('Description', validators=[DataRequired()])
     submit = SubmitField('Register Race')
 
+class EditRaceForm(FlaskForm):
+    name = StringField('Name', validators=[DataRequired()])
+    logo = FileField('Logo', validators=[FileAllowed(photos, 'File is not an image.')])
+    admin = SelectField('Admin User', choices=[('admin', 'Admin'), ('organizer', 'Organizer')])
+    laps_number = SelectField('Number of laps', coerce=int)
+    distance = FloatField('Distance of the race (km)', validators=[InputRequired(), DataRequired('Not a right data format.')])
+    date_and_time_of_race = DateTimeField('Date (Format: 01.01.2000 12:00)', format='%d.%m.%Y %H:%M', validators=[InputRequired(), DataRequired('Not a right data format.')])
+    description = TextAreaField('Description', validators=[DataRequired()])
+    submit = SubmitField('Edit Race')
+
+    def add_data(self, race):
+        self.name.data = race['name']
+        self.admin.data = race['admin']
+        self.laps_number.data = race['laps_number']
+        self.distance.data = race['distance']
+        self.date_and_time_of_race.data = race['date_and_time_of_race']
+        self.description.data = race['description']
+
 class LoginForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired()])
     password = PasswordField('Password', validators=[DataRequired()])
