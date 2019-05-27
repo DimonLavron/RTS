@@ -14,22 +14,20 @@
     {{ form.hidden_tag() }}
     <p>
       <br><strong>{{ form.name.label }}</strong><br>
-        {{ form.name(size=25) }}<br>
-        {% for error in form.name.errors %}
-        <span style="color: black;">[{{ error }}]</span>
-        {% endfor %}
+      {{ form.name(size=25) }}<br>
+      {% for error in form.name.errors %}
+      <span style="color: black;">[{{ error }}]</span>
+      {% endfor %}
     </p>
     <p>
       <br><strong>{{ form.id.label }}</strong><br>
-        {{ form.id(size=25) }}<br>
-        {% for error in form.id.errors %}
-        <span style="color: black;">[{{ error }}]</span>
-        {% endfor %}
-  </p>
-  <h1>
-    <p>
-      {{ form.submit() }}<br>
+      {{ form.id(size=25) }}<br>
+      {% for error in form.id.errors %}
+      <span style="color: black;">[{{ error }}]</span>
+      {% endfor %}
     </p>
-  </h1>
+    <p>
+      <br><strong>{{ form.submit() }}</strong><br>
+    </p>
 </form>
 {% endblock %}

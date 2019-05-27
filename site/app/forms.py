@@ -17,7 +17,6 @@ class RegisterRunnerForm(FlaskForm):
         if id.data in list:
             raise ValidationError('Please use a different id.')
 
-
 class RegisterCheckpointForm(FlaskForm):
     name = StringField('Name', validators=[DataRequired()])
     id = StringField('ID', validators=[DataRequired()])
