@@ -31,6 +31,16 @@ class Event:
         self.tag = tag
         self.time = time
 
+class Race:
+    def __init__(self, name, logo, admin, laps_number, distance, date_and_time_of_race, description):
+        self.name = name
+        self.logo = logo
+        self.admin = admin
+        self.laps_number = laps_number
+        self.distance = distance
+        self.date_and_time_of_race = date_and_time_of_race
+        self.description = description
+
 class Runner:
     def __init__(self, first_name, last_name, id):
         self.first_name = first_name
