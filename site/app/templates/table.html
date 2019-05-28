@@ -1,11 +1,26 @@
 {% extends "base.html" %}
 
 {% block content %}
-<form action="/clear">
+<h1 align="center">All Events</h1>
+{% if current_user.is_authenticated %}
+<form action="{{ url_for('clear') }}">
   <button type="submit"><strong>Clear</strong></button>
 </form>
+{% if current_user.is_authenticated %}
+<button onclick="move('up');">&ShortUpArrow;</button>
+<button onclick="move('down');">&ShortDownArrow;</button>
+<button onclick="move_end('up');">&ShortUpArrow;</button>
+<button onclick="move_end('down');">&ShortDownArrow;</button>
+{% endif %}
 {% if events[0] %}
-<table class="table table-bordered table-hover">
+<style type="text/css">
+	.selected{
+  	background-color:#c0ecec;
+  	color #fff;
+  	font-weight: bold
+	}
+</style>
+<table id="table" class="table table-bordered table-hover">
   <thead>
     <tr>
       <th>Checkpoint Id</th>
@@ -22,15 +37,8 @@
     </tr>
     {% endfor %}
     </tbody>
-    </table>
+</table>
 
-
-
-{% if current_user.is_authenticated %}
-<button onclick="move('up');">&ShortUpArrow;</button>
-<button onclick="move('down');">&ShortDownArrow;</button>
-<button onclick="move_end('up');">&ShortUpArrow;</button>
-<button onclick="move_end('down');">&ShortDownArrow;</button>
 
 <script>
 
