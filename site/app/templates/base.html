@@ -24,37 +24,37 @@
      </button>
        <div class="collapse navbar-collapse" id="navbarResponsive">
          <ul class="navbar-nav ml-auto">
+           {% if current_user.is_anonymous %}
            <li class="nav-item active">
-             <a href="{{ url_for('index') }}" class="nav-link" style="margin-right:20px">Main</a>
+             <a href="{{ url_for('index') }}" class="nav-link" style="margin-right:100px">Main</a>
            </li>
            <li class="nav-item">
-             <a href="{{ url_for('table') }}" class="nav-link" style="margin-right:20px">Results</a>
+             <a href="{{ url_for('table') }}" class="nav-link" style="margin-right:100px">Results</a>
            </li>
            <li class="nav-item">
-             <a href="{{ url_for('races') }}" class="nav-link" style="margin-right:20px">Races</a>
+             <a href="{{ url_for('races') }}" class="nav-link" style="margin-right:100px">Races</a>
            </li>
            <li class="nav-item">
-             <a href="{{ url_for('runners_table') }}" class="nav-link" style="margin-right:20px">Runners</a>
+             <a href="{{ url_for('runners_table') }}" class="nav-link" style="margin-right:100px">Runners</a>
            </li>
            <li class="nav-item">
-             {% if current_user.is_anonymous %}
-             <a href="{{ url_for('login')}}" class="nav-link" style="margin-right:20px">Login</a>
+             <a href="{{ url_for('login')}}" class="nav-link" style="margin-right:100px">Login</a>
+           </li>
+           {% else %}
+            <li class="nav-item">
+              <a href="{{ url_for('register_runner') }}" class="nav-link" style="margin-right:80px">Register Runner</a>
+            </li>
+           <li class="nav-item">
+             <a href="{{ url_for('table') }}" class="nav-link" style="margin-right:70px">Results</a>
            </li>
            <li class="nav-item">
-             {% else %}
-             <a href="{{ url_for('register_runner') }}" class="nav-link" style="margin-right:20px">Register Runner</a>
+             <a href="{{ url_for('register_race') }}" class="nav-link" style="margin-right:70px">Register Race</a>
            </li>
            <li class="nav-item">
-             <a href="{{ url_for('table') }}" class="nav-link" style="margin-right:20px">Results</a>
+             <a href="{{ url_for('register_checkpoint') }}" class="nav-link" style="margin-right:70px">Register Checkpoint</a>
            </li>
            <li class="nav-item">
-             <a href="{{ url_for('register_race') }}" class="nav-link" style="margin-right:20px">Register Race</a>
-           </li>
-           <li class="nav-item">
-             <a href="{{ url_for('register_checkpoint') }}" class="nav-link" style="margin-right:20px">Register Checkpoint</a>
-           </li>
-           <li class="nav-item">
-             <a href="{{ url_for('logout')}}" class="nav-link" style="margin-right:20px">Logout</a>
+             <a href="{{ url_for('logout')}}" class="nav-link" style="margin-right:70px">Logout</a>
              {% endif %}
            </li>
          </ul>
