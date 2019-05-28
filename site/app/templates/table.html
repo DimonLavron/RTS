@@ -1,88 +1,99 @@
-<!-- {% extends "base.html" %}
+{% extends "base.html" %}
 
 {% block content %}
-<table border="2">
-    <caption >Results</caption>
-    {% for row in table %}
-        <tr>
-            {% if loop.first %}
-                {% for val in row %}
-                    <th> {{val}} </th>
-                {% endfor %}
-            {% else %}
-                {% for val in row %}
-                    <td> {{val}} </td>
-                {% endfor %}
-            {% endif %}
-        </tr>
+<form action="/clear">
+  <button type="submit"><strong>Clear</strong></button>
+</form>
+{% if events[0] %}
+<table class="table table-bordered table-hover">
+  <thead>
+    <tr>
+      <th>Checkpoint Id</th>
+      <th>Tag of Player</th>
+      <th>Time</th>
+    </tr>
+    </thead>
+    {% for event in events %}
+    <tbody>
+    <tr>
+      <td>{{ event.checkpoint_id }}</td>
+      <td>{{ event.tag }}</td>
+      <td>{{ event.time }}</td>
+    </tr>
     {% endfor %}
-</table>
-{% endblock %} -->
+    </tbody>
+    </table>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Checkpoint Results</title>
-    <link rel="stylesheet" href="style.css">
-    <
-</head>
-<body>
-  <style>
-body{
-background-color: #72c9f1;
-}
-}
-</style>
-    <header>
-        <nav>
-            <ul class="nav__menu">
-                <li><a href="index.html">Main</a></li>
-                <li><a href="table.html">Results</a></li>
-                <li><a href="login.html">Login</a></li>
-            </ul>
-        </nav>
-    </header>
-    <main>
-        <section class="sec-results">
-            <table class="results__table" border="1">
-                <caption>Results</caption>
-                <tr class="table-header">
 
-                    <th><b>Full Name</b></th>
-                    <th><b>Id</b></th>
-                    <th><b>Time</b></th>
-                </tr>
-                <tr class="table-row">
-                    <td id="resultsName">Божик Юрій</td>
-                    <td id="resultsId">Id003</td>
-                    <td id="resultsTime">0:05:33</td>
-                </tr>
-                <tr class="table-row">
-                    <td id="resultsName">Андрушкевич Владислав</td>
-                    <td id="resultsId">Id005</td>
-                    <td id="resultsTime">0:06:02</td>
-                </tr>
-                <tr class="table-row">
-                    <td id="resultsName">Лаврішин Дмитро</td>
-                    <td id="resultsId">Id001</td>
-                    <td id="resultsTime">0:06:18</td>
-                </tr>
 
-                <tr class="table-row">
-                    <td id="resultsName">Мудрик Назар</td>
-                    <td id="resultsId">Id004</td>
-                    <td id="resultsTime">0:06:49</td>
-                </tr>
-                <tr class="table-row">
-                    <td id="resultsName">Антонюк Дмитро</td>
-                    <td id="resultsId">Id002</td>
-                    <td id="resultsTime">0:07:08</td>
-                </tr>
-            </table>
-        </section>
-    </main>
-</body>
-</html>
+{% if current_user.is_authenticated %}
+<button onclick="move('up');">&ShortUpArrow;</button>
+<button onclick="move('down');">&ShortDownArrow;</button>
+<button onclick="move_end('up');">&ShortUpArrow;</button>
+<button onclick="move_end('down');">&ShortDownArrow;</button>
+
+<script>
+
+		var index;
+		function getSelectedRow()
+		{
+				var table = document.getElementById("table");
+				for(var i = 1; i < table.rows.length; i++)
+				{
+						table.rows[i].onclick = function()
+						{
+								if(typeof index !== "undefined"){
+										table.rows[index].classList.toggle("selected");
+								}
+								index = this.rowIndex;
+								this.classList.toggle("selected");
+						};
+				}
+		}
+		getSelectedRow();
+
+		function move(direction)
+		{
+				var rows = document.getElementById("table").rows,
+						parent = rows[index].parentNode;
+					if(direction === "up")
+					{
+							if(index > 1){
+								parent.insertBefore(rows[index],rows[index - 1]);
+								index--;
+						}
+					}
+					if(direction === "down")
+					{
+							if(index < rows.length-1){
+								parent.insertBefore(rows[index + 1],rows[index]);
+								index++;
+						}
+					}
+		}
+
+		function move_end(direction)
+		{
+				var rows = document.getElementById("table").rows,
+						parent = rows[index].parentNode;
+					if(direction === "up")
+					{
+							while(index > 1){
+								parent.insertBefore(rows[index],rows[index - 1]);
+								index--;
+						}
+					}
+					if(direction === "down")
+					{
+							while(index < rows.length-1){
+								parent.insertBefore(rows[index + 1],rows[index]);
+								index++;
+						}
+					}
+		}
+</script>
+{% endif %}
+{% else %}
+	<h1>No events registered!</h1>
+{% endif %}
+{% endblock content %}

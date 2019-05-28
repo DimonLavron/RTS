@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1 align="center">All Runners</h1>
+{% if runners[0] %}
+<table align="center">
+  <tr>
+    <th>First Name</th>
+    <th>Last Name</th>
+    <th>ID</th>
+  </tr>
+  {% for runner in runners %}
+  <body>
+    <div>
+      <table border="1" cellspacing="1" cellpadding="10" align="center" id="line1">
+        <tr>
+          <td>{{ runner.first_name }}</td>
+          <td>{{ runner.last_name }}</td>
+          <td>{{ runner.id }}</td>
+        </tr>
+        <tr>
+      </table>
+    </div>
+  </body>
+  {% endfor %}
+</table>
+{% else %}
+<h1>No runners registered!</h1>
+{% endif %}
+{% endblock content %}

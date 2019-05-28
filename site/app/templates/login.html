@@ -1,65 +1,34 @@
-<!-- {% extends "base.html" %}
+{% extends "base.html" %}
 
 {% block content %}
-<h1>Login</h1>
-<form action="" method="post" novalidate>
+<style type="text/css">
+  h1 {
+  font-size: 180%;
+  font-family: "Trebuchet MS", Helvetica, sans-serif;
+  font-weight: bolder;
+  color: #333366;
+  }
+</style>
+<h1 align="center">Login</h1></br>
+<br>
+<form action="" method="post" novalidate align="center">
     {{ form.hidden_tag() }}
     <p>
-        {{ form.username.label }}<br>
+        <strong>{{ form.username.label }}</strong><br>
         {{ form.username(size=30) }}
         {% for error in form.username.errors %}
         <span style="color: red;">[{{ error }}]</span>
         {% endfor %}
     </p>
     <p>
-        {{ form.password.label }}<br>
+        <strong>{{ form.password.label }}</strong><br>
         {{ form.password(size=30) }}
         {% for error in form.password.errors %}
         <span style="color: red;">[{{ error }}]</span>
         {% endfor %}
     </p>
     <p>
-        {{ form.submit() }}<br>
+        <strong>{{ form.submit() }}</strong><br>
     </p>
 </form>
-{% endblock %} -->
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Checkpoint Login</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-    <header>
-        <nav>
-            <ul class="nav__menu">
-                <li><a href="index.html">Main</a></li>
-                <li><a href="table.html">Results</a></li>
-                <li><a href="login.html">Login</a></li>
-            </ul>
-        </nav>
-    </header>
-    <main>
-        <section class="reg-user">
-            <h2 class="form__title">Checkpoint Log In</h2>
-            <form class="form form_reg-user">
-                <label for="reg-user__name" class="form__label">
-                    <input type="text" id="reg-user__name" class="form__input">
-                    <span>Username</span>
-                </label>
-
-                <label for="reg-user__id" class="form__label">
-                    <input type="password" id="reg-user__id" class="form__input">
-                    <span>Password</span>
-                </label>
-
-                <input type="submit" value="Log In" class="form__btn">
-            </form>
-        </section>
-    </main>
-</body>
-</html>
+{% endblock %}

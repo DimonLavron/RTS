@@ -1,33 +1,69 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="e">
 <head>
-    <meta charset="UTF-8">
-    <title>RTS-Site</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=0.1">
+  <meta http-http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>RTS</title>
+  <link rel="stylesheet"
+  href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script
+ src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
-<div>
-    Menu:
-    <a href="{{ url_for('index') }}">Main</a>
-    <a href="{{ url_for('table') }}">Results</a>
-    {% if current_user.is_anonymous %}
-    <a href="{{ url_for('login')}}">Login</a>
-    {% else %}
-    <a href="{{ url_for('register_user') }}">Register User</a>
-    <a href="{{ url_for('register_checkpoint') }}">Register Checkpoint</a>
-    <a href="{{ url_for('logout')}}">Logout</a>
-    {% endif %}
-
-</div>
-<hr>
-{% with messages = get_flashed_messages() %}
-    {% if messages %}
-    <ul>
-        {% for message in messages %}
-        <li>{{message}}</li>
-        {% endfor %}
-    </ul>
-    {% endif %}
-{% endwith %}
-{% block content %} {% endblock %}
+   <nav class="navbar navbar-expand-md navbar-light bg-light sticky-top">
+     <div class="container-fluid">
+       <a href="{{ url_for('index') }}" class="navbar-brad"><img src="https://scontent.fiev15-1.fna.fbcdn.net/v/t1.0-9/61136036_609729932864659_1976655279466479616_n.png?_nc_cat=107&_nc_ht=scontent.fiev15-1.fna&oh=c2e04640854abb7a805f82a2973b4c69&oe=5D5848EB" width="300"></a>
+       <button class="navbar-toggler" type="button" data-toggle="collapse"
+       data-target="#navbarResponsive">
+       <span class="navbar-toggler-icon"></span>
+     </button>
+       <div class="collapse navbar-collapse" id="navbarResponsive">
+         <ul class="navbar-nav ml-auto">
+           <li class="nav-item active">
+             <a href="{{ url_for('index') }}" class="nav-link" style="margin-right:60px">Main</a>
+           </li>
+           <li class="nav-item">
+             <a href="{{ url_for('table') }}" class="nav-link" style="margin-right:60px">Results</a>
+           </li>
+           <li class="nav-item">
+             {% if current_user.is_anonymous %}
+             <a href="{{ url_for('login')}}" class="nav-link" style="margin-right:60px">Login</a>
+           </li>
+           <li class="nav-item">
+             {% else %}
+             <a href="{{ url_for('register_runner') }}" class="nav-link" style="margin-right:60px">Register Runner</a>
+           </li>
+           <li class="nav-item">
+             <a href="{{ url_for('table') }}" class="nav-link" style="margin-right:110px">Results</a>
+           </li>
+           <li class="nav-item">
+             <a href="{{ url_for('register_race') }}" class="nav-link" style="margin-right:70px">Register Race</a>
+           </li>
+           <li class="nav-item">
+             <a href="{{ url_for('register_checkpoint') }}" class="nav-link" style="margin-right:70px">Register Checkpoint</a>
+           </li>
+           <li class="nav-item">
+             <a href="{{ url_for('logout')}}" class="nav-link" style="margin-right:70px">Logout</a>
+             {% endif %}
+           </li>
+         </ul>
+       </div>
+     </div>
+   </nav>
+   {% with messages = get_flashed_messages() %}
+       {% if messages %}
+       <ul>
+           {% for message in messages %}
+           <li>{{message}}</li>
+           {% endfor %}
+       </ul>
+       {% endif %}
+   {% endwith %}
+   {% block content %} {% endblock %}
 </body>
 </html>

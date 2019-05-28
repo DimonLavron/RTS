@@ -9,14 +9,20 @@
   color: #333366;
   }
 </style>
-<h1 align="center">Register Checkpoint</h1>
-</br>
-<form action="" method="post" novalidate align="center" margin-top="250px">
+<h1 align="center">Register Runner</h1>
+<form action="" method="post" novalidate align="center">
     {{ form.hidden_tag() }}
     <p>
-        <strong>{{ form.name.label }}</strong><br>
-        {{ form.name(size=30) }}
-        {% for error in form.name.errors %}
+        <strong>{{ form.first_name.label }}</strong><br>
+        {{ form.first_name(size=30) }}
+        {% for error in form.first_name.errors %}
+        <span style="color: red;">[{{ error }}]</span>
+        {% endfor %}
+    </p>
+    <p>
+        <strong>{{ form.last_name.label }}</strong><br>
+        {{ form.last_name(size=30) }}
+        {% for error in form.last_name.errors %}
         <span style="color: red;">[{{ error }}]</span>
         {% endfor %}
     </p>
