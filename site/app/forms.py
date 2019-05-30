@@ -1,10 +1,12 @@
 from app import app, photos, db
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileField, FileAllowed, FileRequired
-from wtforms import StringField, SubmitField, PasswordField, FloatField, DateTimeField, TextAreaField, SelectField
+from wtforms import StringField, SubmitField, PasswordField, FloatField, DateTimeField, TextAreaField, SelectField, HiddenField
 from wtforms.validators import DataRequired, InputRequired, ValidationError
+from bson.objectid import ObjectId
 
 runners_col = db.runners
+checkpoints_col = db.checkpoints
 
 class RegisterRunnerForm(FlaskForm):
     first_name = StringField('First Name', validators=[DataRequired()])
@@ -17,10 +19,33 @@ class RegisterRunnerForm(FlaskForm):
         if id.data in list:
             raise ValidationError('Please use a different id.')
 
-class RegisterCheckpointForm(FlaskForm):
+class AddCheckpointForm(FlaskForm):
     name = StringField('Name', validators=[DataRequired()])
-    id = StringField('ID', validators=[DataRequired()])
-    submit = SubmitField('Register Checkpoint')
+    operator = StringField('Operator', validators=[DataRequired()])
+    submit = SubmitField('Add Checkpoint')
+
+    def validate_name(self, name):
+        list = checkpoints_col.distinct(key='name')
+        if name.data in list:
+            raise ValidationError('Please use a different name.')
+
+class EditCheckpointForm(FlaskForm):
+    name = StringField('Name', validators=[DataRequired()])
+    operator = StringField('Operator', validators=[DataRequired()])
+    id = HiddenField()
+    submit = SubmitField('Edit Checkpoint')
+
+    def validate_name(self, name):
+        list = checkpoints_col.distinct(key='name')
+        checkpoint = checkpoints_col.find({"_id":ObjectId(self.id.data)})[0]
+        list.remove(checkpoint['name'])
+        if name.data in list:
+            raise ValidationError('Please use a different name.')
+
+    def add_data(self, checkpoint):
+        self.name.data = checkpoint['name']
+        self.operator.data = checkpoint['operator']
+        self.id.data = checkpoint['_id']
 
 class RegisterRaceForm(FlaskForm):
     name = StringField('Name', validators=[DataRequired()])

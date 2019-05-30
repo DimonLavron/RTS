@@ -1,14 +1,14 @@
 from app import app, db, mqtt, photos
 from flask import render_template, redirect, url_for, flash, request
-from app.forms import RegisterRunnerForm, RegisterCheckpointForm, LoginForm, RegisterRaceForm, EditRaceForm
-from app.models import User, Event, Race, Runner
+from app.forms import RegisterRunnerForm, AddCheckpointForm, LoginForm, RegisterRaceForm, EditRaceForm, EditCheckpointForm
+from app.models import User, Event, Race, Runner, Checkpoint
 from flask_login import current_user, login_user, logout_user
 from bson.objectid import ObjectId
 
 events_col = db.events
 races_col = db.races
 runners_col = db.runners
-
+checkpoints_col = db.checkpoints
 
 @app.route('/')
 def index():
@@ -66,6 +66,13 @@ def clear():
 	events_col.remove()
 	return redirect(url_for('table'))
 
+@app.route("/clear/<race_id>")
+def clear_checkpoints(race_id):
+	race = races_col.find({"_id":ObjectId(race_id)})[0]
+	for checkpoint in race['checkpoints']:
+		checkpoints_col.delete_one({"_id":checkpoint})
+	races_col.update_one({"_id":ObjectId(race_id)}, {"$set":{"checkpoints":[]}})
+	return redirect(url_for('race_checkpoints', race_id=race_id))
 
 @app.route("/results")
 def table():
@@ -95,17 +102,6 @@ def runners_table():
 		list.append(runners)
 	return render_template('runners_table.html', runners=list)
 
-
-@app.route('/register_checkpoint', methods=['GET', 'POST'])
-def register_checkpoint():
-	if (current_user.is_anonymous):
-		return redirect(url_for('index'))
-	form = RegisterCheckpointForm()
-	if form.validate_on_submit():
-		flash('Checkpoint {} is successfully registered.'.format(form.name.data))
-		return redirect(url_for('index'))
-	return render_template('register_checkpoint.html', form=form)
-
 @app.route('/register_race', methods=['GET', 'POST'])
 def register_race():
 	if (current_user.is_anonymous):
@@ -117,7 +113,7 @@ def register_race():
 		url = photos.url(filename)
 		race = Race(form.name.data, url, form.admin.data, form.laps_number.data, form.distance.data, form.date_and_time_of_race.data, form.description.data)
 		races_col.insert_one({"name":race.name, "logo":race.logo, "admin":race.admin, "laps_number":race.laps_number,
-			"distance":race.distance, "date_and_time_of_race":race.date_and_time_of_race, "description":race.description})
+			"distance":race.distance, "date_and_time_of_race":race.date_and_time_of_race, "description":race.description, "checkpoints":[]})
 		flash('Race {} is successfully registered.'.format(form.name.data))
 		return redirect(url_for('races'))
 	return render_template('register_race.html', form=form)
@@ -127,7 +123,6 @@ def races():
 	list = []
 	for race in races_col.find():
 	   list.append(race)
-	list.reverse()
 	return render_template("races.html", races=list)
 
 @app.route("/race/<race_id>")
@@ -144,6 +139,7 @@ def delete_race(race_id):
 @app.route("/race/<race_id>/edit", methods=['GET', 'POST'])
 def edit_race(race_id):
 	race = races_col.find({"_id":ObjectId(race_id)})[0]
+	checkpoints = race['checkpoints']
 	form = EditRaceForm()
 	form.laps_number.choices = [(i, i) for i in range(1,11)]
 	if form.validate_on_submit():
@@ -154,13 +150,57 @@ def edit_race(race_id):
 			url = photos.url(filename)
 		race = Race(form.name.data, url, form.admin.data, form.laps_number.data, form.distance.data, form.date_and_time_of_race.data, form.description.data)
 		races_col.replace_one({"_id":ObjectId(race_id)}, {"name":race.name, "logo":race.logo, "admin":race.admin, "laps_number":race.laps_number,
-			"distance":race.distance, "date_and_time_of_race":race.date_and_time_of_race, "description":race.description})
+			"distance":race.distance, "date_and_time_of_race":race.date_and_time_of_race, "description":race.description, "checkpoints":checkpoints})
 		flash('Race {} is successfully edited.'.format(form.name.data))
 		return redirect(url_for('race', race_id=race_id))
 	elif request.method == 'GET':
 		form.add_data(race)
 
-	return render_template('race.html', form=form, race_name=race['name'])
+	return render_template('race.html', form=form, race_name=race['name'], race_id=race_id)
+
+@app.route("/race/<race_id>/checkpoints")
+def race_checkpoints(race_id):
+	race = races_col.find({"_id":ObjectId(race_id)})[0]
+	list = []
+	for checkpoint in race['checkpoints']:
+	   list.append(checkpoints_col.find({"_id":checkpoint})[0])
+	return render_template('race_checkpoints.html', race_name=race['name'], checkpoints=list, race_id=race_id)
+
+@app.route('/race/<race_id>/add_checkpoint', methods=['GET', 'POST'])
+def register_checkpoint(race_id):
+	if (current_user.is_anonymous):
+		return redirect(url_for('index'))
+	form = AddCheckpointForm()
+	if form.validate_on_submit():
+		checkpoint = Checkpoint(form.name.data, form.operator.data)
+		checkpoints_col.insert_one({"name":checkpoint.name, "operator":checkpoint.operator})
+		checkpoint_in_db = checkpoints_col.find({"name":checkpoint.name})[0]
+		races_col.update_one({"_id":ObjectId(race_id)}, {"$addToSet":{"checkpoints":checkpoint_in_db['_id']}})
+		flash('Checkpoint {} is successfully registered.'.format(form.name.data))
+		return redirect(url_for('race_checkpoints', race_id=race_id))
+	return render_template('register_checkpoint.html', form=form)
+
+@app.route("/race/<race_id>/checkpoint/<checkpoint_id>/edit", methods=['GET', 'POST'])
+def edit_checkpoint(race_id, checkpoint_id):
+	checkpoint = checkpoints_col.find({"_id":ObjectId(checkpoint_id)})[0]
+	form = EditCheckpointForm()
+	if form.validate_on_submit():
+		checkpoint = Checkpoint(form.name.data, form.operator.data)
+		checkpoints_col.replace_one({"_id":ObjectId(checkpoint_id)}, {"name":checkpoint.name, "operator":checkpoint.operator})
+		flash('Checkpoint {} is successfully edited.'.format(form.name.data))
+		return redirect(url_for('race_checkpoints', race_id=race_id))
+	elif request.method == 'GET':
+		form.add_data(checkpoint)
+
+	return render_template('edit_checkpoint.html', form=form, checkpoint_name=checkpoint['name'], race_id=race_id, checkpoint_id=checkpoint_id)
+
+@app.route("/race/<race_id>/checkpoint/<checkpoint_id>/delete")
+def delete_checkpoint(race_id, checkpoint_id):
+	checkpoint = checkpoints_col.find({"_id":ObjectId(checkpoint_id)})[0]
+	races_col.update_one({"_id":ObjectId(race_id)}, {"$pullAll":{"checkpoints":[ObjectId(checkpoint_id)]}})
+	checkpoints_col.delete_one(checkpoint)
+	return redirect(url_for('race_checkpoints', race_id=race_id))
+
 
 @app.route('/logout')
 def logout():
