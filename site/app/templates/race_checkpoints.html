@@ -2,14 +2,12 @@
 
 {% block content %}
 <h1 align="center">Checkpoints for {{ race_name }}</h1>
-{% if current_user.is_authenticated %}
 <form action="{{ url_for('register_checkpoint', race_id=race_id) }}">
   <button type="submit"><strong>Add</strong></button>
 </form>
 <form action="{{ url_for('clear_checkpoints', race_id=race_id) }}">
   <button type="submit"><strong>Clear</strong></button>
 </form>
-{% endif %}
 <form action="{{ url_for('race', race_id=race_id) }}">
   <button type="submit"><strong>Back to race</strong></button>
 </form>
