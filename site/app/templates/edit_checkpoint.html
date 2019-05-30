@@ -1,16 +1,12 @@
 {% extends "base.html" %}
 
 {% block content %}
-<style type="text/css">
-  h1 {
-    font-size: 180%;
-    font-family: "Trebuchet MS", Helvetica, sans-serif;
-    font-weight: bolder;
-    color: #333366;
-  }
-</style>
-<h1 align="center">New Checkpoint</h1>
-<form action="" method="post" novalidate align="center">
+
+<h1>Edit {{ checkpoint_name }}</h1>
+<form action="{{ url_for('delete_checkpoint', race_id=race_id, checkpoint_id=checkpoint_id) }}">
+  <button type="submit"><strong>Delete</strong></button>
+</form>
+<form action="" method="post" novalidate>
     {{ form.hidden_tag() }}
     <p>
       <br><strong>{{ form.name.label }}</strong><br>
@@ -30,4 +26,4 @@
       <br><strong>{{ form.submit() }}</strong><br>
     </p>
 </form>
-{% endblock %}
+{% endblock content %}
