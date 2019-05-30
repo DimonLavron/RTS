@@ -48,6 +48,7 @@ class Runner:
         self.id = id
 
 class Checkpoint:
-    def __init__(self, name, operator):
+    def __init__(self, name, operator, race):
         self.name = name
         self.operator = operator
+        self.race = race

@@ -171,10 +171,11 @@ def register_checkpoint(race_id):
 	if (current_user.is_anonymous):
 		return redirect(url_for('index'))
 	form = AddCheckpointForm()
+	form.id.data = ObjectId(race_id)
 	if form.validate_on_submit():
-		checkpoint = Checkpoint(form.name.data, form.operator.data)
-		checkpoints_col.insert_one({"name":checkpoint.name, "operator":checkpoint.operator})
-		checkpoint_in_db = checkpoints_col.find({"name":checkpoint.name})[0]
+		checkpoint = Checkpoint(form.name.data, form.operator.data, ObjectId(race_id))
+		checkpoints_col.insert_one({"name":checkpoint.name, "operator":checkpoint.operator, "race":checkpoint.race})
+		checkpoint_in_db = checkpoints_col.find({"name":checkpoint.name, "operator":checkpoint.operator, "race":checkpoint.race})[0]
 		races_col.update_one({"_id":ObjectId(race_id)}, {"$addToSet":{"checkpoints":checkpoint_in_db['_id']}})
 		flash('Checkpoint {} is successfully registered.'.format(form.name.data))
 		return redirect(url_for('race_checkpoints', race_id=race_id))
@@ -185,8 +186,8 @@ def edit_checkpoint(race_id, checkpoint_id):
 	checkpoint = checkpoints_col.find({"_id":ObjectId(checkpoint_id)})[0]
 	form = EditCheckpointForm()
 	if form.validate_on_submit():
-		checkpoint = Checkpoint(form.name.data, form.operator.data)
-		checkpoints_col.replace_one({"_id":ObjectId(checkpoint_id)}, {"name":checkpoint.name, "operator":checkpoint.operator})
+		checkpoint = Checkpoint(form.name.data, form.operator.data, ObjectId(race_id))
+		checkpoints_col.replace_one({"_id":ObjectId(checkpoint_id)}, {"name":checkpoint.name, "operator":checkpoint.operator, "race":checkpoint.race})
 		flash('Checkpoint {} is successfully edited.'.format(form.name.data))
 		return redirect(url_for('race_checkpoints', race_id=race_id))
 	elif request.method == 'GET':
