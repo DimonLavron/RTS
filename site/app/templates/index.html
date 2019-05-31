@@ -3,4 +3,70 @@
 {% block content %}
 <h1>Runners Tracker System - Main Page</h1>
 <p>Hello World!</p>
+<h>Finished races</h>
+<table class="schedule" border = 1 solid>
+  <tr>
+      <th>Race</th>
+      <th>Date</th>
+      <th>Distance</th>
+      <th>Leaders</th>
+  </tr>
+  <tr>
+      <td>first race</td>
+      <td>20.05.2019</td>
+      <td>21.2 km</td>
+      <td>
+          <table class="schedule" border = 1 solid>
+            <tr>
+               <th>position</th>
+               <th>runner</th>
+               <th>time</th>
+            </tr>
+            <tr>
+                <td>1</td>
+                <td>Usain Bolt</td>
+                <td>01:00:52</td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>Dima </td>
+                <td>01:00:52</td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td>Jura </td>
+                <td>01:00:52</td>
+            </tr>
+          </table>
+      </td>
+  </tr>
+  <tr>
+      <td>Second race</td>
+      <td>29.05.2019</td>
+      <td>10.0 km</td>
+      <td>
+          <table class="schedule" border = 1 solid>
+            <tr>
+               <th>position</th>
+               <th>runner</th>
+               <th>time</th>
+            </tr>
+            <tr>
+                <td>1</td>
+                <td>Serhii</td>
+                <td>00:30:02</td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>Usain Bolt </td>
+                <td>00:32:22</td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td>Jack </td>
+                <td>00:33:52</td>
+            </tr>
+          </table>
+      </td>
+  </tr>
 {% endblock %}
