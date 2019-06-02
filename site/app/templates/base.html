@@ -20,11 +20,10 @@
           <a href="{{ url_for('runners_table') }}">Runners</a>
         </div>
       </div>
-        <!-- <a href="{{ url_for('index') }}">Main</a> -->
       <div class="login">
         {% if current_user.is_anonymous %}
         <a class="a-link" href="{{ url_for('login')}}">Login</a>
-        <a href="{{ url_for('register_on_site')}}">Register on site</a>
+        <a class="a-link" href="{{ url_for('register_on_site')}}">Register on site</a>
         {% else %}
         <a class="a-link" href="{{ url_for('register_runner') }}">Register Runner</a>
         <a class="a-link" href="{{ url_for('register_race') }}">Register Race</a>
