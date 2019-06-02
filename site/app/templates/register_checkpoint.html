@@ -1,25 +1,25 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1>Checkpoint Registration</h1>
-<form action="" method="post" novalidate>
+<h1 align="center">Checkpoint Registration</h1>
+<form action="" method="post" novalidate align="center">
     {{ form.hidden_tag() }}
     <p>
-        {{ form.name.label }}<br>
-        {{ form.name(size=30) }}
-        {% for error in form.name.errors %}
-        <span style="color: red;">[{{ error }}]</span>
-        {% endfor %}
+      <br><strong>{{ form.name.label }}</strong><br>
+      {{ form.name(size=25) }}<br>
+      {% for error in form.name.errors %}
+      <span class="span_reg_check">[{{ error }}]</span>
+      {% endfor %}
     </p>
     <p>
-        {{ form.id.label }}<br>
-        {{ form.id(size=30) }}
-        {% for error in form.id.errors %}
-        <span style="color: red;">[{{ error }}]</span>
-        {% endfor %}
+      <br><strong>{{ form.id.label }}</strong><br>
+      {{ form.id(size=25) }}<br>
+      {% for error in form.id.errors %}
+      <span class="span_reg_check">[{{ error }}]</span>
+      {% endfor %}
     </p>
     <p>
-        {{ form.submit() }}<br>
+      <br><strong>{{ form.submit() }}</strong><br>
     </p>
 </form>
 {% endblock %}

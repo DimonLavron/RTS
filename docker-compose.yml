@@ -1,7 +1,16 @@
 version: '3'
 services:
+  script:
+    build: ./script
+    image: rts_script:v0.1
+    depends_on:
+      - mqtt
+    volumes:
+      - ./script:/script
+
   site:
     build: ./site
+    image: rts_site:v0.1
     ports:
       - "8000:5000"
     depends_on:
@@ -14,13 +23,6 @@ services:
     ports:
       - "1883"
       - "9001:9001"
-
-  script:
-    build: ./script
-    depends_on:
-      - mqtt
-    volumes:
-      - ./script:/script
 
   db:
     image: mongo:latest

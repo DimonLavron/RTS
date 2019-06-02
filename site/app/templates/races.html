@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1 align="center">All Races</h1>
+{% if races[0] %}
+  <table border="1" cellspacing="1" cellpadding="10" align="center">
+    <tr>
+      <th class="th_race">Name</th>
+      <th class="th_race">Date</th>
+      <th class="th_race">About</th>
+    </tr>
+    {% for race in races %}
+    <tr>
+      <td class="td_race">{{ race.name }}</td>
+      <td class="td_race">{{ race.date_and_time_of_race.strftime("%d %B %Y %H:%M") }}</td>
+      <td class="td_race"><a href="{{ url_for('race', race_id=race._id) }}">About</a></td>
+    </tr>
+    {% endfor %}
+  </table>
+{% else %}
+  <h1>No races registered!</h1>
+{% endif %}
+{% endblock content %}
