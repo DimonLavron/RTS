@@ -1,5 +1,3 @@
-
-=======
 from app import app, db, mqtt, photos
 from flask import render_template, redirect, url_for, flash, request
 from app.forms import RegisterRunnerForm, AddCheckpointForm, LoginForm, RegisterRaceForm, EditRaceForm, EditCheckpointForm, RegisterForRace, RegisterOnSite
