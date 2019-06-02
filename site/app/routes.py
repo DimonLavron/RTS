@@ -1,6 +1,6 @@
 from app import app, db, mqtt
 from flask import render_template, redirect, url_for, flash
-from app.forms import RegisterUserForm, RegisterCheckpointForm, LoginForm
+from app.forms import RegisterUserForm, RegisterCheckpointForm, LoginForm, RegisterForRace, RegisterOnSite
 from app.models import User, Event
 from flask_login import current_user, login_user, logout_user
 
@@ -101,3 +101,27 @@ def register_checkpoint():
 def logout():
 	logout_user()
 	return redirect(url_for('index'))
+
+
+@app.route('/register_for_race', methods=['GET', 'POST'])
+def register_for_race():
+	form = RegisterForRace()
+	if form.validate_on_submit():
+		flash('register_for_race {} {} age : {} is successfully registered.'.format(form.first_name.data, form.last_name.data, form.age.data))
+		return redirect(url_for('index'))
+	return render_template('register_for_race.html', form=form)
+
+@app.route('/register_on_site', methods=['GET', 'POST'])
+def register_on_site():
+	if (current_user.is_authenticated):
+		return redirect(url_for('index'))
+	form = RegisterOnSite()
+	if form.password.data != form.repeat_password.data:
+		flash('Passwords do not match')
+		return redirect(url_for('register_on_site'))
+	if form.validate_on_submit():
+		 flash('register_on_site {} {} age: {} is successfully registered.'.format(form.first_name.data,\
+		 form.last_name.data, form.age.data))
+		 return redirect(url_for('index'))
+
+	return render_template('register_on_site.html', form=form)

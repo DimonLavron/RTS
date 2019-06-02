@@ -8,7 +8,6 @@ class User(UserMixin):
     password = ''
     role = ''
 
-
 @login.user_loader
 def load_user(id):
     user = User()
