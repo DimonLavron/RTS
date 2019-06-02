@@ -2,10 +2,8 @@
 {% block content %}
 
 <h1>Runners Tracker System - Main Page</h1>
-<p>Hello World!</p>
-<h>Races now</h>
-<h>Upcoming Races </h>
 <table class="schedule" border = 1 solid>
+  <p>Upcoming Races </p>
   <tr>
       <th>Race</th>
       <th>Date</th>
@@ -19,8 +17,9 @@
       <td><a href="{{ url_for('register_for_race')}}">Register for race</a></td>
   </tr>
 
-<h>Race results</h>
+
 <table class="schedule" border = 1 solid>
+  <p>Race results</p>
   <tr>
       <th>Race</th>
       <th>Date</th>
