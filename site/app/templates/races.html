@@ -17,12 +17,14 @@
       <th style="background-color:#ececec; color: #333366;">Name</th>
       <th style="background-color:#ececec; color: #333366;">Date</th>
       <th style="background-color:#ececec; color: #333366;">About</th>
+      <th style="background-color:#ececec; color: #333366;"></th>
     </tr>
     {% for race in races %}
     <tr>
       <td style="background-color:#ececec; color: black">{{ race.name }}</td>
       <td style="background-color:#ececec; color: black">{{ race.date_and_time_of_race.strftime("%d %B %Y %H:%M") }}</td>
       <td style="background-color:#ececec; color: black"><a href="{{ url_for('race', race_id=race._id) }}">About</a></td>
+      <td style="background-color:#ececec; color: black"><form action="{{ url_for('register_runner') }}"><input type="submit" value="APPLY"></form></td>
     </tr>
     {% endfor %}
   </table>
