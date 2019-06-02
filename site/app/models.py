@@ -52,3 +52,12 @@ class Checkpoint:
         self.name = name
         self.operator = operator
         self.race = race
+        
+class RegisteredUser:
+    def __init__(self, username = None, first_name = None , last_name = None, age = None, password = None, email = None):
+        self.username = username
+        self.first_name = first_name
+        self.last_name = last_name
+        self.age = age
+        self.password = password
+        self.email = email
