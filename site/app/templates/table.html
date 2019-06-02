@@ -1,64 +1,44 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1 align="center">All Events</h1>
-{% if current_user.is_authenticated %}
-<form action="{{ url_for('clear') }}">
-  <button type="submit"><strong>Clear</strong></button>
-</form>
-{% endif %}
-{% if events[0] %}
-<style type="text/css">
-	th {
-  	color: blue;
-  	font-size: 13px;
-  	font-family:  "Trebuchet MS", Helvetica, sans-serif;
-    border: 1px solid black;
-    background-color: white;
-	}
-	.selected{
-  	background-color:green;
-  	color #fff;
-  	font-weight: bold;
-	}
-
-  .split {
-    height:100%;
-    width:50%;
-  }
-
-  .right {
-    right:0;
-  }
-
-  .left {
-    left:0;
-  }
-</style>
-
-<div class="split left">
-<table id="table" border="1" cellspacing="1" cellpadding="10" align="center">
-  <tr>
-    <th class="th_race">Checkpoint Id</th>
-    <th class="th_race">Tag of Player</th>
-    <th class="th_race">Time</th>
-  </tr>
-  {% for event in events %}
-  <tr>
-    <td class="td_race">{{ event.checkpoint_id }}</td>
-    <td class="td_race">{{ event.tag }}</td>
-    <td class="td_race">{{ event.time }}</td>
-  </tr>
-  {% endfor %}
-</table>
+<h1 align="center">Events</h1>
+<div class="clear-btn">
+  {% if current_user.is_authenticated %}
+  <form action="{{ url_for('clear') }}">
+    <button class="clear" type="submit">Clear</button>
+  </form>
 </div>
-
-{% if current_user.is_authenticated %}
-<div class="split right">
+<div class="arrows">
   <button onclick="move('up');">&ShortUpArrow;</button>
   <button onclick="move('down');">&ShortDownArrow;</button>
   <button onclick="move_end('up');">&ShortUpArrow;</button>
   <button onclick="move_end('down');">&ShortDownArrow;</button>
+</div>
+<br>
+<br>
+  {% endif %}
+<div align="center">
+{% if events[0] %}
+  <div align="center">
+    <table id="table">
+      <thead class="table100-head">
+        <tr>
+          <th>Checkpoint Id</th>
+          <th>Tag of Player</th>
+          <th>Time</th>
+        </tr>
+      </thead>
+      <tbody>
+      {% for event in events %}
+        <tr>
+          <td>{{ event.checkpoint_id }}</td>
+          <td>{{ event.tag }}</td>
+          <td>{{ event.time }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
 </div>
 
 <script>
@@ -111,7 +91,6 @@
 					}
 		}
 </script>
-{% endif %}
 {% else %}
 	<h1>No events registered!</h1>
 {% endif %}
