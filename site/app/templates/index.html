@@ -3,7 +3,23 @@
 {% block content %}
 <h1>Runners Tracker System - Main Page</h1>
 <p>Hello World!</p>
-<h>Finished races</h>
+<h>Races now</h>
+<h>Upcoming Races </h>
+<table class="schedule" border = 1 solid>
+  <tr>
+      <th>Race</th>
+      <th>Date</th>
+      <th>Distance</th>
+      <th>Register</th>
+  </tr>
+  <tr>
+      <td>Run Lviv</td>
+      <td>12.06.2019</td>
+      <td>21.0 km</td>
+      <td><a href="{{ url_for('register_for_race')}}">Register for race</a></td>
+  </tr>
+
+<h>Race results</h>
 <table class="schedule" border = 1 solid>
   <tr>
       <th>Race</th>
@@ -30,12 +46,12 @@
             <tr>
                 <td>2</td>
                 <td>Dima </td>
-                <td>01:00:52</td>
+                <td>01:03:12</td>
             </tr>
             <tr>
                 <td>3</td>
                 <td>Jura </td>
-                <td>01:00:52</td>
+                <td>01:10:09</td>
             </tr>
           </table>
       </td>
