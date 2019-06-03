@@ -2,8 +2,8 @@
 
 {% block content %}
 <h1 align="center">Events</h1>
+{% if current_user.is_authenticated %}
 <div class="clear-btn">
-  {% if current_user.is_authenticated %}
   <form action="{{ url_for('clear') }}">
     <button class="clear" type="submit">Clear</button>
   </form>
