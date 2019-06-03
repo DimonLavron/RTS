@@ -1,6 +1,86 @@
 {% extends "base.html" %}
 {% block content %}
-<div align="center">
-  <h1>Runners Tracker System - Main Page</h1>
-</div>
+<h1>Runners Tracker System - Main Page</h1>
+<table class="schedule" border = 1 solid>
+  <p>Upcoming Races </p>
+  <tr>
+      <th>Race</th>
+      <th>Date</th>
+      <th>Distance</th>
+      <th>Register</th>
+  </tr>
+  <tr>
+      <td>Run Lviv</td>
+      <td>12.06.2019</td>
+      <td>21.0 km</td>
+      <td><a href="{{ url_for('register_for_race')}}">Register for race</a></td>
+  </tr>
+
+
+<table class="schedule" border = 1 solid>
+  <p>Race results</p>
+  <tr>
+      <th>Race</th>
+      <th>Date</th>
+      <th>Distance</th>
+      <th>Leaders</th>
+  </tr>
+  <tr>
+      <td>First race</td>
+      <td>20.05.2019</td>
+      <td>21.2 km</td>
+      <td>
+          <table class="schedule" border = 1 solid>
+            <tr>
+               <th>Position</th>
+               <th>Runner</th>
+               <th>Time</th>
+            </tr>
+            <tr>
+                <td>1</td>
+                <td>Usain Bolt</td>
+                <td>01:00:52</td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>Dima </td>
+                <td>01:03:12</td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td>Jura </td>
+                <td>01:10:09</td>
+            </tr>
+          </table>
+      </td>
+  </tr>
+  <tr>
+      <td>Second race</td>
+      <td>29.05.2019</td>
+      <td>10.0 km</td>
+      <td>
+          <table class="schedule" border = 1 solid>
+            <tr>
+               <th>Position</th>
+               <th>Runner</th>
+               <th>Time</th>
+            </tr>
+            <tr>
+                <td>1</td>
+                <td>Serhii</td>
+                <td>00:30:02</td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>Usain Bolt </td>
+                <td>00:32:22</td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td>Jack </td>
+                <td>00:33:52</td>
+            </tr>
+          </table>
+      </td>
+  </tr>
 {% endblock %}

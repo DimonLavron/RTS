@@ -1,13 +1,44 @@
+from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
 from app import login
 
 
 class User(UserMixin):
-    id
-    username = ''
-    password = ''
-    role = ''
+    def __init__(self, username=None, first_name=None, last_name=None, age=None, email=None, role=None, dict=None):
+        if dict is None:
+            self.username = username
+            self.first_name = first_name
+            self.last_name = last_name
+            self.age = age
+            self.email = email
+            self.role = role
+        else:
+            self.username = dict['username']
+            self.first_name = dict['first_name']
+            self.last_name = dict['last_name']
+            self.age = dict['age']
+            self.email = dict['email']
+            self.role = dict['role']
+            self.id = dict['_id']
+            self.password_hash = dict['password_hash']
 
+    def set_password(self, password):
+        self.password_hash = generate_password_hash(password)
+
+    def check_password(self, password):
+        return check_password_hash(self.password_hash, password)
+
+    @property
+    def is_admin(self):
+        return self.role == 'admin'
+
+    @property
+    def is_organizer(self):
+        return self.role == 'organizer'
+
+    @property
+    def is_runner(self):
+        return self.role == 'runner'
 
 @login.user_loader
 def load_user(id):

@@ -1,49 +1,49 @@
 from app import app, db, mqtt, photos
 from flask import render_template, redirect, url_for, flash, request
-from app.forms import RegisterRunnerForm, AddCheckpointForm, LoginForm, RegisterRaceForm, EditRaceForm, EditCheckpointForm
+from app.forms import RegisterRunnerForm, AddCheckpointForm, SignInForm, SignUpForm, RegisterRaceForm, EditRaceForm, EditCheckpointForm, RegisterForRace, SignUpForm
 from app.models import User, Event, Race, Runner, Checkpoint
 from flask_login import current_user, login_user, logout_user
 from bson.objectid import ObjectId
+from werkzeug.urls import url_parse
 
 races_col = db.races
+users_col = db.users
 events_col = db.events
 runners_col = db.runners
 checkpoints_col = db.checkpoints
+
+user = User(username = 'admin', role = 'admin')
+user.set_password('admin')
+users_col.insert_one(user.__dict__)
+
+@app.route('/new')
+def new():
+	return render_template('new.html')
 
 @app.route('/')
 def index():
 	return render_template('index.html')
 
 
-@app.route('/login', methods=['GET', 'POST'])
+@app.route('/sign_in', methods=['GET', 'POST'])
 def login():
 	title = "Login"
 	if current_user.is_authenticated:
 		return redirect(url_for('index'))
-	form = LoginForm()
+	form = SignInForm()
 	if form.validate_on_submit():
-		if form.username.data == 'admin' and form.password.data == 'admin':
-			user = User()
-			user.username = 'admin'
-			user.password = 'admin'
-			user.role = 'admin'
-			user.id = 1
-			login_user(user)
-			flash('{}  authorized! Welcome!'.format(user.username))
-			return redirect(url_for('index'))
-		elif form.username.data == 'organizer' and form.password.data == 'organizer':
-			user = User()
-			user.username = 'organizer'
-			user.password = 'organizer'
-			user.role = 'organizer'
-			user.id = 2
-			login_user(user)
-			flash('{} authorized! Welcome!'.format(user.username))
-			return redirect(url_for('index'))
-		else:
+		print(users_col.find({"username":form.username.data})[0])
+		user = User(dict = users_col.find({"username":form.username.data})[0])
+		if user is None or not user.check_password(form.password.data):
 			flash('Invalid username or password')
-			return redirect(url_for('login'))
-	return render_template('login.html', form=form, title=title)
+			return redirect(url_for('index'))
+		login_user(user)
+		next_page = request.args.get('next')
+		if not next_page or url_parse(next_page).netloc != '':
+			next_page = url_for('index')
+		print(current_user.is_admin)
+		return redirect(next_page)
+	return render_template('login.html', form=form)
 
 
 @mqtt.on_connect()
@@ -212,8 +212,30 @@ def delete_checkpoint(race_id, checkpoint_id):
 	checkpoints_col.delete_one(checkpoint)
 	return redirect(url_for('race_checkpoints', race_id=race_id))
 
+@app.route('/register_for_race', methods=['GET', 'POST'])
+def register_for_race():
+	form = RegisterForRace()
+	if form.validate_on_submit():
+		flash('register_for_race {} {}  is successfully registered.'.format(form.first_name.data, form.last_name.data, form.years.data))
+		runner = Runner(first_name, last_name, years)
+		return redirect(url_for('index'))
+	return render_template('register_for_race.html', form=form)
 
-@app.route('/logout')
+@app.route('/sign_up', methods=['GET', 'POST'])
+def register():
+	if (current_user.is_authenticated):
+		return redirect(url_for('index'))
+	form = SignUpForm()
+	if form.validate_on_submit():
+		user = User(form.username.data, form.first_name.data, form.last_name.data, form.age.data, form.email.data, "runner")
+		user.set_password(form.password.data)
+		users_col.insert_one(user.__dict__)
+		flash('User {} is successfully registered.'.format(user.username))
+		return redirect(url_for('login'))
+
+	return render_template('register_on_site.html', form=form)
+
+@app.route('/sign_out')
 def logout():
 	logout_user()
 	return redirect(url_for('index'))
