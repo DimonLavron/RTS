@@ -41,9 +41,6 @@ table tbody tr {
 table tbody tr:last-child {
   border: 0;
 }
-table td, table th {
-  text-align: center;
-}
 table td.l, table th.l {
   text-align: right;
 }
@@ -60,10 +57,6 @@ table td.r, table th.r {
   line-height: 1.2;
   font-weight: unset;
   text-align: center;
-}
-
-tbody tr:nth-child(even) {
-  background-color: #f5f5f5;
 }
 
 tbody tr {
@@ -85,9 +78,7 @@ tbody tr:hover {
 }
 
 .selected {
-  background-color: green;
-  color #fff;
-  font-weight: bold
+  font-weight: bolder;
 }
 
 .body-back {
@@ -122,7 +113,7 @@ tbody tr:hover {
 }
 
 .dropbtn:hover .dropbtn:focus {
-  background-color: transparent;
+  background-color: black;
 }
 
 .dropdown {
@@ -158,7 +149,20 @@ tbody tr:hover {
   right: 15px;
 }
 
-.a-link .create-acc {
+.login a {
+  background-color: transparent;
+  color: white;
+  padding: 10px;
+  font-size: 20px;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.login a:hover a:focus {
+  color: #d1d1d1;
+}
+/* .a-link .create-acc {
   background-color: transparent;
   color: white;
   padding: 10px;
@@ -170,7 +174,7 @@ tbody tr:hover {
 
 .a-link:hover .a-link:focus .create-acc:focus .create-acc:hover{
   color: #d1d1d1;
-}
+} */
 
 .Header-link {
   color: #fff;
@@ -263,4 +267,40 @@ form input {
 .arrows {
   position: absolute;
   right: 6px;
+  background-color: white;
+  border: none;
+  color: black;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  border: 2px solid #555555;
+}
+
+.clear {
+  background-color: white;
+  border: none;
+  color: black;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 14px;
+  margin: 4px 2px;
+  cursor: pointer;
+  border: 2px solid #555555;
+}
+
+.clear:hover .clear:focus {
+  background-color: #555555;
+  color: white;
+}
+
+.about {
+  color:black;
+  text-decoration: none;
+}
+
+.about:hover .about:focus {
+  color: grey;
+  text-decoration: none;
 }

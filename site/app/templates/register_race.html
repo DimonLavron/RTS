@@ -10,7 +10,7 @@
       {% endfor %}
     </p>
     <p>
-      {{ form.logo(size=25, placeholder="choose a logo") }}<br>
+      {{ form.logo(size=25) }}<br>
       {% for error in form.logo.errors %}
       <span class="span_reg">[{{ error }}]</span>
       {% endfor %}
@@ -23,8 +23,8 @@
       {% endfor %}
     </p>
     <p>
-      {{ form.laps_number.label }}
-      {{ form.laps_number() }}<br>
+      <!-- {{ form.laps_number.label }} -->
+      {{ form.laps_number(placeholder="choose number of laps") }}<br>
       {% for error in form.laps_number.errors %}
       <span class="span_reg">[{{ error }}]</span>
       {% endfor %}
@@ -36,13 +36,13 @@
       {% endfor %}
     </p>
     <p>
-      {{ form.date_and_time_of_race(placeholder="date (DD:MM:YYYY HH:MM)") }}<br>
+      {{ form.date_and_time_of_race(placeholder="date (DD.MM.YYYY HH:MM)") }}<br>
       {% for error in form.date_and_time_of_race.errors %}
       <span class="span_reg">[{{ error }}]</span>
       {% endfor %}
     </p>
     <p>
-      {{ form.description(maxlength=300, cols=50, rows=6, placeholder="description") }}<br>
+      {{ form.description(maxlength=300, cols=48, rows=6, placeholder="description") }}<br>
       {% for error in form.description.errors %}
       <span class="span_reg">[{{ error }}]</span>
       {% endfor %}

@@ -16,7 +16,7 @@
       <tr>
         <td>{{ race.name }}</td>
         <td>{{ race.date_and_time_of_race.strftime("%d %B %Y %H:%M") }}</td>
-        <td><a href="{{ url_for('race', race_id=race._id) }}">About</a></td>
+        <td><a class="about" href="{{ url_for('race', race_id=race._id) }}">About</a></td>
       </tr>
     {% endfor %}
     </tbody>
