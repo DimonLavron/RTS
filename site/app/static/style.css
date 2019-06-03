@@ -1,60 +1,95 @@
 a {
-  font-size: 170%;
+  font-size: 20px;
   font-family: "Trebuchet MS", Helvetica, sans-serif;
-  color: #333366;
-  border: 8px solid #ececec;
-  background-color: #ececec;
+  background-color: transparent;
+  text-decoration: none;
+  color: white;
 }
 
 h1 {
-  font-size: 180%;
+  font-size: 25px;
+  top: 20px;
+  color:  #24292e;
+  text-decoration: none;
   font-family: "Trebuchet MS", Helvetica, sans-serif;
-  font-weight: bolder;
-  color: #333366;
 }
 
-th {
-  color: blue;
-  font-size: 13px;
-  font-family:  "Trebuchet MS", Helvetica, sans-serif;
-  border: 1px solid black;
-  background-color: white;
+table {
+  border-spacing: 1;
+  border-collapse: collapse;
+  background: white;
+  overflow: hidden;
+  width: 100%;
+  margin: 0 auto;
+  position: relative;
 }
 
-td {
-  background-color: #ececec;
-  color: black;
+table * {
+  position: relative;
+}
+table td, table th {
+  padding-left: 8px;
+  text-align: center;
+}
+table thead tr {
+  height: 60px;
+  background: #24292e;
+}
+table tbody tr {
+  height: 50px;
+}
+table tbody tr:last-child {
+  border: 0;
+}
+table td.l, table th.l {
+  text-align: right;
+}
+table td.c, table th.c {
+  text-align: center;
+}
+table td.r, table th.r {
+  text-align: center;
+}
+.table100-head th{
+  font-family: "Trebuchet MS", Helvetica, sans-serif;
+  font-size: 25px;
+  color: #fff;
+  line-height: 1.2;
+  font-weight: unset;
+  text-align: center;
 }
 
-.th_race {
-  background-color:#ececec;
-  color: #333366;
+tbody tr {
+  font-family: "Trebuchet MS", Helvetica, sans-serif;
+  font-size: 20px;
+  color: #808080;
+  line-height: 1.2;
+  font-weight: normal;
 }
 
-.td_race {
-  background-color:#ececec;
-  color: black;
+tbody tr:hover {
+  color: #555555;
+  background-color: #f5f5f5;
+  cursor: pointer;
 }
 
 .span_reg {
   color: black;
 }
 
-.selected{
-  background-color:green;
-  color #fff;
-  font-weight: bold
+.selected {
+  font-weight: bolder;
 }
 
-.body_back {
+.body-back {
   background-color: #d9dce0;
 }
 
 .Header {
   background-color: #24292e;
   color: hsla(0,0%,100%,.7);
-  font-size: 14px;
-  line-height: 1.5;
+  font-size: 20px;
+  line-height: 4;
   padding: 16px;
   z-index: 32;
 }
@@ -77,19 +112,19 @@ td {
   cursor: pointer;
 }
 
-.dropbtn:hover, .dropbtn:focus {
-  background-color: #2980B9;
+.dropbtn:hover .dropbtn:focus {
+  background-color: black;
 }
 
 .dropdown {
   position: relative;
-  display: inline-block;
+  display: block;
 }
 
 .dropdown-content {
   display: none;
   position: absolute;
-  background-color: #f1f1f1;
+  background-color: #24292e;
   min-width: 160px;
   overflow: auto;
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
@@ -97,13 +132,15 @@ td {
 }
 
 .dropdown-content a {
-  color: black;
-  padding: 12px 16px;
+  color: white;
+  margin: auto;
+  font-size: 15px;
   text-decoration: none;
   display: block;
+  text-align: center;
 }
 
-.dropdown a:hover {background-color: #ddd;}
+.dropdown a:hover {background-color: grey;}
 
 .show {display: block;}
 
@@ -112,46 +149,158 @@ td {
   right: 15px;
 }
 
-.a-link {
+.login a {
   background-color: transparent;
   color: white;
-  padding: 16px;
-  font-size: 16px;
+  padding: 10px;
+  font-size: 20px;
   border: none;
   cursor: pointer;
+  text-decoration: none;
 }
 
-.octicon {
-  vertical-align: text-bottom;
+.login a:hover a:focus {
+  color: #d1d1d1;
+}
+/* .a-link .create-acc {
+  background-color: transparent;
+  color: white;
+  padding: 10px;
+  font-size: 20px;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
 }
 
-.octicon {
-  display: inline-block;
-  fill: currentColor;
-  vertical-align: text-top;
-}
-
-svg.octicon.octicon-three-bars {
-  height: 24px;
-  width: 18px;
-}
+.a-link:hover .a-link:focus .create-acc:focus .create-acc:hover{
+  color: #d1d1d1;
+} */
 
 .Header-link {
   color: #fff;
-  font-weight: 600;
-  white-space: nowrap;
+  font-weight: normal;
+  font-family: "Trebuchet MS", Helvetica, sans-serif;
 }
+
+.Header-link:focus .Header-link:hover {
+  color: rgba(255, 255, 255, 0.701961);
+  cursor: pointer;
+  display: block;
+}
+
 .btn-link {
   background-color: transparent;
   border: 0;
   cursor: pointer;
-  display: inline-block;
+  display: block;
   font-size: inherit;
   padding: 0;
   text-decoration: none;
   white-space: nowrap;
 }
-button {
-  border-radius: 0;
+
+.table-events {
+  align-items: center;
+  border: none;
+  border-spacing: 1;
+  padding: 10;
+}
+
+.form-login {
+  position: relative;
+  top: 100px;
+  z-index: 1;
+  background: #FFFFFF;
+  max-width: 360px;
+  margin: 0 auto 100px;
+  padding: 45px;
+  text-align: center;
+  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+}
+
+form input {
+  font-family: "Roboto", sans-serif;
+  outline: 0;
+  background: #f2f2f2;
+  width: 100%;
+  border: 0;
+  margin: 0 0 15px;
+  padding: 15px;
+  box-sizing: border-box;
+  font-size: 14px;
+}
+
+.form-submit {
+  font-family: "Trebuchet MS", Helvetica, sans-serif;
+  text-transform: uppercase;
+  outline: 0;
+  background-color: #ffab51;
+  width: 100%;
+  border: 0;
+  padding: 15px;
+  color: black;
+  font-size: 16px;
   cursor: pointer;
+}
+
+.create-acc-need .create-acc {
+  font-family: "Trebuchet MS", Helvetica, sans-serif;
+  font-size: 16px;
+  color: black;
+  text-decoration: none;
+}
+
+.create-acc {
+  color: #a6dda6;
+}
+
+.create-acc:hover .create-acc:focus {
+  color: #6a936a;
+  text-decoration: none;
+}
+
+.clear-btn {
+  position: absolute;
+  left: 6px;
+}
+
+.arrows {
+  position: absolute;
+  right: 6px;
+  background-color: white;
+  border: none;
+  color: black;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  border: 2px solid #555555;
+}
+
+.clear {
+  background-color: white;
+  border: none;
+  color: black;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 14px;
+  margin: 4px 2px;
+  cursor: pointer;
+  border: 2px solid #555555;
+}
+
+.clear:hover .clear:focus {
+  background-color: #555555;
+  color: white;
+}
+
+.about {
+  color:black;
+  text-decoration: none;
+}
+
+.about:hover .about:focus {
+  color: grey;
+  text-decoration: none;
 }

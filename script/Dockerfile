@@ -7,6 +7,6 @@ RUN pip install -r requirements.txt
 
 COPY mosquitto mosquitto
 
-COPY yr903parser.py checkpointId.txt ./
+COPY withouthard.py checkpointId.txt ./
 
-CMD ["python", "./yr903parser.py"]
+CMD ["python", "./withouthard.py"]
