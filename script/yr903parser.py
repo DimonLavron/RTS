@@ -9,7 +9,8 @@ import time
 from functools import reduce
 import paho.mqtt.client as mqtt
 
-HOST = '192.168.0.178'  # The NFC reader IP address
+HOST = "socket"
+#HOST = '192.168.0.178'  # The NFC reader IP address
 READER_PORT = 4001  # Port where reader listens
 MQTT_PORT = 1883  #Port where mosquitto listens
 brocker = "mqtt"
