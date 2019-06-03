@@ -22,12 +22,12 @@
       </div>
       <div class="login">
         {% if current_user.is_anonymous %}
-        <a class="a-link" href="{{ url_for('login')}}">Login</a>
-        <a class="a-link" href="{{ url_for('register_on_site')}}">Register on site</a>
+        <a class="a-link" href="{{ url_for('login')}}">Sign In</a>
+        <a class="a-link" href="{{ url_for('register')}}">Sign Up</a>
         {% else %}
         <a class="a-link" href="{{ url_for('register_runner') }}">Register Runner</a>
         <a class="a-link" href="{{ url_for('register_race') }}">Register Race</a>
-        <a class="a-link" href="{{ url_for('logout')}}">Logout</a>
+        <a class="a-link" href="{{ url_for('logout')}}">Sign Out</a>
         {% endif %}
       </div>
     </div>
