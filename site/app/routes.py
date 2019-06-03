@@ -1,7 +1,7 @@
 from app import app, db, mqtt, photos
 from flask import render_template, redirect, url_for, flash, request
-from app.forms import RegisterRunnerForm, AddCheckpointForm, LoginForm, RegisterRaceForm, EditRaceForm, EditCheckpointForm
-from app.models import User, Event, Race, Runner, Checkpoint
+from app.forms import RegisterRunnerForm, AddCheckpointForm, LoginForm, RegisterRaceForm, EditRaceForm, EditCheckpointForm, RegisterForRace, RegisterOnSite
+from app.models import User, Event, Race, Runner, Checkpoint, RegisteredUser
 from flask_login import current_user, login_user, logout_user
 from bson.objectid import ObjectId
 
@@ -39,6 +39,8 @@ def login():
 			login_user(user)
 			flash('{} authorized! Welcome!'.format(user.username))
 			return redirect(url_for('index'))
+
+
 		else:
 			flash('Invalid username or password')
 			return redirect(url_for('login'))
@@ -211,3 +213,28 @@ def delete_checkpoint(race_id, checkpoint_id):
 def logout():
 	logout_user()
 	return redirect(url_for('index'))
+
+
+@app.route('/register_for_race', methods=['GET', 'POST'])
+def register_for_race():
+	form = RegisterForRace()
+	if form.validate_on_submit():
+		flash('register_for_race {} {}  is successfully registered.'.format(form.first_name.data, form.last_name.data, form.years.data))
+		runner = Runner(first_name, last_name, years)
+		return redirect(url_for('index'))
+	return render_template('register_for_race.html', form=form)
+
+@app.route('/register_on_site', methods=['GET', 'POST'])
+def register_on_site():
+	if (current_user.is_authenticated):
+		return redirect(url_for('index'))
+	form = RegisterOnSite()
+	if form.password.data != form.repeat_password.data:
+		flash('Passwords do not match')
+		return redirect(url_for('register_on_site'))
+	if form.validate_on_submit():
+		 flash('register_on_site  {}   is successfully registered.'.format(form.username.data))
+		 user = RegisteredUser(form.username.data, form.first_name.data, form.last_name.data, form.yers.data, form.password.data, form.email.data)
+		 return redirect(url_for('index'))
+
+	return render_template('register_on_site.html', form=form)

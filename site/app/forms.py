@@ -83,3 +83,21 @@ class LoginForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired()])
     password = PasswordField('Password', validators=[DataRequired()])
     submit = SubmitField('Login')
+
+
+class RegisterForRace(FlaskForm):
+    first_name = StringField('First Name', validators=[DataRequired()])
+    last_name = StringField('Last Name', validators=[DataRequired()])
+    age = StringField('Age', validators=[DataRequired()])
+    submit = SubmitField('Register for race')
+
+
+class RegisterOnSite(FlaskForm):
+    username = StringField('Username', validators=[DataRequired()])
+    first_name = StringField('First Name', validators=[DataRequired()])
+    last_name = StringField('Last Name', validators=[DataRequired()])
+    age = StringField('Age', validators=[DataRequired()])
+    password = PasswordField('Password', validators=[DataRequired()])
+    repeat_password = PasswordField('Repeat password', validators=[DataRequired()])
+    email = StringField('Email',validators=[DataRequired()])
+    submit = SubmitField('Register on site')
