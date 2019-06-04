@@ -2,7 +2,7 @@
 
 {% block content %}
 <h1 align="center">All Events</h1>
-{% if current_user.is_authenticated %}
+{% if current_user.is_authenticated and not current_user.is_runner %}
 <form action="{{ url_for('clear') }}">
   <button type="submit"><strong>Clear</strong></button>
 </form>
@@ -53,7 +53,7 @@
 </table>
 </div>
 
-{% if current_user.is_authenticated %}
+{% if current_user.is_authenticated and not current_user.is_runner %}
 <div class="split right">
   <button onclick="move('up');">&ShortUpArrow;</button>
   <button onclick="move('down');">&ShortDownArrow;</button>

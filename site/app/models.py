@@ -1,6 +1,9 @@
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
-from app import login
+from app import login, db
+from bson.objectid import ObjectId
+
+users_col = db.users
 
 
 class User(UserMixin):
@@ -42,18 +45,7 @@ class User(UserMixin):
 
 @login.user_loader
 def load_user(id):
-    user = User()
-    if id == 1:
-        user.username = 'admin'
-        user.password = 'admin'
-        user.role = 'admin'
-        user.id = 1
-
-    if id == 2:
-        user.username = 'organizer'
-        user.password = 'organizer'
-        user.role = 'organizer'
-        user.id = 2
+    user = User(dict = users_col.find({"_id":ObjectId(id)})[0])
     return user
 
 class Event:

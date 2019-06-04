@@ -12,9 +12,9 @@
       {% endfor %}
     </p>
     <p>
-      <br><strong>{{ form.id.label }}</strong><br>
-      {{ form.id(size=25) }}<br>
-      {% for error in form.id.errors %}
+      <br><strong>{{ form.operator.label }}</strong><br>
+      {{ form.operator(size=25) }}<br>
+      {% for error in form.operator.errors %}
       <span class="span_reg_check">[{{ error }}]</span>
       {% endfor %}
     </p>
