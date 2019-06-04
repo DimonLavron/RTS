@@ -1,61 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1 align="center">All Events</h1>
-{% if current_user.is_authenticated and not current_user.is_runner %}
-<form action="{{ url_for('clear') }}">
-  <button type="submit"><strong>Clear</strong></button>
-</form>
-{% endif %}
-{% if events[0] %}
-<style type="text/css">
-	th {
-  	color: blue;
-  	font-size: 13px;
-  	font-family:  "Trebuchet MS", Helvetica, sans-serif;
-    border: 1px solid black;
-    background-color: white;
-	}
-	.selected{
-  	background-color:green;
-  	color #fff;
-  	font-weight: bold;
-	}
-
-  .split {
-    height:100%;
-    width:50%;
-  }
-
-  .right {
-    right:0;
-  }
-
-  .left {
-    left:0;
-  }
-</style>
-
-<div class="split left">
-<table id="table" border="1" cellspacing="1" cellpadding="10" align="center">
-  <tr>
-    <th class="th_race">Checkpoint Id</th>
-    <th class="th_race">Tag of Player</th>
-    <th class="th_race">Time</th>
-  </tr>
-  {% for event in events %}
-  <tr>
-    <td class="td_race">{{ event.checkpoint_id }}</td>
-    <td class="td_race">{{ event.tag }}</td>
-    <td class="td_race">{{ event.time }}</td>
-  </tr>
-  {% endfor %}
-</table>
-</div>
-
-{% if current_user.is_authenticated and not current_user.is_runner %}
-<div class="split right">
-<h1 align="center">Events</h1>
+<h1 align="center">Results</h1>
 {% if current_user.is_authenticated %}
 <div class="clear-btn">
   <form action="{{ url_for('clear') }}">
@@ -77,9 +23,9 @@
     <table id="table">
       <thead class="table100-head">
         <tr>
-          <th>Checkpoint Id</th>
-          <th>Tag of Player</th>
-          <th>Time</th>
+          <th class="tbh">Checkpoint Id</th>
+          <th class="tbh">Tag of Player</th>
+          <th class="tbh">Time</th>
         </tr>
       </thead>
       <tbody>
@@ -94,7 +40,7 @@
     </table>
   </div>
 </div>
-{% if current_user.is_authenticated and not current_user.is_runner %}
+{% if current_user.is_authenticated %}
 <script>
 		var index;
 		function getSelectedRow() {
