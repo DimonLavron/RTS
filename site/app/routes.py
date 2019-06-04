@@ -16,6 +16,7 @@ user = User(username = 'admin')
 user.set_password('admin')
 users_col.insert_one(user.__dict__)
 
+
 @app.route('/')
 def index():
 	list = [race for race in races_col.find()]

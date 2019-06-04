@@ -22,7 +22,6 @@
       <div class="login">
         {% if current_user.is_anonymous %}
         <a class="a-link" href="{{ url_for('login')}}">Sign In</a>
-        <a class="a-link" href="{{ url_for('register')}}">Sign Up</a>
         {% else %}
         <a class="a-link" href="{{ url_for('register_runner') }}">Register Runner</a>
         <a class="a-link" href="{{ url_for('register_race') }}">Register Race</a>
