@@ -27,7 +27,7 @@
     {% endfor %}
   </table>
 
-  {% if current_user.is_authenticated and not current_user.is_runner %}
+  {% if current_user.is_authenticated %}
   <button onclick="move('up');">&ShortUpArrow;</button>
   <button onclick="move('down');">&ShortDownArrow;</button>
   <button onclick="move_end('up');">&ShortUpArrow;</button>

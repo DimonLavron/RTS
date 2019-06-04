@@ -1,59 +1,6 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1 align="center">All Events</h1>
-{% if current_user.is_authenticated and not current_user.is_runner %}
-<form action="{{ url_for('clear') }}">
-  <button type="submit"><strong>Clear</strong></button>
-</form>
-{% endif %}
-{% if events[0] %}
-<style type="text/css">
-	th {
-  	color: blue;
-  	font-size: 13px;
-  	font-family:  "Trebuchet MS", Helvetica, sans-serif;
-    border: 1px solid black;
-    background-color: white;
-	}
-	.selected{
-  	background-color:green;
-  	color #fff;
-  	font-weight: bold;
-	}
-
-  .split {
-    height:100%;
-    width:50%;
-  }
-
-  .right {
-    right:0;
-  }
-
-  .left {
-    left:0;
-  }
-</style>
-
-<div class="split left">
-<table id="table" border="1" cellspacing="1" cellpadding="10" align="center">
-  <tr>
-    <th class="th_race">Checkpoint Id</th>
-    <th class="th_race">Tag of Player</th>
-    <th class="th_race">Time</th>
-  </tr>
-  {% for event in events %}
-  <tr>
-    <td class="td_race">{{ event.checkpoint_id }}</td>
-    <td class="td_race">{{ event.tag }}</td>
-    <td class="td_race">{{ event.time }}</td>
-  </tr>
-  {% endfor %}
-</table>
-</div>
-
-{% if current_user.is_authenticated and not current_user.is_runner %}
 <div class="split right">
 <h1 align="center">Events</h1>
 {% if current_user.is_authenticated %}
@@ -94,59 +41,59 @@
     </table>
   </div>
 </div>
-{% if current_user.is_authenticated and not current_user.is_runner %}
-<script>
-		var index;
-		function getSelectedRow() {
-				var table = document.getElementById("table");
-				for(var i = 1; i < table.rows.length; i++) {
-						table.rows[i].onclick = function() {
-								if(typeof index !== "undefined"){
-										table.rows[index].classList.toggle("selected");
-								}
-								index = this.rowIndex;
-								this.classList.toggle("selected");
-						};
-				}
-		}
-		getSelectedRow();
+  {% if current_user.is_authenticated %}
+  <script>
+  		var index;
+  		function getSelectedRow() {
+  				var table = document.getElementById("table");
+  				for(var i = 1; i < table.rows.length; i++) {
+  						table.rows[i].onclick = function() {
+  								if(typeof index !== "undefined"){
+  										table.rows[index].classList.toggle("selected");
+  								}
+  								index = this.rowIndex;
+  								this.classList.toggle("selected");
+  						};
+  				}
+  		}
+  		getSelectedRow();
 
-		function move(direction) {
-				var rows = document.getElementById("table").rows,
-						parent = rows[index].parentNode;
-					if(direction === "up") {
-							if(index > 1){
-								parent.insertBefore(rows[index],rows[index - 1]);
-								index--;
-						}
-					}
-					if(direction === "down") {
-							if(index < rows.length-1){
-								parent.insertBefore(rows[index + 1],rows[index]);
-								index++;
-						}
-					}
-		}
+  		function move(direction) {
+  				var rows = document.getElementById("table").rows,
+  						parent = rows[index].parentNode;
+  					if(direction === "up") {
+  							if(index > 1){
+  								parent.insertBefore(rows[index],rows[index - 1]);
+  								index--;
+  						}
+  					}
+  					if(direction === "down") {
+  							if(index < rows.length-1){
+  								parent.insertBefore(rows[index + 1],rows[index]);
+  								index++;
+  						}
+  					}
+  		}
 
-		function move_end(direction) {
-				var rows = document.getElementById("table").rows,
-						parent = rows[index].parentNode;
-					if(direction === "up") {
-							while(index > 1){
-								parent.insertBefore(rows[index],rows[index - 1]);
-								index--;
-						}
-					}
-					if(direction === "down") {
-							while(index < rows.length-1){
-								parent.insertBefore(rows[index + 1],rows[index]);
-								index++;
-						}
-					}
-		}
-</script>
-{% endif %}
+  		function move_end(direction) {
+  				var rows = document.getElementById("table").rows,
+  						parent = rows[index].parentNode;
+  					if(direction === "up") {
+  							while(index > 1){
+  								parent.insertBefore(rows[index],rows[index - 1]);
+  								index--;
+  						}
+  					}
+  					if(direction === "down") {
+  							while(index < rows.length-1){
+  								parent.insertBefore(rows[index + 1],rows[index]);
+  								index++;
+  						}
+  					}
+  		}
+  </script>
+  {% endif %}
 {% else %}
 	<h1>No events registered!</h1>
 {% endif %}
-{% endblock content %}
+{% endblock %}
