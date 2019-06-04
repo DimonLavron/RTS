@@ -83,12 +83,8 @@ def table():
 
 @app.route('/register_runner', methods=['GET', 'POST'])
 def register_runner():
-<<<<<<< HEAD
-	if current_user.is_anonymous or current_user.is_runner:
-=======
 	title = "Runner Registration"
-	if current_user.is_anonymous:
->>>>>>> a8a87fa1c1acf636f8ca77b2ae9ac6110ed59ac9
+	if current_user.is_anonymous or current_user.is_runner:
 		return redirect(url_for('index'))
 	form = RegisterRunnerForm()
 	if form.validate_on_submit():
@@ -106,12 +102,8 @@ def runners_table():
 
 @app.route('/register_race', methods=['GET', 'POST'])
 def register_race():
-<<<<<<< HEAD
-	if current_user.is_anonymous or current_user.is_runner:
-=======
 	title = "Race Registration"
-	if current_user.is_anonymous:
->>>>>>> a8a87fa1c1acf636f8ca77b2ae9ac6110ed59ac9
+	if current_user.is_anonymous or current_user.is_runner:
 		return redirect(url_for('index'))
 	form = RegisterRaceForm()
 	form.laps_number.choices = [(i, i) for i in range(1,11)]
