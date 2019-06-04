@@ -55,17 +55,13 @@
   </p>
 </form>
 {% else %}
-<h1 align="center">{{ race.name }}</h1>
+<br>
+<br>
 {% if current_user.is_authenticated and not current_user.is_runner %}
 <div>
   <div class="clear-btn">
     <form action="{{ url_for('edit_race', race_id=race._id) }}">
       <button class="clear" type="submit">Edit</button>
-    </form>
-  </div>
-  <div class="runners-btn">
-    <form action="{{ url_for('race_runners', race_id=race._id) }}">
-      <button type="submit"><strong>Runners</strong></button>
     </form>
   </div>
   <div class="checkpoints-btn">
@@ -76,25 +72,31 @@
 </div>
 {% endif %}
 <div class="form-race">
+  <h1 align="center">{{ race.name }}</h1>
   <div class="img-race">
-    <img src="{{ race.logo }}">
+    <img src="{{ race.logo }}", width="200", height="200">
   </div>
   <div class="info-race">
   <p class="p-race">
     Admin: {{ race.admin }}
   </p>
-  <p>
+  <p class="p-race">
     Number of laps: {{ race.laps_number }}
   </p>
-  <p>
+  <p class="p-race">
     Distance of the race: {{ race.distance }}
   </p>
-  <p>
+  <p class="p-race">
     Date: {{ race.date_and_time_of_race.strftime("%d %B %Y %H:%M") }}
   </p>
-  <p>
+  <p class="p-race">
     Description:<br>{{ race.description }}
   </p>
+  <div align="center">
+    <form action="{{ url_for('race_runners', race_id=race._id) }}">
+      <button class="runners-b" type="submit">Runners</button>
+    </form>
+  </div>
   </div>
 </div>
 

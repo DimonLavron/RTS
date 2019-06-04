@@ -1,38 +1,43 @@
 {% extends "base.html" %}
 {% block content %}
-<h1>Runners Tracker System - Main Page</h1>
-<p>Upcoming Races</p>
+<h1 align="center">Runners Tracker System - Main Page</h1>
+<h3 align="center" class="about">Upcoming Races</h3>
 {% if races[0] %}
 <table class="schedule" border = 1 solid>
-
+  <thead class="table100-head">
   <tr>
-      <th>Race</th>
-      <th>Date</th>
-      <th>Distance</th>
-      <th>Register</th>
+      <th class="tbh-1">Race</th>
+      <th class="tbh-1">Date</th>
+      <th class="tbh-1">Distance</th>
+      <th class="tbh-1">Register</th>
   </tr>
-  <tr>
+</thead>
+<tbody>
     {% for race in races %}
       <tr>
         <td>{{ race.name }}</td>
         <td>{{ race.date_and_time_of_race.strftime("%d %B %Y %H:%M") }}</td>
         <td>{{ race.distance }} km</td>
-        <td><a href="{{ url_for('register_for_race', race_id=race._id)}}">Register for race</a></td>
+        <td><a class="about" href="{{ url_for('register_for_race', race_id=race._id)}}">Register for race</a></td>
       </tr>
     {% endfor %}
+  </tbody>
 {% else %}
 	<h1>No upcoming races now!</h1>
 {% endif %}
 
 
 <table class="schedule" border = 1 solid>
-  <p>Race results</p>
+  <h3 align="center" class="about">Race results</h3>
+  <thead class="table100-head">
   <tr>
-      <th>Race</th>
-      <th>Date</th>
-      <th>Distance</th>
-      <th>Leaders</th>
+      <th class="tbh-1">Race</th>
+      <th class="tbh-1">Date</th>
+      <th class="tbh-1">Distance</th>
+      <th class="tbh-1">Leaders</th>
   </tr>
+  </thead>
+
   <tr>
       <td>First race</td>
       <td>20.05.2019</td>
