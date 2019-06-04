@@ -75,6 +75,13 @@ def clear_checkpoints(race_id):
 	races_col.update_one({"_id":ObjectId(race_id)}, {"$set":{"checkpoints":[]}})
 	return redirect(url_for('race_checkpoints', race_id=race_id))
 
+@app.route("/clear2/<race_id>")
+def clear_runners(race_id):
+	if current_user.is_anonymous:
+		return redirect(url_for('index'))
+	races_col.update_one({"_id":ObjectId(race_id)}, {"$set":{"runners":[]}})
+	return redirect(url_for('race_runners', race_id=race_id))
+
 @app.route("/results")
 def table():
 	title = "Results"
@@ -215,7 +222,7 @@ def register_for_race(race_id):
 	if form.validate_on_submit():
 		flash('Runner {} {}  is successfully registered.'.format(form.first_name.data, form.last_name.data))
 		runner = Runner(form.first_name.data, form.last_name.data, form.age.data)
-		races_col.update_one({"_id":ObjectId(race_id)}, {"$pullAll":{"runners":[runner.__dict__]}})
+		races_col.update_one({"_id":ObjectId(race_id)}, {"$addToSet":{"runners":runner.__dict__}})
 		return redirect(url_for('index'))
 	return render_template('register_for_race.html', form=form)
 
@@ -232,6 +239,14 @@ def register():
 		return redirect(url_for('login'))
 
 	return render_template('register_on_site.html', form=form)
+
+@app.route("/race/<race_id>/runners")
+def race_runners(race_id):
+	if current_user.is_anonymous:
+		return redirect(url_for('index'))
+	race = races_col.find({"_id":ObjectId(race_id)})[0]
+	print(race['runners'])
+	return render_template('race_runners.html', race_name=race['name'], runners=race['runners'], race_id=race_id)
 
 @app.route('/sign_out')
 def logout():

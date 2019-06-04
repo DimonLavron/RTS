@@ -67,6 +67,9 @@
 <form action="{{ url_for('edit_race', race_id=race._id) }}">
   <button type="submit"><strong>Edit</strong></button>
 </form>
+<form action="{{ url_for('race_runners', race_id=race._id) }}">
+  <button type="submit"><strong>Runners</strong></button>
+</form>
 <form action="{{ url_for('race_checkpoints', race_id=race._id) }}">
   <button type="submit"><strong>Checkpoints</strong></button>
 </form>

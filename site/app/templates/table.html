@@ -1,12 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
-<<<<<<< HEAD
-<div class="split right">
-<h1 align="center">Events</h1>
-=======
 <h1 align="center">Results</h1>
->>>>>>> 53d881750b110005aac56f9acc47f0db6b6ee9f5
 {% if current_user.is_authenticated %}
 <div class="clear-btn">
   <form action="{{ url_for('clear') }}">
@@ -45,24 +40,6 @@
     </table>
   </div>
 </div>
-<<<<<<< HEAD
-  {% if current_user.is_authenticated %}
-  <script>
-  		var index;
-  		function getSelectedRow() {
-  				var table = document.getElementById("table");
-  				for(var i = 1; i < table.rows.length; i++) {
-  						table.rows[i].onclick = function() {
-  								if(typeof index !== "undefined"){
-  										table.rows[index].classList.toggle("selected");
-  								}
-  								index = this.rowIndex;
-  								this.classList.toggle("selected");
-  						};
-  				}
-  		}
-  		getSelectedRow();
-=======
 {% if current_user.is_authenticated %}
 <script>
 		var index;
@@ -79,7 +56,6 @@
 				}
 		}
 		getSelectedRow();
->>>>>>> 53d881750b110005aac56f9acc47f0db6b6ee9f5
 
   		function move(direction) {
   				var rows = document.getElementById("table").rows,
