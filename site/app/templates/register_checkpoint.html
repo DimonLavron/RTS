@@ -1,25 +1,22 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1 align="center">Checkpoint Registration</h1>
-<form action="" method="post" novalidate align="center">
+<form class="form-login" action="" method="post" novalidate align="center">
     {{ form.hidden_tag() }}
     <p>
-      <br><strong>{{ form.name.label }}</strong><br>
-      {{ form.name(size=25) }}<br>
+      {{ form.name(size=25, placeholder="name") }}<br>
       {% for error in form.name.errors %}
       <span class="span_reg_check">[{{ error }}]</span>
       {% endfor %}
     </p>
     <p>
-      <br><strong>{{ form.operator.label }}</strong><br>
-      {{ form.operator(size=25) }}<br>
+      {{ form.operator(size=25, placeholder="operator") }}<br>
       {% for error in form.operator.errors %}
       <span class="span_reg_check">[{{ error }}]</span>
       {% endfor %}
     </p>
     <p>
-      <br><strong>{{ form.submit() }}</strong><br>
+      <br><strong>{{ form.submit(class="form-submit") }}</strong><br>
     </p>
 </form>
 {% endblock %}

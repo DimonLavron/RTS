@@ -16,14 +16,14 @@
       {% endfor %}
     </p>
     <p>
-      {{ form.admin.label }}
+      {{ form.admin.label(class="select-menu") }}
       {{ form.admin }}<br>
       {% for error in form.admin.errors %}
       <span class="span_reg">[{{ error }}]</span>
       {% endfor %}
     </p>
     <p>
-      <!-- {{ form.laps_number.label }} -->
+      {{ form.laps_number.label(class="select-menu") }}
       {{ form.laps_number(placeholder="choose number of laps") }}<br>
       {% for error in form.laps_number.errors %}
       <span class="span_reg">[{{ error }}]</span>

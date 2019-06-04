@@ -55,7 +55,7 @@ class EditCheckpointForm(FlaskForm):
 class RegisterRaceForm(FlaskForm):
     name = StringField('Name', validators=[DataRequired()])
     logo = FileField('Logo', validators=[FileAllowed(photos, 'File is not an image.'), FileRequired('File was empty.')])
-    admin = SelectField('Admin User', choices=[('', 'Select Admin'), ('Admin', 'Admin'), ('Organizer', 'Organizer')])
+    admin = SelectField('Admin User', choices=[('Admin', 'Admin'), ('Organizer', 'Organizer')])
     laps_number = SelectField('Number of laps', coerce=int)
     distance = FloatField('Distance of the race (km)', validators=[InputRequired(), DataRequired('Not a right data format.')])
     date_and_time_of_race = DateTimeField('Date (Format: 01.01.2000 12:00)', format='%d.%m.%Y %H:%M', validators=[InputRequired(), DataRequired('Not a right data format.')])
