@@ -12,14 +12,15 @@ events_col = db.events
 runners_col = db.runners
 checkpoints_col = db.checkpoints
 
-user = User(username = 'admin', role = 'admin')
+user = User(username = 'admin')
 user.set_password('admin')
 users_col.insert_one(user.__dict__)
 
 
 @app.route('/')
 def index():
-	return render_template('index.html')
+	list = [race for race in races_col.find()]
+	return render_template('index.html', races=list)
 
 
 @app.route('/sign_in', methods=['GET', 'POST'])
@@ -59,20 +60,27 @@ def handle_mqtt_message(client, userdata, message):
 
 @app.route("/clear")
 def clear():
-	if current_user.is_anonymous or current_user.is_runner:
+	if current_user.is_anonymous:
 		return redirect(url_for('index'))
 	events_col.remove()
 	return redirect(url_for('table'))
 
 @app.route("/clear/<race_id>")
 def clear_checkpoints(race_id):
-	if current_user.is_anonymous or current_user.is_runner:
+	if current_user.is_anonymous:
 		return redirect(url_for('index'))
 	race = races_col.find({"_id":ObjectId(race_id)})[0]
 	for checkpoint in race['checkpoints']:
 		checkpoints_col.delete_one({"_id":checkpoint})
 	races_col.update_one({"_id":ObjectId(race_id)}, {"$set":{"checkpoints":[]}})
 	return redirect(url_for('race_checkpoints', race_id=race_id))
+
+@app.route("/clear2/<race_id>")
+def clear_runners(race_id):
+	if current_user.is_anonymous:
+		return redirect(url_for('index'))
+	races_col.update_one({"_id":ObjectId(race_id)}, {"$set":{"runners":[]}})
+	return redirect(url_for('race_runners', race_id=race_id))
 
 @app.route("/results")
 def table():
@@ -85,7 +93,7 @@ def table():
 @app.route('/register_runner', methods=['GET', 'POST'])
 def register_runner():
 	title = "Runner Registration"
-	if current_user.is_anonymous or current_user.is_runner:
+	if current_user.is_anonymous:
 		return redirect(url_for('index'))
 	form = RegisterRunnerForm()
 	if form.validate_on_submit():
@@ -104,14 +112,14 @@ def runners_table():
 @app.route('/register_race', methods=['GET', 'POST'])
 def register_race():
 	title = "Race Registration"
-	if current_user.is_anonymous or current_user.is_runner:
+	if current_user.is_anonymous:
 		return redirect(url_for('index'))
 	form = RegisterRaceForm()
 	form.laps_number.choices = [(i, i) for i in range(1,11)]
 	if form.validate_on_submit():
 		filename = photos.save(form.logo.data)
 		url = photos.url(filename)
-		race = Race(form.name.data, url, form.admin.data, form.laps_number.data, form.distance.data, form.date_and_time_of_race.data, form.description.data, [])
+		race = Race(form.name.data, url, form.admin.data, form.laps_number.data, form.distance.data, form.date_and_time_of_race.data, form.description.data, [], [])
 		races_col.insert_one(race.__dict__)
 		flash('Race {} is successfully registered.'.format(race.name))
 		return redirect(url_for('races'))
@@ -130,7 +138,7 @@ def race(race_id):
 
 @app.route("/race/<race_id>/delete")
 def delete_race(race_id):
-	if current_user.is_anonymous or current_user.is_runner:
+	if current_user.is_anonymous:
 		return redirect(url_for('index'))
 	race = races_col.find({"_id":ObjectId(race_id)})[0]
 	races_col.delete_one(race)
@@ -138,10 +146,11 @@ def delete_race(race_id):
 
 @app.route("/race/<race_id>/edit", methods=['GET', 'POST'])
 def edit_race(race_id):
-	if current_user.is_anonymous or current_user.is_runner:
+	if current_user.is_anonymous:
 		return redirect(url_for('index'))
 	race = races_col.find({"_id":ObjectId(race_id)})[0]
 	checkpoints = race['checkpoints']
+	runners = race['runners']
 	form = EditRaceForm()
 	form.laps_number.choices = [(i, i) for i in range(1,11)]
 	if form.validate_on_submit():
@@ -150,7 +159,7 @@ def edit_race(race_id):
 		else:
 			filename = photos.save(form.logo.data)
 			url = photos.url(filename)
-		race = Race(form.name.data, url, form.admin.data, form.laps_number.data, form.distance.data, form.date_and_time_of_race.data, form.description.data, checkpoints)
+		race = Race(form.name.data, url, form.admin.data, form.laps_number.data, form.distance.data, form.date_and_time_of_race.data, form.description.data, checkpoints, runners)
 		races_col.replace_one({"_id":ObjectId(race_id)}, race.__dict__)
 		flash('Race {} is successfully edited.'.format(race.name))
 		return redirect(url_for('race', race_id=race_id))
@@ -161,7 +170,7 @@ def edit_race(race_id):
 
 @app.route("/race/<race_id>/checkpoints")
 def race_checkpoints(race_id):
-	if current_user.is_anonymous or current_user.is_runner:
+	if current_user.is_anonymous:
 		return redirect(url_for('index'))
 	race = races_col.find({"_id":ObjectId(race_id)})[0]
 	list = [checkpoints_col.find({"_id":checkpoint})[0] for checkpoint in race['checkpoints']]
@@ -169,7 +178,7 @@ def race_checkpoints(race_id):
 
 @app.route('/race/<race_id>/add_checkpoint', methods=['GET', 'POST'])
 def register_checkpoint(race_id):
-	if current_user.is_anonymous or current_user.is_runner:
+	if current_user.is_anonymous:
 		return redirect(url_for('index'))
 	form = AddCheckpointForm()
 	form.id.data = ObjectId(race_id)
@@ -184,7 +193,7 @@ def register_checkpoint(race_id):
 
 @app.route("/race/<race_id>/checkpoint/<checkpoint_id>/edit", methods=['GET', 'POST'])
 def edit_checkpoint(race_id, checkpoint_id):
-	if current_user.is_anonymous or current_user.is_runner:
+	if current_user.is_anonymous:
 		return redirect(url_for('index'))
 	checkpoint = checkpoints_col.find({"_id":ObjectId(checkpoint_id)})[0]
 	form = EditCheckpointForm()
@@ -200,19 +209,20 @@ def edit_checkpoint(race_id, checkpoint_id):
 
 @app.route("/race/<race_id>/checkpoint/<checkpoint_id>/delete")
 def delete_checkpoint(race_id, checkpoint_id):
-	if current_user.is_anonymous or current_user.is_runner:
+	if current_user.is_anonymous:
 		return redirect(url_for('index'))
 	checkpoint = checkpoints_col.find({"_id":ObjectId(checkpoint_id)})[0]
 	races_col.update_one({"_id":ObjectId(race_id)}, {"$pullAll":{"checkpoints":[ObjectId(checkpoint_id)]}})
 	checkpoints_col.delete_one(checkpoint)
 	return redirect(url_for('race_checkpoints', race_id=race_id))
 
-@app.route('/register_for_race', methods=['GET', 'POST'])
-def register_for_race():
+@app.route('/race/<race_id>/register_for_race', methods=['GET', 'POST'])
+def register_for_race(race_id):
 	form = RegisterForRace()
 	if form.validate_on_submit():
-		flash('register_for_race {} {}  is successfully registered.'.format(form.first_name.data, form.last_name.data, form.years.data))
-		runner = Runner(first_name, last_name, years)
+		flash('Runner {} {}  is successfully registered.'.format(form.first_name.data, form.last_name.data))
+		runner = Runner(form.first_name.data, form.last_name.data, form.age.data)
+		races_col.update_one({"_id":ObjectId(race_id)}, {"$addToSet":{"runners":runner.__dict__}})
 		return redirect(url_for('index'))
 	return render_template('register_for_race.html', form=form)
 
@@ -222,13 +232,21 @@ def register():
 		return redirect(url_for('index'))
 	form = SignUpForm()
 	if form.validate_on_submit():
-		user = User(form.username.data, form.first_name.data, form.last_name.data, form.age.data, form.email.data, "runner")
+		user = User(form.username.data, form.first_name.data, form.last_name.data, form.age.data, form.email.data)
 		user.set_password(form.password.data)
 		users_col.insert_one(user.__dict__)
 		flash('User {} is successfully registered.'.format(user.username))
 		return redirect(url_for('login'))
 
 	return render_template('register_on_site.html', form=form)
+
+@app.route("/race/<race_id>/runners")
+def race_runners(race_id):
+	if current_user.is_anonymous:
+		return redirect(url_for('index'))
+	race = races_col.find({"_id":ObjectId(race_id)})[0]
+	print(race['runners'])
+	return render_template('race_runners.html', race_name=race['name'], runners=race['runners'], race_id=race_id)
 
 @app.route('/sign_out')
 def logout():

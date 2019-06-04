@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1 align="center">Runners for {{ race_name }}</h1>
+<form action="{{ url_for('clear_runners', race_id=race_id) }}">
+  <button type="submit"><strong>Clear</strong></button>
+</form>
+<form action="{{ url_for('race', race_id=race_id) }}">
+  <button type="submit"><strong>Back to race</strong></button>
+</form>
+{% if runners[0] %}
+  <table id="table" border="1" cellspacing="1" cellpadding="10" align="center">
+    <tr>
+      <th style="background-color:#ececec; color: #333366;">Name</th>
+      <th style="background-color:#ececec; color: #333366;">Age</th>
+    </tr>
+    {% for runner in runners %}
+    <tr>
+      <td style="background-color:#ececec; color: black">{{ runner.first_name }} {{ runner.last_name }}</td>
+      <td style="background-color:#ececec; color: black">{{ runner.age }}</td>
+    </tr>
+    {% endfor %}
+  </table>
+{% else %}
+  <h1>No runners registered!</h1>
+{% endif %}
+{% endblock content %}

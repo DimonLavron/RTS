@@ -57,42 +57,42 @@
 		}
 		getSelectedRow();
 
-		function move(direction) {
-				var rows = document.getElementById("table").rows,
-						parent = rows[index].parentNode;
-					if(direction === "up") {
-							if(index > 1){
-								parent.insertBefore(rows[index],rows[index - 1]);
-								index--;
-						}
-					}
-					if(direction === "down") {
-							if(index < rows.length-1){
-								parent.insertBefore(rows[index + 1],rows[index]);
-								index++;
-						}
-					}
-		}
+  		function move(direction) {
+  				var rows = document.getElementById("table").rows,
+  						parent = rows[index].parentNode;
+  					if(direction === "up") {
+  							if(index > 1){
+  								parent.insertBefore(rows[index],rows[index - 1]);
+  								index--;
+  						}
+  					}
+  					if(direction === "down") {
+  							if(index < rows.length-1){
+  								parent.insertBefore(rows[index + 1],rows[index]);
+  								index++;
+  						}
+  					}
+  		}
 
-		function move_end(direction) {
-				var rows = document.getElementById("table").rows,
-						parent = rows[index].parentNode;
-					if(direction === "up") {
-							while(index > 1){
-								parent.insertBefore(rows[index],rows[index - 1]);
-								index--;
-						}
-					}
-					if(direction === "down") {
-							while(index < rows.length-1){
-								parent.insertBefore(rows[index + 1],rows[index]);
-								index++;
-						}
-					}
-		}
-</script>
-{% endif %}
+  		function move_end(direction) {
+  				var rows = document.getElementById("table").rows,
+  						parent = rows[index].parentNode;
+  					if(direction === "up") {
+  							while(index > 1){
+  								parent.insertBefore(rows[index],rows[index - 1]);
+  								index--;
+  						}
+  					}
+  					if(direction === "down") {
+  							while(index < rows.length-1){
+  								parent.insertBefore(rows[index + 1],rows[index]);
+  								index++;
+  						}
+  					}
+  		}
+  </script>
+  {% endif %}
 {% else %}
 	<h1>No events registered!</h1>
 {% endif %}
-{% endblock content %}
+{% endblock %}

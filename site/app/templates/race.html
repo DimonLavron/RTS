@@ -63,6 +63,11 @@
       <button class="clear" type="submit">Edit</button>
     </form>
   </div>
+  <div class="runners-btn">
+    <form action="{{ url_for('race_runners', race_id=race._id) }}">
+      <button type="submit"><strong>Runners</strong></button>
+    </form>
+  </div>
   <div class="checkpoints-btn">
     <form action="{{ url_for('race_checkpoints', race_id=race._id) }}">
       <button class="checkpoints-b" type="submit">Checkpoints</button>

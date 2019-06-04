@@ -1,8 +1,10 @@
 {% extends "base.html" %}
 {% block content %}
 <h1>Runners Tracker System - Main Page</h1>
+<p>Upcoming Races</p>
+{% if races[0] %}
 <table class="schedule" border = 1 solid>
-  <p>Upcoming Races </p>
+
   <tr>
       <th>Race</th>
       <th>Date</th>
@@ -10,11 +12,17 @@
       <th>Register</th>
   </tr>
   <tr>
-      <td>Run Lviv</td>
-      <td>12.06.2019</td>
-      <td>21.0 km</td>
-      <td><a href="{{ url_for('register_for_race')}}">Register for race</a></td>
-  </tr>
+    {% for race in races %}
+      <tr>
+        <td>{{ race.name }}</td>
+        <td>{{ race.date_and_time_of_race.strftime("%d %B %Y %H:%M") }}</td>
+        <td>{{ race.distance }} km</td>
+        <td><a href="{{ url_for('register_for_race', race_id=race._id)}}">Register for race</a></td>
+      </tr>
+    {% endfor %}
+{% else %}
+	<h1>No upcoming races now!</h1>
+{% endif %}
 
 
 <table class="schedule" border = 1 solid>
