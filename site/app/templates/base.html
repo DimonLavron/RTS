@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>{{ title }}</title>
-  <link rel="stylesheet" type="text/css" href="static/style.css">
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body class="body-back">
   <header>
@@ -24,8 +24,10 @@
         <a class="a-link" href="{{ url_for('login')}}">Sign In</a>
         <a class="a-link" href="{{ url_for('register')}}">Sign Up</a>
         {% else %}
+        {% if not current_user.is_runner %}
         <a class="a-link" href="{{ url_for('register_runner') }}">Register Runner</a>
         <a class="a-link" href="{{ url_for('register_race') }}">Register Race</a>
+        {% endif %}
         <a class="a-link" href="{{ url_for('logout')}}">Sign Out</a>
         {% endif %}
       </div>

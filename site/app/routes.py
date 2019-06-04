@@ -29,7 +29,6 @@ def login():
 		return redirect(url_for('index'))
 	form = SignInForm()
 	if form.validate_on_submit():
-		print(users_col.find({"username":form.username.data})[0])
 		user = User(dict = users_col.find({"username":form.username.data})[0])
 		if user is None or not user.check_password(form.password.data):
 			flash('Invalid username or password')
@@ -38,7 +37,6 @@ def login():
 		next_page = request.args.get('next')
 		if not next_page or url_parse(next_page).netloc != '':
 			next_page = url_for('index')
-		print(current_user.is_admin)
 		return redirect(next_page)
 	return render_template('login.html', form=form)
 
@@ -61,14 +59,14 @@ def handle_mqtt_message(client, userdata, message):
 
 @app.route("/clear")
 def clear():
-	if current_user.is_anonymous:
+	if current_user.is_anonymous or current_user.is_runner:
 		return redirect(url_for('index'))
 	events_col.remove()
 	return redirect(url_for('table'))
 
 @app.route("/clear/<race_id>")
 def clear_checkpoints(race_id):
-	if current_user.is_anonymous:
+	if current_user.is_anonymous or current_user.is_runner:
 		return redirect(url_for('index'))
 	race = races_col.find({"_id":ObjectId(race_id)})[0]
 	for checkpoint in race['checkpoints']:
@@ -87,7 +85,7 @@ def table():
 @app.route('/register_runner', methods=['GET', 'POST'])
 def register_runner():
 	title = "Runner Registration"
-	if current_user.is_anonymous:
+	if current_user.is_anonymous or current_user.is_runner:
 		return redirect(url_for('index'))
 	form = RegisterRunnerForm()
 	if form.validate_on_submit():
@@ -106,7 +104,7 @@ def runners_table():
 @app.route('/register_race', methods=['GET', 'POST'])
 def register_race():
 	title = "Race Registration"
-	if current_user.is_anonymous:
+	if current_user.is_anonymous or current_user.is_runner:
 		return redirect(url_for('index'))
 	form = RegisterRaceForm()
 	form.laps_number.choices = [(i, i) for i in range(1,11)]
@@ -132,7 +130,7 @@ def race(race_id):
 
 @app.route("/race/<race_id>/delete")
 def delete_race(race_id):
-	if current_user.is_anonymous:
+	if current_user.is_anonymous or current_user.is_runner:
 		return redirect(url_for('index'))
 	race = races_col.find({"_id":ObjectId(race_id)})[0]
 	races_col.delete_one(race)
@@ -140,7 +138,7 @@ def delete_race(race_id):
 
 @app.route("/race/<race_id>/edit", methods=['GET', 'POST'])
 def edit_race(race_id):
-	if current_user.is_anonymous:
+	if current_user.is_anonymous or current_user.is_runner:
 		return redirect(url_for('index'))
 	race = races_col.find({"_id":ObjectId(race_id)})[0]
 	checkpoints = race['checkpoints']
@@ -163,7 +161,7 @@ def edit_race(race_id):
 
 @app.route("/race/<race_id>/checkpoints")
 def race_checkpoints(race_id):
-	if current_user.is_anonymous:
+	if current_user.is_anonymous or current_user.is_runner:
 		return redirect(url_for('index'))
 	race = races_col.find({"_id":ObjectId(race_id)})[0]
 	list = [checkpoints_col.find({"_id":checkpoint})[0] for checkpoint in race['checkpoints']]
@@ -171,7 +169,7 @@ def race_checkpoints(race_id):
 
 @app.route('/race/<race_id>/add_checkpoint', methods=['GET', 'POST'])
 def register_checkpoint(race_id):
-	if current_user.is_anonymous:
+	if current_user.is_anonymous or current_user.is_runner:
 		return redirect(url_for('index'))
 	form = AddCheckpointForm()
 	form.id.data = ObjectId(race_id)
@@ -186,7 +184,7 @@ def register_checkpoint(race_id):
 
 @app.route("/race/<race_id>/checkpoint/<checkpoint_id>/edit", methods=['GET', 'POST'])
 def edit_checkpoint(race_id, checkpoint_id):
-	if current_user.is_anonymous:
+	if current_user.is_anonymous or current_user.is_runner:
 		return redirect(url_for('index'))
 	checkpoint = checkpoints_col.find({"_id":ObjectId(checkpoint_id)})[0]
 	form = EditCheckpointForm()
@@ -202,7 +200,7 @@ def edit_checkpoint(race_id, checkpoint_id):
 
 @app.route("/race/<race_id>/checkpoint/<checkpoint_id>/delete")
 def delete_checkpoint(race_id, checkpoint_id):
-	if current_user.is_anonymous:
+	if current_user.is_anonymous or current_user.is_runner:
 		return redirect(url_for('index'))
 	checkpoint = checkpoints_col.find({"_id":ObjectId(checkpoint_id)})[0]
 	races_col.update_one({"_id":ObjectId(race_id)}, {"$pullAll":{"checkpoints":[ObjectId(checkpoint_id)]}})
@@ -220,7 +218,7 @@ def register_for_race():
 
 @app.route('/sign_up', methods=['GET', 'POST'])
 def register():
-	if (current_user.is_authenticated):
+	if current_user.is_authenticated:
 		return redirect(url_for('index'))
 	form = SignUpForm()
 	if form.validate_on_submit():
