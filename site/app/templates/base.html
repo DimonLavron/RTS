@@ -2,24 +2,28 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+<<<<<<< HEAD
   <title>RTS-Site</title>
   <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+=======
+  <title>{{ title }}</title>
+  <link rel="stylesheet" type="text/css" href="static/style.css">
+>>>>>>> a8a87fa1c1acf636f8ca77b2ae9ac6110ed59ac9
 </head>
-<body class="body_back">
+<body class="body-back">
   <header>
     <div class="Header">
       <div class="dropdown">
-        <button onclick="dropFunction()" class="dropbtn Header-link btn-link" type="button">
-          <svg height="24" class="octicon octicon-three-bars" viewBox="0 0 12 16" version="1.1" width="18" aria-hidden="true">
-            <path fill-rule="evenodd" d="M11.41 9H.59C0 9 0 8.59 0 8c0-.59 0-1 .59-1H11.4c.59 0 .59.41.59 1 0 .59 0 1-.59 1h.01zm0-4H.59C0 5 0 4.59 0 4c0-.59 0-1 .59-1H11.4c.59 0 .59.41.59 1 0 .59 0 1-.59 1h.01zM.59 11H11.4c.59 0 .59.41.59 1 0 .59 0 1-.59 1H.59C0 13 0 12.59 0 12c0-.59 0-1 .59-1z"></path>
-          </svg>
-        </button>
-        <div id="dropdown-div" class="dropdown-content">
-          <a href="{{ url_for('table') }}">Results</a>
-          <a href="{{ url_for('races') }}">Races</a>
-          <a href="{{ url_for('runners_table') }}">Runners</a>
-        </div>
+        <button onclick="dropFunction()" class="dropbtn Header-link btn-link" type="button">Menu</button>
+          <div id="dropdown-div" class="dropdown-content">
+            <a href="{{ url_for('table') }}">Results</a>
+            <a href="{{ url_for('races') }}">Races</a>
+            <a href="{{ url_for('runners_table') }}">Runners</a>
+          </div>
       </div>
+      <!-- <div class="logo">
+        <a class="logo-a" href="{{ url_for('index') }}">RTS</a>
+      </div> -->
       <div class="login">
         {% if current_user.is_anonymous %}
         <a class="a-link" href="{{ url_for('login')}}">Sign In</a>
@@ -34,17 +38,7 @@
       </div>
     </div>
   </header>
-  <hr>
-  {% with messages = get_flashed_messages() %}
-    {% if messages %}
-      <ul>
-        {% for message in messages %}
-          <li>{{message}}</li>
-        {% endfor %}
-      </ul>
-    {% endif %}
-  {% endwith %}
-  {% block content %} {% endblock %}
+  {% block content %}{% endblock %}
 </body>
 <script>
   function dropFunction() {

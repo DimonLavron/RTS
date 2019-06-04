@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
+<<<<<<< HEAD
 <h1 align="center">All Events</h1>
 {% if current_user.is_authenticated and not current_user.is_runner %}
 <form action="{{ url_for('clear') }}">
@@ -55,12 +56,48 @@
 
 {% if current_user.is_authenticated and not current_user.is_runner %}
 <div class="split right">
+=======
+<h1 align="center">Events</h1>
+{% if current_user.is_authenticated %}
+<div class="clear-btn">
+  <form action="{{ url_for('clear') }}">
+    <button class="clear" type="submit">Clear</button>
+  </form>
+</div>
+<div class="arrows">
+>>>>>>> a8a87fa1c1acf636f8ca77b2ae9ac6110ed59ac9
   <button onclick="move('up');">&ShortUpArrow;</button>
   <button onclick="move('down');">&ShortDownArrow;</button>
   <button onclick="move_end('up');">&ShortUpArrow;</button>
   <button onclick="move_end('down');">&ShortDownArrow;</button>
 </div>
-
+<br>
+<br>
+  {% endif %}
+<div align="center">
+{% if events[0] %}
+  <div align="center">
+    <table id="table">
+      <thead class="table100-head">
+        <tr>
+          <th>Checkpoint Id</th>
+          <th>Tag of Player</th>
+          <th>Time</th>
+        </tr>
+      </thead>
+      <tbody>
+      {% for event in events %}
+        <tr>
+          <td>{{ event.checkpoint_id }}</td>
+          <td>{{ event.tag }}</td>
+          <td>{{ event.time }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% if current_user.is_authenticated %}
 <script>
 		var index;
 		function getSelectedRow() {

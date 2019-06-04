@@ -1,23 +1,29 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1 align="center">All Runners</h1>
+<title>Runners</title>
+<h1 align="center">Runners</h1>
 {% if runners[0] %}
-<table border="1" cellspacing="1" cellpadding="10" align="center" id="line1">
-  <tr>
-    <th class="th_race">First Name</th>
-    <th class="th_race">Last Name</th>
-    <th class="th_race">ID</th>
-  </tr>
+<table id="line1">
+  <thead class="table100-head">
+    <tr>
+      <th class="th_race">First Name</th>
+      <th class="th_race">Last Name</th>
+      <th class="th_race">ID</th>
+    </tr>
+  </thead>
+  <tbody>
   {% for runner in runners %}
-  <tr>
-    <td class="td_race">{{ runner.first_name }}</td>
-    <td class="td_race">{{ runner.last_name }}</td>
-    <td class="td_race">{{ runner.id }}</td>
-  </tr>
+    <tr>
+      <td class="td_race">{{ runner.first_name }}</td>
+      <td class="td_race">{{ runner.last_name }}</td>
+      <td class="td_race">{{ runner.id }}</td>
+    </tr>
   {% endfor %}
+  </tbody>
 </table>
 {% else %}
-<h1>No runners registered!</h1>
+<br>
+<h1 align="center">No runners registered!</h1>
 {% endif %}
 {% endblock content %}

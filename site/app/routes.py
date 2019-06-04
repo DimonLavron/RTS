@@ -23,6 +23,7 @@ def index():
 
 @app.route('/sign_in', methods=['GET', 'POST'])
 def login():
+	title = "Login"
 	if current_user.is_authenticated:
 		return redirect(url_for('index'))
 	form = SignInForm()
@@ -74,14 +75,20 @@ def clear_checkpoints(race_id):
 
 @app.route("/results")
 def table():
+	title = "Results"
 	list = [event for event in events_col.find()]
 	list.reverse()
-	return render_template("table.html", events=list)
+	return render_template("table.html", events=list, title=title)
 
 
 @app.route('/register_runner', methods=['GET', 'POST'])
 def register_runner():
+<<<<<<< HEAD
 	if current_user.is_anonymous or current_user.is_runner:
+=======
+	title = "Runner Registration"
+	if current_user.is_anonymous:
+>>>>>>> a8a87fa1c1acf636f8ca77b2ae9ac6110ed59ac9
 		return redirect(url_for('index'))
 	form = RegisterRunnerForm()
 	if form.validate_on_submit():
@@ -89,16 +96,22 @@ def register_runner():
 		runners_col.insert_one(runner.__dict__)
 		flash('Runner {} {} is successfully registered.'.format(runner.first_name, runner.last_name))
 		return redirect(url_for('runners_table'))
-	return render_template('register_runner.html', form=form)
+	return render_template('register_runner.html', form=form, title=title)
 
 @app.route('/runners')
 def runners_table():
+	title = "Runners"
 	list = [runner for runner in runners_col.find()]
-	return render_template('runners_table.html', runners=list)
+	return render_template('runners_table.html', runners=list, title=title)
 
 @app.route('/register_race', methods=['GET', 'POST'])
 def register_race():
+<<<<<<< HEAD
 	if current_user.is_anonymous or current_user.is_runner:
+=======
+	title = "Race Registration"
+	if current_user.is_anonymous:
+>>>>>>> a8a87fa1c1acf636f8ca77b2ae9ac6110ed59ac9
 		return redirect(url_for('index'))
 	form = RegisterRaceForm()
 	form.laps_number.choices = [(i, i) for i in range(1,11)]
@@ -109,12 +122,13 @@ def register_race():
 		races_col.insert_one(race.__dict__)
 		flash('Race {} is successfully registered.'.format(race.name))
 		return redirect(url_for('races'))
-	return render_template('register_race.html', form=form)
+	return render_template('register_race.html', form=form, title=title)
 
 @app.route("/races")
 def races():
+	title = "Races"
 	list = [race for race in races_col.find()]
-	return render_template("races.html", races=list)
+	return render_template("races.html", races=list, title=title)
 
 @app.route("/race/<race_id>")
 def race(race_id):

@@ -7,59 +7,59 @@
   <button type="submit"><strong>Delete</strong></button>
 </form>
 <form action="" method="post" enctype="multipart/form-data" novalidate>
-    {{ form.hidden_tag() }}
-    <p>
-      <br><strong>{{ form.name.label }}</strong><br>
-      {{ form.name(size=25) }}<br>
-      {% for error in form.name.errors %}
-      <span style="color: black;">[{{ error }}]</span>
-      {% endfor %}
-    </p>
-    <p>
-      <br><strong>{{ form.logo.label }}</strong><br>
-      {{ form.logo(size=25) }}<br>
-      {% for error in form.logo.errors %}
-      <span style="color: black;">[{{ error }}]</span>
-      {% endfor %}
-    </p>
-    <p>
-      <br><strong>{{ form.admin.label }}</strong><br>
-      {{ form.admin }}<br>
-      {% for error in form.admin.errors %}
-      <span style="color: black;">[{{ error }}]</span>
-      {% endfor %}
-    </p>
-    <p>
-      <br><strong>{{ form.laps_number.label }}</strong><br>
-      {{ form.laps_number }}<br>
-      {% for error in form.laps_number.errors %}
-      <span style="color: black;">[{{ error }}]</span>
-      {% endfor %}
-    </p>
-    <p>
-      <br><strong>{{ form.distance.label }}</strong><br>
-      {{ form.distance(size=10) }}<br>
-      {% for error in form.distance.errors %}
-      <span style="color: black;">[{{ error }}]</span>
-      {% endfor %}
-    </p>
-    <p>
-      <br><strong>{{ form.date_and_time_of_race.label }}</strong><br>
-      {{ form.date_and_time_of_race }}<br>
-      {% for error in form.date_and_time_of_race.errors %}
-      <span style="color: black;">[{{ error }}]</span>
-      {% endfor %}
-    </p>
-    <p>
-      <br><strong>{{ form.description.label }}</strong><br>
-      {{ form.description(maxlength=300, cols=50, rows=6) }}<br>
-      {% for error in form.description.errors %}
-      <span style="color: black;">[{{ error }}]</span>
-      {% endfor %}
-    </p>
-    <p>
-      <br><strong>{{ form.submit() }}</strong><br>
-    </p>
+  {{ form.hidden_tag() }}
+  <p>
+    <br><strong>{{ form.name.label }}</strong><br>
+    {{ form.name(size=25) }}<br>
+    {% for error in form.name.errors %}
+    <span style="color: black;">[{{ error }}]</span>
+    {% endfor %}
+  </p>
+  <p>
+    <br><strong>{{ form.logo.label }}</strong><br>
+    {{ form.logo(size=25) }}<br>
+    {% for error in form.logo.errors %}
+    <span style="color: black;">[{{ error }}]</span>
+    {% endfor %}
+  </p>
+  <p>
+    <br><strong>{{ form.admin.label }}</strong><br>
+    {{ form.admin }}<br>
+    {% for error in form.admin.errors %}
+    <span style="color: black;">[{{ error }}]</span>
+    {% endfor %}
+  </p>
+  <p>
+    <br><strong>{{ form.laps_number.label }}</strong><br>
+    {{ form.laps_number }}<br>
+    {% for error in form.laps_number.errors %}
+    <span style="color: black;">[{{ error }}]</span>
+    {% endfor %}
+  </p>
+  <p>
+    <br><strong>{{ form.distance.label }}</strong><br>
+    {{ form.distance(size=10) }}<br>
+    {% for error in form.distance.errors %}
+    <span style="color: black;">[{{ error }}]</span>
+    {% endfor %}
+  </p>
+  <p>
+    <br><strong>{{ form.date_and_time_of_race.label }}</strong><br>
+    {{ form.date_and_time_of_race }}<br>
+    {% for error in form.date_and_time_of_race.errors %}
+    <span style="color: black;">[{{ error }}]</span>
+    {% endfor %}
+  </p>
+  <p>
+    <br><strong>{{ form.description.label }}</strong><br>
+    {{ form.description(maxlength=300, cols=50, rows=6) }}<br>
+    {% for error in form.description.errors %}
+    <span style="color: black;">[{{ error }}]</span>
+    {% endfor %}
+  </p>
+  <p>
+    <br><strong>{{ form.submit() }}</strong><br>
+  </p>
 </form>
 {% else %}
 <h1>Race: {{ race.name }}</h1>
@@ -88,4 +88,4 @@
   Description:<br>{{ race.description }}
 </p>
 {% endif %}
-{% endblock content %}
+{% endblock %}
