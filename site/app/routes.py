@@ -16,9 +16,6 @@ user = User(username = 'admin', role = 'admin')
 user.set_password('admin')
 users_col.insert_one(user.__dict__)
 
-@app.route('/new')
-def new():
-	return render_template('new.html')
 
 @app.route('/')
 def index():
